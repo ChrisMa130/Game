@@ -2,17 +2,22 @@
 using System.Collections;
 
 // 游戏主体逻辑
-public class GameMgr : MonoBehaviour
+
+namespace MG
 {
-    private Player MySelf;
-
-    void Start ()
+    public class GameMgr : MonoBehaviour
     {
-        MySelf = gameObject.AddMissingComponent<Player>();
-    }
+        private Player MySelf;
 
-	void Update ()
-    {
-        MySelf.Activate(Time.deltaTime);
+        void Start()
+        {
+            MySelf = gameObject.AddMissingComponent<Player>();
+        }
+
+        void Update()
+        {
+            MySelf.Activate(Time.deltaTime);
+        }
     }
 }
+
