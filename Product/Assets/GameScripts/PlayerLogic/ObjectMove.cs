@@ -6,7 +6,36 @@ namespace MG
 {
     public class ObjectMove : MonoBehaviour
     {
-        public void MoveRight()
+        private Transform MyTrans;
+
+        private float Speed { get; set; }
+
+        void Start()
+        {
+            MyTrans = gameObject.transform;
+        }
+
+        public void MoveRight(float detlaTime)
+        {
+            
+        }
+
+        public void MoveLeft(float detlaTime)
+        {
+            
+        }
+
+        public void MoveUp(float detlaTime)
+        {
+            
+        }
+
+        public void MoveDown(float detlaTime)
+        {
+            
+        }
+
+        public void Jump(float detlaTime)
         {
             
         }

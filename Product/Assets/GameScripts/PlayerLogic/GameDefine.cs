@@ -2,18 +2,23 @@
 using System.Collections;
 
 // 一些游戏定义丢这里
-public static class GameDefine
+
+namespace MG
 {
-    public static readonly int GameFps = 18;    // 一个像素游戏，18帧/秒不过分吧。。
-
-    static public T AddMissingComponent<T>(this GameObject go) where T : Component
+    public static class GameDefine
     {
-        T comp = go.GetComponent<T>();
+        public static readonly int GameFps = 18;    // 一个像素游戏，18帧/秒不过分吧。。
 
-        if (comp == null)
+        public static T AddMissingComponent<T>(this GameObject go) where T : Component
         {
-            comp = go.AddComponent<T>();
+            T comp = go.GetComponent<T>();
+
+            if (comp == null)
+            {
+                comp = go.AddComponent<T>();
+            }
+            return comp;
         }
-        return comp;
     }
 }
+
