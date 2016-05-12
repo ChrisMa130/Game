@@ -25,7 +25,7 @@ namespace MG
             {
                 CheckRight,
                 CheckUp,
-                CheckDown,
+                CheckDown,  
                 CheckLeft,
                 CheckJump,
                 CheckPause
