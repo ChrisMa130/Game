@@ -18,13 +18,12 @@ namespace MG
 
         void Update()
         {
-            // 讲道理，这里应该只做表现逻辑，游戏逻辑丢这里的话，可能会产生时序的bug。
-            // 临时测试，bug:停不下来，跳跃无效。
             if (InputMgr.Left)
                 MoveHelper.MoveLeft();
-
-            if (InputMgr.Right)
+            else if (InputMgr.Right)
                 MoveHelper.MoveRight();
+            else
+                MoveHelper.MoveStop();
 
             if (InputMgr.Jump)
                 MoveHelper.Jump();

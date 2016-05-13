@@ -30,18 +30,19 @@ namespace MG
             GroundCheck = transform.Find("GroundCheck");
             Anim        = GetComponent<Animator>();
             Rigidbody   = GetComponent<Rigidbody2D>();
+
+            WhatIsGround.value = -1;
         }
 
         private void FixedUpdate()
         {
-            Grounded = false;
-
-            var colliders = Physics2D.OverlapCircleAll(GroundCheck.position, GroundedRadius, WhatIsGround);
-            for (int i = 0; i < colliders.Length; i++)
-            {
-                if (colliders[i].gameObject != gameObject)
-                    Grounded = true;
-            }
+            Grounded = Physics2D.Linecast(transform.position, GroundCheck.position, 1 << LayerMask.NameToLayer("Ground"));  
+//            var colliders = Physics2D.OverlapCircleAll(GroundCheck.position, GroundedRadius, WhatIsGround);
+//            for (int i = 0; i < colliders.Length; i++)
+//            {
+//                if (colliders[i].gameObject != gameObject)
+//                    Grounded = true;
+//            }
 
             Anim.SetBool("Ground", Grounded);
             Anim.SetFloat("vSpeed", Rigidbody.velocity.y);
@@ -77,7 +78,7 @@ namespace MG
 
         private void internalJump()
         {
-            if (!Grounded || !Anim.GetBool("Ground"))
+            if (!Grounded)
                 return;
 
             Grounded = false;
@@ -96,6 +97,11 @@ namespace MG
         {
             float moveParam = Input.GetAxis("Horizontal");
             Move(moveParam);
+        }
+
+        public void MoveStop()
+        {
+            Move(0);
         }
 
         public void MoveUp()
