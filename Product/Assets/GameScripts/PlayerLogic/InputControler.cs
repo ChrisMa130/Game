@@ -43,9 +43,7 @@ namespace MG
             Reset();
             for (int i = 0; i < CheckerList.Length; i++)
             {
-                var func = CheckerList[i];
-                if (func())
-                    break;
+                CheckerList[i]();
             }
         }
 
@@ -87,7 +85,7 @@ namespace MG
 
         private bool CheckJump()
         {
-            if (!Input.GetKey(KeyCode.Space))
+            if (!Input.GetButtonDown("Jump"))
                 return false;
 
             Jump = true;

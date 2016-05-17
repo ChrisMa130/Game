@@ -19,8 +19,7 @@ namespace MG
         [SerializeField]
         private float MaxSpeed = 1.2f;                    // The fastest the player can travel in the x axis.
         [SerializeField]
-        private float JumpForce = 150f;                  // Amount of force added when the player jumps.
-        [SerializeField]
+        private float JumpForce = 200f;                  // Amount of force added when the player jumps.
         private bool AirControl = true;
 
         private void Awake()
@@ -37,13 +36,6 @@ namespace MG
         private void FixedUpdate()
         {
             Grounded = Physics2D.Linecast(transform.position, GroundCheck.position, 1 << LayerMask.NameToLayer("Ground"));  
-//            var colliders = Physics2D.OverlapCircleAll(GroundCheck.position, GroundedRadius, WhatIsGround);
-//            for (int i = 0; i < colliders.Length; i++)
-//            {
-//                if (colliders[i].gameObject != gameObject)
-//                    Grounded = true;
-//            }
-
             Anim.SetBool("Ground", Grounded);
             Anim.SetFloat("vSpeed", Rigidbody.velocity.y);
         }
@@ -65,7 +57,8 @@ namespace MG
             Anim.SetFloat("Speed", Mathf.Abs(moveParam));
 
             Rigidbody.velocity = new Vector2(moveParam * MaxSpeed, Rigidbody.velocity.y);
-           
+            // Rigidbody.velocity = new Vector2(Rigidbody.velocity.x, moveParam * MaxSpeed);
+
             if (moveParam > 0 && !FacingRight)
             {
                 Flip();
@@ -74,6 +67,14 @@ namespace MG
             {
                 Flip();
             }
+        }
+
+        private void Climb(float moveParam)
+        {
+            // TODO 动画待接入
+            // 读取角色中心的碰撞体
+            // 查看周围是否有梯子的layer
+            // 有就上。没有就pass
         }
 
         private void internalJump()

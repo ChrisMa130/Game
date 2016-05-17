@@ -27,6 +27,16 @@ namespace MG
 
             if (InputMgr.Jump)
                 MoveHelper.Jump();
+
+//            string m;
+//            if (InputMgr.Left)
+//                m = "左";
+//            else if (InputMgr.Right)
+//                m = "右";
+//            else
+//                m = "null";
+//
+//            Debug.Log(string.Format("向{0}移动，{1}跳跃", m, InputMgr.Jump ? "有" : "没有"));
         }
 
         public virtual void Activate(float deltaTime)

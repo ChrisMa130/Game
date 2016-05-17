@@ -23,51 +23,51 @@ public class LineManagement : MonoBehaviour
 	}
 	    void Update () 
 	    {
-		bool isDying = m_char.GetComponent<Animator> ().GetCurrentAnimatorStateInfo (0).IsName ("BlueHat_Death");
-		if (!(isDying) && controller.GetComponent<GameManager>().canDraw) {
-				// On mouse down new line will be created 
-				if (Input.GetMouseButtonDown (0)) {
-					if (line == null)
-						createLine ();
-					mousePos = Camera.main.ScreenToWorldPoint (Input.mousePosition);
-					mousePos.z = 0;
-					line.SetPosition (0, mousePos);
-							
-					startPos = mousePos;
-				} else if (Input.GetMouseButtonUp (0)) {
-					if (line) {
-						if (lastLine != null && validLine)
-							Destroy (lastLine.gameObject);
-						mousePos = Camera.main.ScreenToWorldPoint (Input.mousePosition);
-						mousePos.z = 0;
-						float lineLength = Vector3.Distance (startPos, mousePos);
-						if ((Vector3.SqrMagnitude (startPos - mousePos) > 0.01) && validLine) {
-							line.SetPosition (1, mousePos);
-							endPos = mousePos;
-							addColliderToLine ();
-						}
-						if (lineLength > lengthLimit)
-							Destroy (line.gameObject);
-						if (validLine)
-							lastLine = line;
-						line = null;
-					}
-				} else if (Input.GetMouseButton (0)) {
-					if (line) {
-						mousePos = Camera.main.ScreenToWorldPoint (Input.mousePosition);
-						mousePos.z = 0;
-						line.SetPosition (1, mousePos);
-						float lineLength = Vector3.Distance (startPos, mousePos);
-						if (lineLength > lengthLimit) {
-							line.SetColors (Color.red, Color.red);
-							validLine = false;
-						} else {
-							line.SetColors (Color.white, Color.white);
-							validLine = true;
-						}
-					}
-				}
-			}
+//		bool isDying = m_char.GetComponent<Animator> ().GetCurrentAnimatorStateInfo (0).IsName ("BlueHat_Death");
+//		if (!(isDying) && controller.GetComponent<GameManager>().canDraw) {
+//				// On mouse down new line will be created 
+//				if (Input.GetMouseButtonDown (0)) {
+//					if (line == null)
+//						createLine ();
+//					mousePos = Camera.main.ScreenToWorldPoint (Input.mousePosition);
+//					mousePos.z = 0;
+//					line.SetPosition (0, mousePos);
+//							
+//					startPos = mousePos;
+//				} else if (Input.GetMouseButtonUp (0)) {
+//					if (line) {
+//						if (lastLine != null && validLine)
+//							Destroy (lastLine.gameObject);
+//						mousePos = Camera.main.ScreenToWorldPoint (Input.mousePosition);
+//						mousePos.z = 0;
+//						float lineLength = Vector3.Distance (startPos, mousePos);
+//						if ((Vector3.SqrMagnitude (startPos - mousePos) > 0.01) && validLine) {
+//							line.SetPosition (1, mousePos);
+//							endPos = mousePos;
+//							addColliderToLine ();
+//						}
+//						if (lineLength > lengthLimit)
+//							Destroy (line.gameObject);
+//						if (validLine)
+//							lastLine = line;
+//						line = null;
+//					}
+//				} else if (Input.GetMouseButton (0)) {
+//					if (line) {
+//						mousePos = Camera.main.ScreenToWorldPoint (Input.mousePosition);
+//						mousePos.z = 0;
+//						line.SetPosition (1, mousePos);
+//						float lineLength = Vector3.Distance (startPos, mousePos);
+//						if (lineLength > lengthLimit) {
+//							line.SetColors (Color.red, Color.red);
+//							validLine = false;
+//						} else {
+//							line.SetColors (Color.white, Color.white);
+//							validLine = true;
+//						}
+//					}
+//				}
+//			}
 		}
 	    // Following method creates line runtime using Line Renderer component
 	    private void createLine()
