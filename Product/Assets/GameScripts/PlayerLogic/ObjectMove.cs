@@ -8,10 +8,12 @@ namespace MG
     public class ObjectMove : MonoBehaviour
     {
         private         Transform   GroundCheck;
+        private         Transform   ClimbObj;
         private         Animator    Anim;
         private         Rigidbody2D Rigidbody;
         private         bool        Grounded;
-        private const   float       GroundedRadius = 0.2f;
+        private         bool        CanClimb;
+        private const   float       ClimbRadius = 0.2f;
         private         bool        FacingRight;
 
         [SerializeField]
@@ -26,7 +28,9 @@ namespace MG
         {
             AirControl  = true;
             FacingRight = true;
+            CanClimb    = false;
             GroundCheck = transform.Find("GroundCheck");
+            ClimbObj    = transform.Find("ClimbCheck");
             Anim        = GetComponent<Animator>();
             Rigidbody   = GetComponent<Rigidbody2D>();
 
@@ -35,9 +39,24 @@ namespace MG
 
         private void FixedUpdate()
         {
+            CanClimb = false;
             Grounded = Physics2D.Linecast(transform.position, GroundCheck.position, 1 << LayerMask.NameToLayer("Ground"));  
             Anim.SetBool("Ground", Grounded);
             Anim.SetFloat("vSpeed", Rigidbody.velocity.y);
+
+            CanClimb = Physics2D.Linecast(transform.position, ClimbObj.position, 1 << LayerMask.NameToLayer("Climb"));
+//            for (int i = 0; i < colliders.Length; i++)
+//            {
+//                if (colliders[i].gameObject != gameObject)
+//                {
+//                    CanClimb = true;
+//                    break;
+//                }
+//            }
+
+            Debug.Log(string.Format("{0}爬梯子", CanClimb ? "可以" : "不可以"));
+
+            // TODO 动画
         }
 
         private void Flip()
@@ -72,9 +91,11 @@ namespace MG
         private void Climb(float moveParam)
         {
             // TODO 动画待接入
-            // 读取角色中心的碰撞体
-            // 查看周围是否有梯子的layer
-            // 有就上。没有就pass
+            if (!CanClimb)
+                return;
+
+            Anim.SetFloat("Speed", Mathf.Abs(moveParam));
+            Rigidbody.velocity = new Vector2(Rigidbody.velocity.x, moveParam * MaxSpeed);
         }
 
         private void internalJump()
@@ -107,10 +128,19 @@ namespace MG
 
         public void MoveUp()
         {
+            float moveParam = Input.GetAxis("Vertical");
+            Climb(moveParam);
         }
 
         public void MoveDown()
-        {        
+        {
+            float moveParam = Input.GetAxis("Vertical");
+            Climb(moveParam);
+        }
+
+        public void ClimbStop()
+        {
+            Climb(0);
         }
 
         public void Jump()

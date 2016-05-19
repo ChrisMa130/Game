@@ -25,8 +25,16 @@ namespace MG
             else
                 MoveHelper.MoveStop();
 
+            if (InputMgr.Up)
+                MoveHelper.MoveUp();
+            else if (InputMgr.Down)
+                MoveHelper.MoveDown();
+            else
+                MoveHelper.ClimbStop();
+           
             if (InputMgr.Jump)
                 MoveHelper.Jump();
+
 
 //            string m;
 //            if (InputMgr.Left)
