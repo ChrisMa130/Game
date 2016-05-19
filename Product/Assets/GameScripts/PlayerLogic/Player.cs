@@ -8,12 +8,14 @@ namespace MG
     {
         private GameInput InputMgr;
         private ObjectMove MoveHelper;
+        private Collect CollectItem;
 
         void Start()
         {
             // 出生后一些创建代码
             InputMgr    = gameObject.AddComponent<GameInput>();
             MoveHelper  = gameObject.AddComponent<ObjectMove>();
+            CollectItem = new Collect();
         }
 
         void Update()
@@ -50,6 +52,11 @@ namespace MG
         public virtual void Activate(float deltaTime)
         {
             // 这里处理游戏逻辑。
+        }
+
+        public void AddCollectItem(int key, int value)
+        {
+            CollectItem.AddCollectItem(key, value);
         }
     }
 }
