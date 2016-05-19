@@ -12,9 +12,10 @@ namespace MG
         private         Animator    Anim;
         private         Rigidbody2D Rigidbody;
         private         bool        Grounded;
-        private         bool        CanClimb;
+        public          bool        CanClimb;
         private const   float       ClimbRadius = 0.2f;
         private         bool        FacingRight;
+        private         float       OrgGravityScale;
 
         [SerializeField]
         private LayerMask WhatIsGround;
@@ -34,29 +35,21 @@ namespace MG
             Anim        = GetComponent<Animator>();
             Rigidbody   = GetComponent<Rigidbody2D>();
 
+            OrgGravityScale = Rigidbody.gravityScale;
+
             WhatIsGround.value = -1;
         }
 
         private void FixedUpdate()
         {
-            CanClimb = false;
             Grounded = Physics2D.Linecast(transform.position, GroundCheck.position, 1 << LayerMask.NameToLayer("Ground"));  
             Anim.SetBool("Ground", Grounded);
             Anim.SetFloat("vSpeed", Rigidbody.velocity.y);
 
-            CanClimb = Physics2D.Linecast(transform.position, ClimbObj.position, 1 << LayerMask.NameToLayer("Climb"));
-//            for (int i = 0; i < colliders.Length; i++)
-//            {
-//                if (colliders[i].gameObject != gameObject)
-//                {
-//                    CanClimb = true;
-//                    break;
-//                }
-//            }
-
-            Debug.Log(string.Format("{0}爬梯子", CanClimb ? "可以" : "不可以"));
-
-            // TODO 动画
+            if (CanClimb)
+                Rigidbody.gravityScale = 0;
+            else
+                Rigidbody.gravityScale = OrgGravityScale;
         }
 
         private void Flip()
