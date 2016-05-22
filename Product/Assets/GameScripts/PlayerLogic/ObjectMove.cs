@@ -24,8 +24,14 @@ namespace MG
         private float JumpForce = 200f;                  // Amount of force added when the player jumps.
         private bool AirControl = true;
         private float DisableJumpTime;  // 关于这个变量的作用，在起跳后一段时间不在接受跳跃指令，因为通过obj来检测是否在地面的，跳跃速度在前几帧无法跳出检测范围，所以在较小的情况下，可能会出现2个跳跃叠加在一起的情况。
+        private Player My;
 
-        private void Awake()
+        public void SetPlayer(Player player)
+        {
+            My = player;
+        }
+
+        private void Start()
         {
             AirControl  = true;
             FacingRight = true;
@@ -43,9 +49,15 @@ namespace MG
 
         private void FixedUpdate()
         {
-            Grounded = Physics2D.Linecast(transform.position, GroundCheck.position, 1 << LayerMask.NameToLayer("Ground"));  
-            Anim.SetBool("Ground", Grounded);
-            Anim.SetFloat("vSpeed", Rigidbody.velocity.y);
+            if (My == null)
+                return;
+
+            Grounded = Physics2D.Linecast(transform.position, GroundCheck.position, 1 << LayerMask.NameToLayer("Ground"));
+
+            if (Grounded)
+                My.Stand();
+            else
+                My.Jump();
 
             DisableJumpTime = Mathf.Max(DisableJumpTime -= Time.deltaTime, 0.0f);
 
@@ -77,8 +89,7 @@ namespace MG
             if (!Grounded && !AirControl)
                 return;
 
-            Anim.SetFloat("Speed", Mathf.Abs(moveParam));
-
+            My.Walk(moveParam);
             Rigidbody.velocity = new Vector2(moveParam * MaxSpeed, Rigidbody.velocity.y);
 
             if (moveParam > 0 && !FacingRight)
@@ -96,21 +107,24 @@ namespace MG
             if (!OnTheLadder)
                 return;
 
-            Anim.SetFloat("Speed", Mathf.Abs(moveParam));
+            My.Climb(moveParam);
             Rigidbody.velocity = new Vector2(Rigidbody.velocity.x, moveParam * MaxSpeed);
         }
 
-        private void internalJump()
+        private void InternalJump()
         {
             if (!Grounded || DisableJumpTime > 0.0f)
                 return;
 
             Grounded = false;
             DisableJumpTime = 0.2f;
+
+            My.Jump();
+
             Anim.SetBool("Ground", false);
             Rigidbody.AddForce(new Vector2(0f, JumpForce));
         }
-
+         
         // 下面是对移动接口的封装。
         public void MoveRight()
         {
@@ -155,7 +169,7 @@ namespace MG
 
         public void Jump()
         {
-            internalJump();
+            InternalJump();
         }
     }
 

@@ -9,13 +9,17 @@ namespace MG
         private GameInput InputMgr;
         private ObjectMove MoveHelper;
         private Collect CollectItem;
+        private Represent MyRepresent;
 
-        void Start()
+        void Awake()
         {
             // 出生后一些创建代码
             InputMgr    = gameObject.AddComponent<GameInput>();
             MoveHelper  = gameObject.AddComponent<ObjectMove>();
+            MyRepresent = gameObject.AddComponent<Represent>();
+
             CollectItem = new Collect();
+            MoveHelper.SetPlayer(this);
         }
 
         void Update()
@@ -36,17 +40,6 @@ namespace MG
            
             if (InputMgr.Jump)
                 MoveHelper.Jump();
-
-
-//            string m;
-//            if (InputMgr.Left)
-//                m = "左";
-//            else if (InputMgr.Right)
-//                m = "右";
-//            else
-//                m = "null";
-//
-//            Debug.Log(string.Format("向{0}移动，{1}跳跃", m, InputMgr.Jump ? "有" : "没有"));
         }
 
         public virtual void Activate(float deltaTime)
@@ -57,6 +50,31 @@ namespace MG
         public void AddCollectItem(int key, int value)
         {
             CollectItem.AddCollectItem(key, value);
+        }
+
+        public void Walk(float moveParam)
+        {
+            MyRepresent.Walk(moveParam);
+        }
+
+        public void Stand()
+        {
+            MyRepresent.Stand();
+        }
+
+        public void Climb(float moveParam)
+        {
+            MyRepresent.Climb(moveParam);
+        }
+
+        public void Dead()
+        {
+            MyRepresent.Dead();
+        }
+
+        public void Jump()
+        {
+            MyRepresent.Jump();
         }
     }
 }
