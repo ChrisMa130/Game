@@ -49,7 +49,7 @@ namespace MG
 
         private void FixedUpdate()
         {
-            if (My == null)
+            if (My == null || My.IsDead)
                 return;
 
             Grounded = Physics2D.Linecast(transform.position, GroundCheck.position, 1 << LayerMask.NameToLayer("Ground"));

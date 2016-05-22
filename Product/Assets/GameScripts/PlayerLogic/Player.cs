@@ -10,6 +10,9 @@ namespace MG
         private ObjectMove MoveHelper;
         private Collect CollectItem;
         private Represent MyRepresent;
+        
+        // 猪脚一些属性
+        public bool IsDead { get; private set; }
 
         void Awake()
         {
@@ -20,6 +23,8 @@ namespace MG
 
             CollectItem = new Collect();
             MoveHelper.SetPlayer(this);
+
+            IsDead = false;
         }
 
         void Update()
@@ -69,6 +74,7 @@ namespace MG
 
         public void Dead()
         {
+            IsDead = true;
             MyRepresent.Dead();
         }
 
