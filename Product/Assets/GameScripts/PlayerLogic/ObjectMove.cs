@@ -8,14 +8,13 @@ namespace MG
     public class ObjectMove : MonoBehaviour
     {
         private         Transform   GroundCheck;
-        private         Transform   ClimbObj;
         private         Animator    Anim;
         private         Rigidbody2D Rigidbody;
         private         bool        Grounded;
         public          bool        CanClimb;
-        private const   float       ClimbRadius = 0.2f;
         private         bool        FacingRight;
         private         float       OrgGravityScale;
+        private         bool        OnTheLadder;
 
         [SerializeField]
         private LayerMask WhatIsGround;
@@ -24,18 +23,20 @@ namespace MG
         [SerializeField]
         private float JumpForce = 200f;                  // Amount of force added when the player jumps.
         private bool AirControl = true;
+        private float DisableJumpTime;  // 关于这个变量的作用，在起跳后一段时间不在接受跳跃指令，因为通过obj来检测是否在地面的，跳跃速度在前几帧无法跳出检测范围，所以在较小的情况下，可能会出现2个跳跃叠加在一起的情况。
 
         private void Awake()
         {
             AirControl  = true;
             FacingRight = true;
             CanClimb    = false;
+            OnTheLadder = false;
             GroundCheck = transform.Find("GroundCheck");
-            ClimbObj    = transform.Find("ClimbCheck");
             Anim        = GetComponent<Animator>();
             Rigidbody   = GetComponent<Rigidbody2D>();
 
             OrgGravityScale = Rigidbody.gravityScale;
+            DisableJumpTime = 0f;
 
             WhatIsGround.value = -1;
         }
@@ -46,10 +47,20 @@ namespace MG
             Anim.SetBool("Ground", Grounded);
             Anim.SetFloat("vSpeed", Rigidbody.velocity.y);
 
-            if (CanClimb)
+            DisableJumpTime = Mathf.Max(DisableJumpTime -= Time.deltaTime, 0.0f);
+
+            if (CanClimb && OnTheLadder)
+            {
                 Rigidbody.gravityScale = 0;
+            }
             else
-                Rigidbody.gravityScale = OrgGravityScale;
+            {
+                if (!CanClimb)
+                {
+                    Rigidbody.gravityScale = OrgGravityScale;
+                    OnTheLadder = false;
+                }
+            }
         }
 
         private void Flip()
@@ -69,7 +80,6 @@ namespace MG
             Anim.SetFloat("Speed", Mathf.Abs(moveParam));
 
             Rigidbody.velocity = new Vector2(moveParam * MaxSpeed, Rigidbody.velocity.y);
-            // Rigidbody.velocity = new Vector2(Rigidbody.velocity.x, moveParam * MaxSpeed);
 
             if (moveParam > 0 && !FacingRight)
             {
@@ -83,8 +93,7 @@ namespace MG
 
         private void Climb(float moveParam)
         {
-            // TODO 动画待接入
-            if (!CanClimb)
+            if (!OnTheLadder)
                 return;
 
             Anim.SetFloat("Speed", Mathf.Abs(moveParam));
@@ -93,10 +102,11 @@ namespace MG
 
         private void internalJump()
         {
-            if (!Grounded)
+            if (!Grounded || DisableJumpTime > 0.0f)
                 return;
 
             Grounded = false;
+            DisableJumpTime = 0.2f;
             Anim.SetBool("Ground", false);
             Rigidbody.AddForce(new Vector2(0f, JumpForce));
         }
@@ -121,12 +131,19 @@ namespace MG
 
         public void MoveUp()
         {
+            if (!CanClimb)
+                return;
+
             float moveParam = Input.GetAxis("Vertical");
+            OnTheLadder = true;
             Climb(moveParam);
         }
 
         public void MoveDown()
         {
+            if (!CanClimb)
+                return;
+
             float moveParam = Input.GetAxis("Vertical");
             Climb(moveParam);
         }
