@@ -16,7 +16,7 @@ namespace MG
 
         void Update()
         {
-            MySelf.Activate(Time.deltaTime);
+            // MySelf.Activate(Time.deltaTime);
         }
     }
 }

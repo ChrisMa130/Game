@@ -2,6 +2,7 @@
 using System.Collections;
 using System.ComponentModel;
 using System.Deployment.Internal;
+using UnityEngineInternal;
 
 // 对键盘或者鼠标等收入设备的封装
 
@@ -15,6 +16,7 @@ namespace MG
         public bool Down        { get; private set; }
         public bool PauseTime   { get; private set; }
         public bool Jump        { get; private set; }
+        public bool HasInput    { get; private set; }
 
         public delegate bool InputChecker();
         private InputChecker[] CheckerList;
@@ -53,6 +55,7 @@ namespace MG
                 return false;
 
             Right = true;
+            HasInput = true;
             return true;
         }
 
@@ -62,6 +65,7 @@ namespace MG
                 return false;
 
             Up = true;
+            HasInput = true;
             return true;
         }
 
@@ -71,6 +75,7 @@ namespace MG
                 return false;
 
             Down = true;
+            HasInput = true;
             return true;
         }
 
@@ -80,6 +85,7 @@ namespace MG
                 return false;
 
             Left = true;
+            HasInput = true;
             return true;
         }
 
@@ -89,6 +95,7 @@ namespace MG
                 return false;
 
             Jump = true;
+            HasInput = true;
             return true;
         }
 
@@ -98,6 +105,7 @@ namespace MG
                 return false;
 
             PauseTime = true;
+            HasInput = true;
             return true;
         }
 
@@ -109,6 +117,7 @@ namespace MG
             Down        = false;
             PauseTime   = false;
             Jump        = false;
+            HasInput    = false;
         }
     }
 }

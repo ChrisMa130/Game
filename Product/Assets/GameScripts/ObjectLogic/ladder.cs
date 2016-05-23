@@ -13,9 +13,9 @@ namespace MG
         {
             if (other.gameObject.layer == LayerMask.NameToLayer("Player"))
             {
-                var playerMove = other.gameObject.GetComponent<ObjectMove>();
-                if (playerMove != null)
-                    playerMove.CanClimb = true;
+                var player = other.gameObject.GetComponent<Player>();
+                if (player != null)
+                    player.OnTheClimbAera = true;
             }
         }
 
@@ -23,9 +23,9 @@ namespace MG
         {
             if (other.gameObject.layer == LayerMask.NameToLayer("Player"))
             {
-                var playerMove = other.gameObject.GetComponent<ObjectMove>();
-                if (playerMove != null)
-                    playerMove.CanClimb = false;
+                var player = other.gameObject.GetComponent<Player>();
+                if (player != null)
+                    player.OnTheClimbAera = false;
             }
         }
     }

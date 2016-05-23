@@ -6,14 +6,16 @@ namespace MG
     {
         private Animator Anim;
         private Rigidbody2D Rigidbody;
+        private Player Owner;
 
-        void Start()
+        void Awake()
         {
             Anim = GetComponent<Animator>();
             Rigidbody = GetComponent<Rigidbody2D>();
+            Owner = GetComponent<Player>();
         }
 
-        public void Walk(float moveParam)
+        public void Run(float moveParam)
         {
             Anim.SetFloat("Speed", Mathf.Abs(moveParam));
         }
@@ -21,7 +23,8 @@ namespace MG
         public void Stand()
         {
             Anim.SetBool("Ground", true);
-            Anim.SetFloat("vSpeed", Rigidbody.velocity.y);
+            // Anim.SetFloat("vSpeed", Rigidbody.velocity.y);
+            Anim.SetFloat("Speed", 0);
         }
 
         public void Climb(float moveParam)
@@ -38,6 +41,18 @@ namespace MG
         public void Jump()
         {
             Anim.SetBool("Ground", false);
+        }
+
+        public void TurnRound(Dir dir)
+        {
+            Vector3 theScale = Owner.transform.localScale;
+
+            if (dir == Dir.Left)
+                theScale.x = -Mathf.Abs(theScale.x);
+            else
+                theScale.x = Mathf.Abs(theScale.x);
+
+            Owner.transform.localScale = theScale;
         }
     }
 }
