@@ -54,7 +54,7 @@ namespace MG
                 Move();
             }
 
-            if (input.Up && Owner.OnTheClimbAera)
+            if ((input.Up || input.Down) && Owner.OnTheClimbAera)
                 Owner.Climb();
         }
 

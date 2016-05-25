@@ -66,7 +66,7 @@ namespace MG
             if (!input.Jump)
                 return;
 
-            Owner.Jump();
+            Owner.Stand();
         }
 
         private void Move(float param)
