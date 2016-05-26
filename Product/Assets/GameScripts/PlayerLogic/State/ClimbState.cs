@@ -16,6 +16,7 @@ namespace MG
         {
             OldGravityScale = Rigidbody.gravityScale;
             Rigidbody.gravityScale = 0;
+            Move(0);
         }
 
         public override void Activate(float deltaTime)
@@ -71,7 +72,15 @@ namespace MG
 
         private void Move(float param)
         {
-            Rigidbody.velocity = new Vector2(Rigidbody.velocity.x, param * GameDefine.PlayerMaxSpeed);
+            if (GameDefine.FloatIsZero(param))
+            {
+                Rigidbody.velocity = new Vector2(0, param * GameDefine.PlayerMaxSpeed);
+            }
+            else
+            {
+                Rigidbody.velocity = new Vector2(Rigidbody.velocity.x, param * GameDefine.PlayerMaxSpeed);
+            }
+            
         }
     }
 
