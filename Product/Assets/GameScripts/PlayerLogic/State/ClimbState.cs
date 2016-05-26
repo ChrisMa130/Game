@@ -74,7 +74,11 @@ namespace MG
         {
             if (GameDefine.FloatIsZero(param))
             {
+<<<<<<< HEAD
                 Rigidbody.velocity = new Vector2(0, 0);
+=======
+                Rigidbody.velocity = new Vector2(0, param * GameDefine.PlayerMaxSpeed);
+>>>>>>> 6acaa4018e92f54ef204cb05b335c5e6d6ffd59f
             }
             else
             {
