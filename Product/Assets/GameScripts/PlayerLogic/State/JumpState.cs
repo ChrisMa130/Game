@@ -54,6 +54,7 @@ namespace MG
                 Move();
             }
 
+            // TODO 当玩家是X到达梯子中心点的时候，在切换状态
             if ((input.Up || input.Down) && Owner.OnTheClimbAera)
                 Owner.Climb();
         }
