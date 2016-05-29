@@ -13,6 +13,13 @@ namespace MG
         private Transform GroundCheck;
         public bool Grounded { get; private set; }
         public bool OnTheClimbAera { get; set; }
+        public GameObject LadderObj { get; set; }
+
+        public Vector3 Position
+        {
+            get { return transform.position; }
+            set { transform.position = value; }
+        }
 
         // 猪脚一些属性
         public bool IsDead { get; private set; }
