@@ -15,7 +15,11 @@ namespace MG
             {
                 var player = other.gameObject.GetComponent<Player>();
                 if (player != null)
+                {
                     player.OnTheClimbAera = true;
+                    player.LadderObj = gameObject;
+                }
+                    
             }
         }
 
@@ -25,7 +29,11 @@ namespace MG
             {
                 var player = other.gameObject.GetComponent<Player>();
                 if (player != null)
+                {
                     player.OnTheClimbAera = false;
+                    player.LadderObj = null;
+                }
+                    
             }
         }
     }

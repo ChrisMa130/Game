@@ -7,6 +7,7 @@ namespace MG
     {
         private float moveParam;
         private float OldGravityScale;
+        private Collider2D c2d;
 
         public ClimbState(Player player) : base(player)
         {
@@ -17,6 +18,8 @@ namespace MG
             OldGravityScale = Rigidbody.gravityScale;
             Rigidbody.gravityScale = 0;
             Move(0);
+
+            c2d = Owner.LadderObj.GetComponent<Collider2D>();
         }
 
         public override void Activate(float deltaTime)
@@ -41,7 +44,8 @@ namespace MG
 
         public override void ApplyInput(GameInput input)
         {
-            if (input.Up)
+            float h = Mathf.Abs(Owner.Position.y) - Mathf.Abs((c2d.bounds.size.y * Owner.LadderObj.transform.localScale.y) / 2);
+            if (input.Up && h <= 0)
             {
                 Move(moveParam);
             }

@@ -48,6 +48,9 @@ namespace MG
 
             if (input.Up && Owner.OnTheClimbAera)
             {
+                // TODO 这里要从玩家坐标向玩家的朝向发射一个射线，如果发现与梯子距离小于设定值，
+                // 那么按上则采取靠近梯子，当与梯子的距离足够近，并且，还是梯子中心的时候再转换成为爬梯子的状态
+                                
                 Owner.Climb();
                 return;
             }
