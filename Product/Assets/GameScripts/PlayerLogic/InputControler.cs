@@ -34,7 +34,7 @@ namespace MG
             };
         }
 
-        void LateUpdate()
+        public void Activate()
         {
             RecvInput();
         }
@@ -101,7 +101,7 @@ namespace MG
 
         private bool CheckPause()
         {
-            if (!Input.GetKey(KeyCode.E))
+            if (!Input.GetKey(KeyCode.LeftShift) && !Input.GetKeyDown(KeyCode.RightShift))
                 return false;
 
             PauseTime = true;

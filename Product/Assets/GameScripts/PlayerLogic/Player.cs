@@ -27,7 +27,6 @@ namespace MG
         void Awake()
         {
             // 出生后一些创建代码
-            InputMgr    = gameObject.AddComponent<GameInput>();
             MyRepresent = gameObject.AddComponent<Represent>();
             MyState     = gameObject.AddMissingComponent<PlayerState>();
 
@@ -47,14 +46,19 @@ namespace MG
 
         void Update()
         {
-            float time = Time.deltaTime;
+        }
 
+        public void Activate(float deltaTime)
+        {
             Grounded = Physics2D.Linecast(transform.position, GroundCheck.position, 1 << LayerMask.NameToLayer("Ground"));
 
-            MyState.ApplyInput(InputMgr);
-
             if (MyState != null)
-                MyState.Activate(time);
+                MyState.Activate(deltaTime);
+        }
+
+        public void ApplyInput(GameInput input)
+        {
+            MyState.ApplyInput(input);
         }
 
         public void AddCollectItem(int key, int value)
