@@ -36,19 +36,8 @@ namespace MG
         {
             if (InputMgr.PauseTime)
             {
-                Debug.Log("暂停");
                 IsPause = !IsPause;
                 PauseGame(IsPause);
-            }
-
-            if (InputMgr.Jump)
-            {
-                Debug.Log("跳跃");
-            }
-
-            if (InputMgr.Down)
-            {
-                Debug.Log("下");
             }
 
             if (!IsPause)
