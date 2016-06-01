@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using System.Collections;
 
 namespace MG
 {
@@ -44,9 +43,10 @@ namespace MG
 
         public override void ApplyInput(GameInput input)
         {
-            float h = Mathf.Abs(Owner.Position.y) - (Mathf.Abs(c2d.bounds.size.y) + Owner.LadderObj.transform.position.y);
-            Debug.Log(h);
-            if (input.Up && h <= 0)
+            float ladderY = Owner.LadderObj.transform.position.y;
+            bool outladder = Owner.Position.y > (ladderY + c2d.bounds.size.y);
+
+            if (input.Up && !outladder)
             {
                 Move(moveParam);
             }
