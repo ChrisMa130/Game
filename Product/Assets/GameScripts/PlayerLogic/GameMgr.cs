@@ -18,7 +18,6 @@ namespace MG
             IsPause = false;
             InputMgr = gameObject.AddComponent<GameInput>();
             PlayerLogic = PlayerObject.AddMissingComponent<Player>();
-            
         }
 
         void Update()

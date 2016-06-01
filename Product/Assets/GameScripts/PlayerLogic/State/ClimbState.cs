@@ -44,7 +44,8 @@ namespace MG
 
         public override void ApplyInput(GameInput input)
         {
-            float h = Mathf.Abs(Owner.Position.y) - Mathf.Abs((c2d.bounds.size.y * Owner.LadderObj.transform.localScale.y) / 2);
+            float h = Mathf.Abs(Owner.Position.y) - (Mathf.Abs(c2d.bounds.size.y) + Owner.LadderObj.transform.position.y);
+            Debug.Log(h);
             if (input.Up && h <= 0)
             {
                 Move(moveParam);
