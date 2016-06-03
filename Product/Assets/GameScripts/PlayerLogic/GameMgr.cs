@@ -11,6 +11,7 @@ namespace MG
         public GameObject PlayerObject;
         private Player PlayerLogic;
         private GameInput InputMgr;
+        private LineMgr LineMgr;
         private bool IsPause;
 
         void Start()
@@ -18,6 +19,7 @@ namespace MG
             IsPause = false;
             InputMgr = gameObject.AddComponent<GameInput>();
             PlayerLogic = PlayerObject.AddMissingComponent<Player>();
+            LineMgr = gameObject.AddMissingComponent<LineMgr>();
         }
 
         void Update()
@@ -27,7 +29,7 @@ namespace MG
             InputMgr.Activate();
 
             UpdateInput();
-
+            
             PlayerLogic.Activate(timeDelta);  // 暂时不拆，因为可能回滚时间要active的。
         }
 
@@ -43,6 +45,8 @@ namespace MG
             {
                 PlayerLogic.ApplyInput(InputMgr);
             }
+
+            LineMgr.ApplyInput(InputMgr);
         }
 
         public void PauseGame(bool pause)

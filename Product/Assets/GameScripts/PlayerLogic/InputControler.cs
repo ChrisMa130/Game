@@ -17,6 +17,9 @@ namespace MG
         public bool PauseTime   { get; private set; }
         public bool Jump        { get; private set; }
         public bool HasInput    { get; private set; }
+        public bool Mouse1Down  { get; private set; }
+        public bool Mouse1Up    { get; private set; }
+        public bool Mouse1Move  { get; private set; }
 
         public delegate bool InputChecker();
         private InputChecker[] CheckerList;
@@ -30,7 +33,10 @@ namespace MG
                 CheckDown,  
                 CheckLeft,
                 CheckJump,
-                CheckPause
+                CheckPause,
+                CheckMouse1Down,
+                CheckMouse1Up,
+                CheckMouse1Move
             };
         }
 
@@ -109,6 +115,36 @@ namespace MG
             return true;
         }
 
+        private bool CheckMouse1Down()
+        {
+            if (!Input.GetMouseButtonDown(0))
+                return false;
+
+            Mouse1Down = true;
+            HasInput = true;
+            return true;
+        }
+
+        private bool CheckMouse1Up()
+        {
+            if (!Input.GetMouseButtonUp(0))
+                return false;
+
+            Mouse1Up = true;
+            HasInput = true;
+            return true;
+        }
+
+        private bool CheckMouse1Move()
+        {
+            if (!Input.GetMouseButton(0))
+                return false;
+
+            Mouse1Move = true;
+            HasInput = true;
+            return true;
+        }
+
         private void Reset()
         {
             Right       = false;
@@ -118,6 +154,9 @@ namespace MG
             PauseTime   = false;
             Jump        = false;
             HasInput    = false;
+            Mouse1Down  = false;
+            Mouse1Up    = false;
+            Mouse1Move  = false;
         }
     }
 }
