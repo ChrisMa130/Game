@@ -52,3 +52,7 @@ Product/Temp/
 Product/.vs/Product/v14/.suo
 Product/Product.CSharp.csproj
 Product/Product.sln
+
+/Product/*
+!/Docs/Assets
+!/Docs/ProjectSettings
