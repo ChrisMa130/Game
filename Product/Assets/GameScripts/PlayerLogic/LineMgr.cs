@@ -89,7 +89,7 @@ namespace MG
             LineRender.SetPosition(1, mousePos);
 
             float lineLength = Vector3.Distance(StartPos, mousePos);
-            if (lineLength > GameDefine.LineLengthLimit)
+            if (lineLength > GameDefine.LineMaxLimit || lineLength <= GameDefine.LineMinLimit)
             {
                 LineRender.SetColors(Color.red, Color.red);
                 ValidLine = false;
@@ -112,6 +112,9 @@ namespace MG
 
         private void SetCollider()
         {
+            if (StartPos == EndPos)
+                return;
+
             BoxCollider2D col = Line.gameObject.GetComponent<BoxCollider2D>();
             float lineLength = Vector3.Distance(StartPos, EndPos); // length of line
             col.size = new Vector2(lineLength, 0.02f);
@@ -123,6 +126,7 @@ namespace MG
             {
                 angle *= -1;
             }
+
             angle = Mathf.Rad2Deg * Mathf.Atan(angle);
             col.transform.Rotate(0, 0, angle);
             col.offset = new Vector2(0, 0);
