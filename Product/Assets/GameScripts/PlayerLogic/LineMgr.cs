@@ -1,31 +1,22 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 namespace MG
 {
     public class LineMgr : MonoBehaviour
     {
         private GameObject Line;
+
         private Vector3 StartPos;
         private Vector3 EndPos;
-        private LineRenderer LineRender;
+
         private bool ValidLine;
 
-        void Start()
-        {
-            var o = Resources.Load("prefabs/line") as GameObject;
-            Line = Instantiate(o);
-            Line.name = "Line";
-
-            LineRender = Line.GetComponent<LineRenderer>();
-            LineRender.SetVertexCount(2);
-            LineRender.SetWidth(0.02f, 0.02f);
-
-            Line.SetActive(false);
-        }
+        private GameObject CurrentOpLine;
+        private LineRenderer CurrentLineRenderer;
 
         public void Activate(float deltaTime)
         {
-            // 处理存活时间
         }
 
         public void ApplyInput(GameInput input)
@@ -45,69 +36,79 @@ namespace MG
             }
         }
 
-        bool CheckPosition()
+        void CreateLine()
         {
-            // 检查当前点是否能画线
-
-            return false;
+            var o = Resources.Load("prefabs/line") as GameObject;
+            CurrentOpLine = Instantiate(o);
+            CurrentLineRenderer = CurrentOpLine.GetComponent<LineRenderer>();
+            CurrentLineRenderer.SetVertexCount(2);
+            CurrentLineRenderer.SetWidth(0.02f, 0.02f);
         }
 
         void SetStartPos()
         {
-            ResetLine();
+            if (CurrentOpLine == null)
+            {
+                CreateLine();
+            }
+
             var mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             mousePos.z = 0;
-            LineRender.SetPosition(0, mousePos);
-            LineRender.SetPosition(1, mousePos);
+            CurrentLineRenderer.SetPosition(0, mousePos);
+            CurrentLineRenderer.SetPosition(1, mousePos);
 
             StartPos = mousePos;
 
-            if (!Line.activeInHierarchy)
-                Line.SetActive(true);
+            CurrentOpLine.SetActive(true);
         }
 
         void SetEndPos()
         {
             if (!ValidLine)
             {
-                ResetLine();
-                Line.SetActive(false);
+                GameObject.DestroyImmediate(CurrentOpLine);
+                return;
             }
 
             var mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             mousePos.z = 0;
-            LineRender.SetPosition(1, mousePos);
+            CurrentLineRenderer.SetPosition(1, mousePos);
 
             EndPos = mousePos;
             SetCollider();
+
+            if (Line != null)
+            {
+                var s = Line.AddComponent<autodestory>();
+                s.DestoryTime = GameDefine.DisableLineLiveTime;
+                var b2d = Line.GetComponent<BoxCollider2D>();
+                if (b2d != null)
+                {
+                    GameObject.DestroyImmediate(b2d);
+                }
+            }
+
+            Line = CurrentOpLine;
+            CurrentOpLine = null;
         }
 
         void MovePos()
         {
             var mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             mousePos.z = 0;
-            LineRender.SetPosition(1, mousePos);
+            CurrentLineRenderer.SetPosition(1, mousePos);
 
             float lineLength = Vector3.Distance(StartPos, mousePos);
             if (lineLength > GameDefine.LineMaxLimit || lineLength <= GameDefine.LineMinLimit)
             {
-                LineRender.SetColors(Color.red, Color.red);
+                CurrentLineRenderer.SetColors(Color.red, Color.red);
                 ValidLine = false;
             }
             else
             {
-                LineRender.SetColors(Color.white, Color.white);
+                CurrentLineRenderer.SetColors(Color.white, Color.white);
                 ValidLine = true;
             }
-        }
-
-        void ResetLine()
-        {
-            LineRender.SetVertexCount(2);
-            LineRender.SetWidth(0.02f, 0.02f);
-            LineRender.SetPosition(0, Vector2.zero);
-            LineRender.SetPosition(0, Vector2.zero);
-            Line.transform.rotation = new Quaternion(0f, 0f, 0f, 0f);
         }
 
         private void SetCollider()
@@ -115,7 +116,7 @@ namespace MG
             if (StartPos == EndPos)
                 return;
 
-            BoxCollider2D col = Line.gameObject.GetComponent<BoxCollider2D>();
+            BoxCollider2D col = CurrentOpLine.gameObject.GetComponent<BoxCollider2D>();
             float lineLength = Vector3.Distance(StartPos, EndPos); // length of line
             col.size = new Vector2(lineLength, 0.02f);
             Vector3 midPoint = (StartPos + EndPos)/ 2;
