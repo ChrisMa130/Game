@@ -87,6 +87,7 @@
      <Compile Include="Assets\GameScripts\Camera\Code\Triggers\ProCamera2DTriggerRails.cs" />
      <Compile Include="Assets\GameScripts\Camera\Code\Triggers\ProCamera2DTriggerZoom.cs" />
      <Compile Include="Assets\GameScripts\Camera\ProCamera2D.cs" />
+     <Compile Include="Assets\GameScripts\ObjectLogic\SingletonMonoBehaviour.cs" />
      <Compile Include="Assets\GameScripts\ObjectLogic\Spike.cs" />
      <Compile Include="Assets\GameScripts\ObjectLogic\autodestory.cs" />
      <Compile Include="Assets\GameScripts\ObjectLogic\ladder.cs" />
@@ -107,19 +108,6 @@
      <Compile Include="Assets\GameScripts\PlayerLogic\State\PlayerState.cs" />
      <Compile Include="Assets\GameScripts\PlayerLogic\State\RunState.cs" />
      <Compile Include="Assets\GameScripts\PlayerLogic\State\StandState.cs" />
-     <Compile Include="Assets\Scripts\Camera2DFollow.cs" />
-     <Compile Include="Assets\Scripts\ForbiddenZone.cs" />
-     <Compile Include="Assets\Scripts\GameManager.cs" />
-     <Compile Include="Assets\Scripts\LineManagement.cs" />
-     <Compile Include="Assets\Scripts\MoveTest.cs" />
-     <Compile Include="Assets\Scripts\PlayerControl.cs" />
-     <Compile Include="Assets\Scripts\PlayerControlOld.cs" />
-     <Compile Include="Assets\Scripts\Player_Control.cs" />
-     <Compile Include="Assets\Scripts\Player_Movement.cs" />
-     <Compile Include="Assets\Scripts\Spike.cs" />
-     <Compile Include="Assets\Scripts\Tests\Bullet.cs" />
-     <Compile Include="Assets\Scripts\Tests\balls.cs" />
-     <Compile Include="Assets\Scripts\jumptest.cs" />
      <None Include="Assets\GameScripts\Camera\Code\Helpers\TransitionFX\Resources\PC2D_Circle.shader" />
      <None Include="Assets\GameScripts\Camera\Code\Helpers\TransitionFX\Resources\PC2D_Wipe.shader" />
      <None Include="Assets\GameScripts\Camera\Code\Helpers\TransitionFX\Resources\PC2D_Blinds.shader" />

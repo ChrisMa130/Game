@@ -7,6 +7,8 @@ namespace MG
     {
         private GameObject Line;
 
+		public float LineSize = 0.15f;
+
         private Vector3 StartPos;
         private Vector3 EndPos;
 
@@ -52,7 +54,7 @@ namespace MG
             CurrentOpLine = Instantiate(o);
             CurrentLineRenderer = CurrentOpLine.GetComponent<LineRenderer>();
             CurrentLineRenderer.SetVertexCount(2);
-            CurrentLineRenderer.SetWidth(0.1f, 0.1f);
+			CurrentLineRenderer.SetWidth(LineSize, LineSize);
         }
 
         void SetStartPos()
@@ -157,7 +159,7 @@ namespace MG
 
             BoxCollider2D col = CurrentOpLine.gameObject.GetComponent<BoxCollider2D>();
             float lineLength = Vector3.Distance(StartPos, EndPos); // length of line
-            col.size = new Vector2(lineLength, 0.1f);
+			col.size = new Vector2(lineLength, LineSize);
             Vector3 midPoint = (StartPos + EndPos)/ 2;
             col.transform.localPosition = midPoint;
 
