@@ -1,17 +1,15 @@
 ﻿using UnityEngine;
-using System.Collections;
-using System.Runtime.InteropServices;
 
 // 游戏主体逻辑
 
 namespace MG
 {
-    public class GameMgr : MonoBehaviour
+    public class GameMgr : SingletonMonoBehaviour<GameMgr>
     {
         public GameObject PlayerObject;
         private Player PlayerLogic;
         private GameInput InputMgr;
-        private LineMgr LineMgr;
+        public LineMgr LineMgr;
         private bool IsPause;
 
         void Start()

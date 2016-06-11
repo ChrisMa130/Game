@@ -107,7 +107,7 @@ namespace MG
 
         private bool CheckPause()
         {
-            if (!Input.GetKey(KeyCode.LeftShift) && !Input.GetKeyDown(KeyCode.RightShift))
+            if (!Input.GetKey(KeyCode.F))
                 return false;
 
             PauseTime = true;
