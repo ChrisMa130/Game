@@ -96,9 +96,13 @@ namespace MG
             {
                 // 当前线段消失
                 // 给领域加一个自动消失的脚本
-                var s = ForbiddenLine.AddComponent<autodestory>();
-                s.DestoryTime = GameDefine.DisableLineLiveTime;
-                ForbiddenLine = null;
+                if (ForbiddenLine != null)
+                {
+                    var s = ForbiddenLine.AddComponent<autodestory>();
+                    s.DestoryTime = GameDefine.DisableLineLiveTime;
+                    ForbiddenLine = null;
+                }
+
                 GameObject.DestroyImmediate(Line);
                 Line = null;
             }
