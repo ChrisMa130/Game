@@ -6,8 +6,7 @@ namespace MG
     public class LineMgr : MonoBehaviour
     {
         private GameObject Line;
-
-		public float LineSize = 0.15f;
+        private GameObject ForbiddenLine;
 
         private Vector3 StartPos;
         private Vector3 EndPos;
@@ -54,7 +53,7 @@ namespace MG
             CurrentOpLine = Instantiate(o);
             CurrentLineRenderer = CurrentOpLine.GetComponent<LineRenderer>();
             CurrentLineRenderer.SetVertexCount(2);
-			CurrentLineRenderer.SetWidth(LineSize, LineSize);
+			CurrentLineRenderer.SetWidth(GameDefine.LineSize, GameDefine.LineSize);
         }
 
         void SetStartPos()
@@ -81,27 +80,27 @@ namespace MG
         {
             if (!ValidLine || !CanDraw)
             {
+                if (ForbiddenLine != null)
+                {
+                    GameObject.DestroyImmediate(ForbiddenLine);
+                    ForbiddenLine = null;
+                }
+                    
                 GameObject.DestroyImmediate(CurrentOpLine);
                 return;
             }
 
-            SetCollider();
+            SetCollider(CurrentOpLine, StartPos, EndPos);
 
             if (Line != null)
             {
-                var s = Line.AddComponent<autodestory>();
+                // 当前线段消失
+                // 给领域加一个自动消失的脚本
+                var s = ForbiddenLine.AddComponent<autodestory>();
                 s.DestoryTime = GameDefine.DisableLineLiveTime;
-                var b2d = Line.GetComponent<BoxCollider2D>();
-                if (b2d != null)
-                {
-                    GameObject.DestroyImmediate(b2d);
-                }
-
-                var lineRender = Line.GetComponent<LineRenderer>();
-                lineRender.SetColors(Color.red, Color.red);
-
-                lineRender.SetPosition(0, CalcLinePos(LastStartPos, LastEndPos, GameDefine.DisableLineAddlen));
-                lineRender.SetPosition(1, CalcLinePos(LastEndPos, LastStartPos, GameDefine.DisableLineAddlen));
+                ForbiddenLine = null;
+                GameObject.DestroyImmediate(Line);
+                Line = null;
             }
 
             LastEndPos = StartPos;
@@ -109,8 +108,30 @@ namespace MG
 
             Line = CurrentOpLine;
 
+            CreateForbiddenZone();
+
             CurrentOpLine = null;
             CurrentLineRenderer = null;
+        }
+
+        void CreateForbiddenZone()
+        {
+            var o = Resources.Load("prefabs/ForbiddenZone") as GameObject;
+            ForbiddenLine = Instantiate(o);
+
+            var renderer = ForbiddenLine.GetComponent<LineRenderer>();
+
+            renderer.SetVertexCount(2);
+            var size = GameDefine.LineSize + GameDefine.ForbiddenLineAddWidth;
+            renderer.SetWidth(size, size);
+
+            var start = CalcLinePos(StartPos, EndPos, GameDefine.ForbiddenLineAddLen);
+            var end = CalcLinePos(EndPos, StartPos, GameDefine.ForbiddenLineAddLen);
+
+            SetCollider(ForbiddenLine, start, end);
+
+            renderer.SetPosition(0, start);
+            renderer.SetPosition(1, end);
         }
 
         void MovePos()
@@ -152,18 +173,18 @@ namespace MG
             }
         }
 
-        private void SetCollider()
+        private void SetCollider(GameObject obj, Vector3 start, Vector3 end)
         {
-            if (StartPos == EndPos || CurrentOpLine == null)
+            if (start == end || CurrentOpLine == null)
                 return;
 
-            BoxCollider2D col = CurrentOpLine.gameObject.GetComponent<BoxCollider2D>();
-            float lineLength = Vector3.Distance(StartPos, EndPos); // length of line
-			col.size = new Vector2(lineLength, LineSize);
-            Vector3 midPoint = (StartPos + EndPos)/ 2;
+            BoxCollider2D col = obj.GetComponent<BoxCollider2D>();
+            float lineLength = Vector3.Distance(start, end); // length of line
+			col.size = new Vector2(lineLength, GameDefine.LineSize);
+            Vector3 midPoint = (start + end) / 2;
             col.transform.localPosition = midPoint;
 
-            float angle = GetAngle(StartPos, EndPos);
+            float angle = GetAngle(start, end);
             col.transform.Rotate(0, 0, angle);
             col.offset = new Vector2(0, 0);
         }
