@@ -33,9 +33,9 @@ namespace MG
         public static readonly float LineMaxLimit = 2.5f;
         public static readonly float LineMinLimit = 1f;
         public static readonly float LineSize = 0.15f;
-        public static readonly float DisableLineLiveTime = 2.0f;
-        public static readonly float ForbiddenLineAddLen = 0.3f;
-        public static readonly float ForbiddenLineAddWidth = 0.1f;
+        public static readonly float DisableLineLiveTime = 0.001f;
+        public static readonly float ForbiddenLineAddLen = 0.6f;
+        public static readonly float ForbiddenLineAddWidth = 0.3f;
 
         public static T AddMissingComponent<T>(this GameObject go) where T : Component
         {

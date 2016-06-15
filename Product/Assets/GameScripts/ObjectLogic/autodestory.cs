@@ -6,7 +6,7 @@ namespace MG
     public class autodestory : MonoBehaviour
     {
         public float DestoryTime = 0;
-        void Update()
+        void FixedUpdate()
         {
             if (DestoryTime <= 0)
             {
