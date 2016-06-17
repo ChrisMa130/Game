@@ -8,15 +8,16 @@ namespace MG
         private GameObject Line;
         private GameObject ForbiddenLine;
 
-        private Vector3 StartPos;
-        private Vector3 EndPos;
+        public Vector3 StartPos;
+        public Vector3 EndPos;
 
         private Vector3 LastStartPos;
         private Vector3 LastEndPos;
 
-        private bool ValidLine;
+        public bool ValidLine;
+        public bool InForbiddenZone;
 
-        private GameObject CurrentOpLine;
+        public GameObject CurrentOpLine;
         private LineRenderer CurrentLineRenderer;
 
         public bool CanDraw { get; set; }
@@ -80,17 +81,19 @@ namespace MG
         {
             if (!ValidLine || !CanDraw)
             {
-                if (ForbiddenLine != null)
-                {
-                    GameObject.DestroyImmediate(ForbiddenLine);
-                    ForbiddenLine = null;
-                }
+//                if (ForbiddenLine != null)
+//                {
+//                    GameObject.DestroyImmediate(ForbiddenLine);
+//                    ForbiddenLine = null;
+//                }
                     
                 GameObject.DestroyImmediate(CurrentOpLine);
                 return;
             }
 
-            SetCollider(CurrentOpLine, StartPos, EndPos);
+            float angle = GetAngle(StartPos, EndPos);
+            float theTa = Mathf.Round(angle / 45.0f) * (45.0f);
+            SetCollider(CurrentOpLine, StartPos, EndPos, Mathf.Abs(theTa));
 
             if (Line != null)
             {
@@ -111,6 +114,9 @@ namespace MG
             LastStartPos = EndPos;
 
             Line = CurrentOpLine;
+
+            var linec2d = Line.GetComponent<Collider2D>();
+            linec2d.isTrigger = false;
 
             CreateForbiddenZone();
 
@@ -158,14 +164,21 @@ namespace MG
             }
             else
             {
-                mousePos.y = StartPos.y + len * Mathf.Tan(theTa);
+                mousePos.y = StartPos.y + len * Mathf.Sin(theTa);
             }
             CurrentLineRenderer.SetPosition(1, mousePos);
 
             EndPos = mousePos;
 
+            SetCollider(CurrentOpLine, StartPos, mousePos, Math.Abs(theTa));
+
             float lineLength = Vector3.Distance(StartPos, mousePos);
-            if (lineLength > GameDefine.LineMaxLimit || lineLength <= GameDefine.LineMinLimit)
+            if (InForbiddenZone)
+            {
+                CurrentLineRenderer.SetColors(Color.red, Color.red);
+                ValidLine = false;
+            }
+            else if (lineLength > GameDefine.LineMaxLimit || lineLength <= GameDefine.LineMinLimit)
             {
                 CurrentLineRenderer.SetColors(Color.red, Color.red);
                 ValidLine = false;
@@ -187,9 +200,31 @@ namespace MG
 			col.size = new Vector2(lineLength, GameDefine.LineSize);
             Vector3 midPoint = (start + end) / 2;
             col.transform.localPosition = midPoint;
-
+            
             float angle = GetAngle(start, end);
-            col.transform.Rotate(0, 0, angle);
+            float theTa = Mathf.Round(angle / 45.0f) * (45.0f);
+            if ((int) Mathf.Abs(theTa) == 90)
+            {
+                theTa = 90;
+            }
+                // Debug.LogFormat("{0}, {1}", col.transform.rotation, angle);
+            col.transform.Rotate(0, 0, theTa);
+            col.offset = new Vector2(0, 0);
+        }
+        private void SetCollider(GameObject obj, Vector3 start, Vector3 end, float angle)
+        {
+            if (start == end || CurrentOpLine == null)
+                return;
+
+            Debug.Log(angle);
+            BoxCollider2D col = obj.GetComponent<BoxCollider2D>();
+            float lineLength = Vector3.Distance(start, end); // length of line
+            Vector3 midPoint = (start + end) / 2;
+            col.transform.localPosition = midPoint;
+            col.size = new Vector2(lineLength, GameDefine.LineSize);
+            col.transform.eulerAngles = new Vector3(0, 0, angle);
+            // col.transform.Rotate(0, 0, angle);
+            
             col.offset = new Vector2(0, 0);
         }
 

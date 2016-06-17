@@ -5,22 +5,37 @@ namespace MG
 {
     public class ForbiddenZone : MonoBehaviour
     {
-        void OnMouseDown()
+        Collider2D c2d;
+
+        void Start()
         {
-            GameMgr.Instance.LineMgr.CanDraw = false;
+            c2d = GetComponent<Collider2D>();
         }
 
-        void OnMouseOver()
+        void Update()
         {
-            if (GameMgr.Instance.LineMgr.CanDraw)
-                GameMgr.Instance.LineMgr.CanDraw = false;
-        }
-        void OnMouseExit()
-        {
-            GameMgr.Instance.LineMgr.CanDraw = true;
+            if (GameMgr.Instance.LineMgr == null)
+                return;
+
+            var line = GameMgr.Instance.LineMgr;
+//            if (c2d.bounds.Contains(line.EndPos))
+//                Debug.Log("穿过了");
+            if (line.CurrentOpLine == null)
+                return;
+
+            var anotherC2d = line.CurrentOpLine.GetComponent<Collider2D>();
+            if (c2d.bounds.Intersects(anotherC2d.bounds))
+            {
+                line.InForbiddenZone = true;
+                Debug.Log("在里面");
+            }
+            else
+            {
+                line.InForbiddenZone = false;
+                Debug.Log("不再里面");
+            }
         }
     }
-
 }
 
 
