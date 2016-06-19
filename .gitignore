@@ -55,3 +55,5 @@ Product/Product.sln
 
 !/Docs/Assets
 !/Docs/ProjectSettings
+Product/Product.CSharp.Editor.csproj
+Product/Product.CSharp.Plugins.csproj

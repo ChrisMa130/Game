@@ -8,23 +8,22 @@ namespace MG
         private GameObject Line;
         private GameObject ForbiddenLine;
 
-        public Vector3 StartPos;
-        public Vector3 EndPos;
+        private Vector3 StartPos;
+        private Vector3 EndPos;
 
-        private Vector3 LastStartPos;
-        private Vector3 LastEndPos;
-
-        public bool ValidLine;
-        public bool InForbiddenZone;
+        private bool ValidLine;
 
         public GameObject CurrentOpLine;
         private LineRenderer CurrentLineRenderer;
 
         public bool CanDraw { get; set; }
 
+        private int LineCount;
+
         void Start()
         {
             CanDraw = true;
+            LineCount = 1;
         }
 
         public void Activate(float deltaTime)
@@ -52,6 +51,7 @@ namespace MG
         {
             var o = Resources.Load("prefabs/line") as GameObject;
             CurrentOpLine = Instantiate(o);
+            CurrentOpLine.name = "Line" + LineCount++;
             CurrentLineRenderer = CurrentOpLine.GetComponent<LineRenderer>();
             CurrentLineRenderer.SetVertexCount(2);
 			CurrentLineRenderer.SetWidth(GameDefine.LineSize, GameDefine.LineSize);
@@ -91,9 +91,7 @@ namespace MG
                 return;
             }
 
-            float angle = GetAngle(StartPos, EndPos);
-            float theTa = Mathf.Round(angle / 45.0f) * (45.0f);
-            SetCollider(CurrentOpLine, StartPos, EndPos, Mathf.Abs(theTa));
+            SetCollider(CurrentOpLine, StartPos, EndPos);
 
             if (Line != null)
             {
@@ -110,9 +108,6 @@ namespace MG
                 Line = null;
             }
 
-            LastEndPos = StartPos;
-            LastStartPos = EndPos;
-
             Line = CurrentOpLine;
 
             var linec2d = Line.GetComponent<Collider2D>();
@@ -128,6 +123,7 @@ namespace MG
         {
             var o = Resources.Load("prefabs/ForbiddenZone") as GameObject;
             ForbiddenLine = Instantiate(o);
+            ForbiddenLine.name = "Forbidden" + LineCount;
 
             var renderer = ForbiddenLine.GetComponent<LineRenderer>();
 
@@ -170,15 +166,35 @@ namespace MG
 
             EndPos = mousePos;
 
-            SetCollider(CurrentOpLine, StartPos, mousePos, Math.Abs(theTa));
+            Vector3 dir = EndPos - StartPos;
+            float dist = Vector3.Distance(StartPos, EndPos);
+            dir.Normalize();
+            var hit = Physics2D.Raycast(StartPos, dir, dist * dist);
+            if (hit.collider != null)
+            {
+                Debug.Log(hit.transform.tag);
+                if (hit.transform.tag.Equals("ForbiddenZone") || hit.transform.tag.Equals("Player"))
+                {
+                    ValidLine = false;
+                }
+                else
+                {
+                    ValidLine = true;
+                }
+            }
+            else
+            {
+                ValidLine = true;
+            }
 
-            float lineLength = Vector3.Distance(StartPos, mousePos);
-            if (InForbiddenZone)
+            if (!ValidLine)
             {
                 CurrentLineRenderer.SetColors(Color.red, Color.red);
-                ValidLine = false;
+                return;
             }
-            else if (lineLength > GameDefine.LineMaxLimit || lineLength <= GameDefine.LineMinLimit)
+
+            float lineLength = Vector3.Distance(StartPos, mousePos);
+            if (lineLength > GameDefine.LineMaxLimit || lineLength <= GameDefine.LineMinLimit)
             {
                 CurrentLineRenderer.SetColors(Color.red, Color.red);
                 ValidLine = false;
@@ -210,20 +226,6 @@ namespace MG
 
             col.transform.Rotate(0, 0, theTa);
             col.offset = new Vector2(0, 0);
-        }
-        private void SetCollider(GameObject obj, Vector3 start, Vector3 end, float angle)
-        {
-            if (start == end || CurrentOpLine == null)
-                return;
-
-            BoxCollider2D col = obj.GetComponent<BoxCollider2D>();
-            float lineLength = Vector3.Distance(start, end); // length of line
-            Vector3 midPoint = (start + end) / 2;
-            col.transform.localPosition = midPoint;
-            col.size = new Vector2(lineLength, GameDefine.LineSize);
-            col.transform.eulerAngles = new Vector3(0, 0, angle);
-            
-            col.offset = Vector2.zero;
         }
 
         private Vector3 CalcLinePos(Vector3 A, Vector3 B, float len)
