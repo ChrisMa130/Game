@@ -108,7 +108,7 @@ namespace MG
 
         private bool CheckPause()
         {
-            if (!Input.GetKeyUp(KeyCode.F))
+            if (!Input.GetKeyDown(KeyCode.F))
                 return false;
 
             PauseTime = true;
