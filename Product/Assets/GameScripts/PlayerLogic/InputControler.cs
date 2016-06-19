@@ -20,6 +20,7 @@ namespace MG
         public bool Mouse1Down  { get; private set; }
         public bool Mouse1Up    { get; private set; }
         public bool Mouse1Move  { get; private set; }
+        public bool MouseInput  { get; private set; }
 
         public delegate bool InputChecker();
         private InputChecker[] CheckerList;
@@ -121,7 +122,7 @@ namespace MG
                 return false;
 
             Mouse1Down = true;
-            HasInput = true;
+            MouseInput = true;
             return true;
         }
 
@@ -131,7 +132,7 @@ namespace MG
                 return false;
 
             Mouse1Up = true;
-            HasInput = true;
+            MouseInput = true;
             return true;
         }
 
@@ -141,7 +142,7 @@ namespace MG
                 return false;
 
             Mouse1Move = true;
-            HasInput = true;
+            MouseInput = true;
             return true;
         }
 
@@ -157,6 +158,7 @@ namespace MG
             Mouse1Down  = false;
             Mouse1Up    = false;
             Mouse1Move  = false;
+            MouseInput  = false;
         }
     }
 }

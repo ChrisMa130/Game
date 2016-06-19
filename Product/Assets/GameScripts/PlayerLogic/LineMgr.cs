@@ -207,7 +207,7 @@ namespace MG
             {
                 theTa = 90;
             }
-                // Debug.LogFormat("{0}, {1}", col.transform.rotation, angle);
+
             col.transform.Rotate(0, 0, theTa);
             col.offset = new Vector2(0, 0);
         }
@@ -216,16 +216,14 @@ namespace MG
             if (start == end || CurrentOpLine == null)
                 return;
 
-            Debug.Log(angle);
             BoxCollider2D col = obj.GetComponent<BoxCollider2D>();
             float lineLength = Vector3.Distance(start, end); // length of line
             Vector3 midPoint = (start + end) / 2;
             col.transform.localPosition = midPoint;
             col.size = new Vector2(lineLength, GameDefine.LineSize);
             col.transform.eulerAngles = new Vector3(0, 0, angle);
-            // col.transform.Rotate(0, 0, angle);
             
-            col.offset = new Vector2(0, 0);
+            col.offset = Vector2.zero;
         }
 
         private Vector3 CalcLinePos(Vector3 A, Vector3 B, float len)
