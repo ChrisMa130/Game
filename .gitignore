@@ -47,6 +47,7 @@ Temporary Items
 .apdisk
 Product/Library/
 Product/Temp/UnityLockfile
+Product/test_build/
 Product/Temp/
 /Code/TimeSpace/Library
 Product/.vs/Product/v14/.suo
