@@ -125,6 +125,7 @@ namespace MG
             ForbiddenLine = Instantiate(o);
             ForbiddenLine.name = "Forbidden" + LineCount;
 
+            BoxCollider2D col = ForbiddenLine.GetComponent<BoxCollider2D>();
             var renderer = ForbiddenLine.GetComponent<LineRenderer>();
 
             renderer.SetVertexCount(2);
@@ -134,10 +135,11 @@ namespace MG
             var start = CalcLinePos(StartPos, EndPos, GameDefine.ForbiddenLineAddLen);
             var end = CalcLinePos(EndPos, StartPos, GameDefine.ForbiddenLineAddLen);
 
-            SetCollider(ForbiddenLine, start, end);
-
             renderer.SetPosition(0, start);
             renderer.SetPosition(1, end);
+
+            SetCollider(ForbiddenLine, start, end);
+            col.size = new Vector2(col.size.x, size);
         }
 
         void MovePos()
