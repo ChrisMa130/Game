@@ -43,6 +43,9 @@ namespace MG
 
         public override void ApplyInput(GameInput input)
         {
+            if (Owner.OnTheLine)
+                return;
+
             if (input.Left)
             {
                 Owner.TurnRound(Dir.Left);

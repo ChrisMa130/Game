@@ -85,7 +85,6 @@ namespace MG
             {
                 Rigidbody.velocity = new Vector2(Rigidbody.velocity.x, param * GameDefine.PlayerMaxSpeed);
             }
-            
         }
     }
 

@@ -19,11 +19,13 @@ namespace MG
         public bool CanDraw { get; set; }
 
         private int LineCount;
+        public int LineAngle;
 
         void Start()
         {
             CanDraw = true;
             LineCount = 1;
+            LineAngle = 0;
         }
 
         public void Activate(float deltaTime)
@@ -156,7 +158,8 @@ namespace MG
             float angle = GetAngle(StartPos, mousePos);
             var len = mousePos.x - StartPos.x;
             float theTa = Mathf.Round(angle/45.0f)*(45.0f);
-            if ((int) Mathf.Abs(theTa) == 90)
+            LineAngle = (int)Mathf.Abs(theTa);
+            if (LineAngle == 90)
             {
                 mousePos.x = StartPos.x;
             }

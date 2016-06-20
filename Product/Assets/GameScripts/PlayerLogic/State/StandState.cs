@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEditor;
 
 namespace MG
 {
@@ -40,10 +41,21 @@ namespace MG
             if (Owner == null || Owner.IsDead)
                 return;
 
-            if (input.Left || input.Right)
+            if (!Owner.OnTheLine)
             {
-                Owner.Run();
-                return;
+                if (input.Left || input.Right)
+                {
+                    Owner.Run();
+                    return;
+                }
+            }
+            else
+            {
+                if (!Owner.Grounded && (input.Left || input.Right))
+                {
+                    Owner.Run();
+                    return;
+                }
             }
 
             if (input.Up && Owner.OnTheClimbAera)

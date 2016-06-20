@@ -9,9 +9,10 @@ namespace MG
         private GameInput InputMgr;
         private Collect CollectItem;
         private Represent MyRepresent;
-        private PlayerState MyState;
+        public PlayerState MyState;
         private Transform GroundCheck;
         public bool Grounded { get; private set; }
+        public bool OnTheLine { get; set; }
         public bool OnTheClimbAera { get; set; }
         public GameObject LadderObj { get; set; }
 
@@ -32,7 +33,6 @@ namespace MG
 
             CollectItem = new Collect();
 
-            // MoveHelper.SetPlayer(this);
             MyState.Init(this);
             IsDead = false;
             OnTheClimbAera = false;
