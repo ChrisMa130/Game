@@ -169,10 +169,9 @@ namespace MG
             Vector3 dir = EndPos - StartPos;
             float dist = Vector3.Distance(StartPos, EndPos);
             dir.Normalize();
-            var hit = Physics2D.Raycast(StartPos, dir, dist * dist);
+            var hit = Physics2D.Raycast(StartPos, dir, dist);
             if (hit.collider != null)
             {
-                Debug.Log(hit.transform.tag);
                 if (hit.transform.tag.Equals("ForbiddenZone") || hit.transform.tag.Equals("Player"))
                 {
                     ValidLine = false;
