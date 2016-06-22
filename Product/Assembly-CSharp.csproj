@@ -91,6 +91,7 @@
      <Compile Include="Assets\GameScripts\ObjectLogic\Spike.cs" />
      <Compile Include="Assets\GameScripts\ObjectLogic\autodestory.cs" />
      <Compile Include="Assets\GameScripts\ObjectLogic\ladder.cs" />
+     <Compile Include="Assets\GameScripts\ObjectLogic\line.cs" />
      <Compile Include="Assets\GameScripts\ObjectLogic\outdoor.cs" />
      <Compile Include="Assets\GameScripts\ObjectLogic\pickup.cs" />
      <Compile Include="Assets\GameScripts\PlayerLogic\Collect.cs" />
