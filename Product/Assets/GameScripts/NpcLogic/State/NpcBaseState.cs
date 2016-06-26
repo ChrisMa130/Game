@@ -6,13 +6,13 @@ namespace MG
     public class NpcBaseState : MonoBehaviour
     {
         protected readonly Npc Owner;
-        // protected readonly Represent Animator;
-        // protected readonly Rigidbody2D Rigidbody;
+        protected readonly NpcRepresent Animator;
+        protected readonly Rigidbody2D Rigidbody;
         protected NpcBaseState(Npc npc)
         {
             Owner = npc;
-            //Animator = player.gameObject.GetComponent<Represent>();
-            // Rigidbody = player.gameObject.GetComponent<Rigidbody2D>();
+            Animator = Owner.gameObject.GetComponent<NpcRepresent>();
+            Rigidbody = Owner.gameObject.GetComponent<Rigidbody2D>();
         }
 
         public virtual void Enter() { }
