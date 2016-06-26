@@ -5,7 +5,7 @@ namespace MG
 {
     public class NpcWalkState : NpcBaseState
     {
-        private float moveParam = 1.0f;
+        private float moveParam = 0.5f;
 
         public NpcWalkState(Npc npc) : base(npc)
         {
@@ -42,9 +42,9 @@ namespace MG
         public override void ChangeDir(Dir dir)
         {
             if (dir == Dir.Left)
-                moveParam = Mathf.Abs(moveParam);
-            else
                 moveParam = -moveParam;
+            else
+                moveParam = Mathf.Abs(moveParam) ;
         }
     }
 }

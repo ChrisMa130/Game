@@ -37,7 +37,7 @@ namespace MG
         {
             Stand();
             GroundCheck = transform.Find("GroundCheck");
-            CurrentDir = Dir.Left;
+            CurrentDir = Dir.Right;
         }
 
         public void Activate(float deltaTime)
