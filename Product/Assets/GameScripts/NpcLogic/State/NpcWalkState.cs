@@ -5,7 +5,7 @@ namespace MG
 {
     public class NpcWalkState : NpcBaseState
     {
-        private float moveParam = 0.5f;
+        private float moveParam = 1f;
 
         public NpcWalkState(Npc npc) : base(npc)
         {
@@ -36,7 +36,7 @@ namespace MG
         private void Move()
         {
             Animator.Run(moveParam);
-            Rigidbody.velocity = new Vector2(moveParam * GameDefine.PlayerMaxSpeed, Rigidbody.velocity.y);
+            Rigidbody.velocity = new Vector2(moveParam, Rigidbody.velocity.y);
         }
 
         public override void ChangeDir(Dir dir)
@@ -44,7 +44,7 @@ namespace MG
             if (dir == Dir.Left)
                 moveParam = -moveParam;
             else
-                moveParam = Mathf.Abs(moveParam) ;
+                moveParam = Mathf.Abs(moveParam);
         }
     }
 }

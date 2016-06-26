@@ -14,7 +14,7 @@ namespace MG
         private Transform GroundCheck;
         public bool Grounded { get; private set; }
 
-        public Dir CurrentDir { get; private set; }
+        public Dir CurrentDir;
 
         public Vector3 Position
         {

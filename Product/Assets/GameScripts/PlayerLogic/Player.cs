@@ -51,6 +51,8 @@ namespace MG
         public void Activate(float deltaTime)
         {
             Grounded = Physics2D.Linecast(transform.position, GroundCheck.position, 1 << LayerMask.NameToLayer("Ground"));
+            if (!Grounded)
+                Grounded = Physics2D.Linecast(transform.position, GroundCheck.position, 1 << LayerMask.NameToLayer("Wall"));
 
             if (MyState != null)
                 MyState.Activate(deltaTime);
