@@ -3,7 +3,7 @@ using System.Collections;
 
 namespace MG
 {
-    public class NpcBaseState : MonoBehaviour
+    public class NpcBaseState
     {
         protected readonly Npc Owner;
         protected readonly NpcRepresent Animator;
@@ -19,6 +19,7 @@ namespace MG
         public virtual void Activate(float deltaTime) { }
         public virtual void Exit() { }
         public virtual bool CanChange(NpcStateType State) { return true; }
+        public virtual void ChangeDir(Dir dir) { }
     }
 }
 

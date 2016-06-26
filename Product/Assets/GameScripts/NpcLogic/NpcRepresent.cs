@@ -17,30 +17,30 @@ namespace MG
 
         public void Run(float moveParam)
         {
-            Anim.SetFloat("Speed", Mathf.Abs(moveParam));
+            //Anim.SetFloat("Speed", Mathf.Abs(moveParam));
         }
 
         public void Stand()
         {
-            Anim.SetBool("Ground", true);
+            //Anim.SetBool("Ground", true);
             // Anim.SetFloat("vSpeed", Rigidbody.velocity.y);
-            Anim.SetFloat("Speed", 0);
+            //Anim.SetFloat("Speed", 0);
         }
 
         public void Climb(float moveParam)
         {
-            Anim.SetFloat("Speed", Mathf.Abs(moveParam));
+            //Anim.SetFloat("Speed", Mathf.Abs(moveParam));
         }
 
         public void Dead()
         {
-            Anim.SetBool("Dead", true);
+            //Anim.SetBool("Dead", true);
             Rigidbody.isKinematic = true;
         }
 
         public void Jump()
         {
-            Anim.SetBool("Ground", false);
+            //Anim.SetBool("Ground", false);
         }
 
         public void TurnRound(Dir dir)

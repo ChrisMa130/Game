@@ -14,6 +14,8 @@ namespace MG
         private Transform GroundCheck;
         public bool Grounded { get; private set; }
 
+        public Dir CurrentDir { get; private set; }
+
         public Vector3 Position
         {
             get { return transform.position; }
@@ -35,6 +37,7 @@ namespace MG
         {
             Stand();
             GroundCheck = transform.Find("GroundCheck");
+            CurrentDir = Dir.Left;
         }
 
         public void Activate(float deltaTime)
@@ -66,9 +69,19 @@ namespace MG
             State.Jump();
         }
 
+        public void TurnRound()
+        {
+            if (CurrentDir == Dir.Left)
+                TurnRound(Dir.Right);
+            else
+                TurnRound(Dir.Left);
+        }
+
         public void TurnRound(Dir dir)
         {
             Represent.TurnRound(dir);
+            State.ChangeDir(dir);
+            CurrentDir = dir;
         }
     }
 }

@@ -39,9 +39,12 @@ namespace MG
             Rigidbody.velocity = new Vector2(moveParam * GameDefine.PlayerMaxSpeed, Rigidbody.velocity.y);
         }
 
-        public void ChangeDir(Dir dir)
+        public override void ChangeDir(Dir dir)
         {
-            Owner.TurnRound(dir);
+            if (dir == Dir.Left)
+                moveParam = Mathf.Abs(moveParam);
+            else
+                moveParam = -moveParam;
         }
     }
 }

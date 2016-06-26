@@ -19,7 +19,7 @@ namespace MG
                 new NpcStandState(Owner),
                 new NpcWalkState(Owner), 
                 new NpcJumpState(Owner), 
-                new NpcDeadState(Owner), 
+                new NpcDeadState(Owner) 
             };
 
             CurrentState = NpcStateType.Stand;
@@ -59,9 +59,6 @@ namespace MG
         public bool CanChangeState(NpcStateType type)
         {
             var state = States[(int)CurrentState];
-            if (state == null)
-                return false;
-
             return state.CanChange(type);
         }
 
@@ -75,7 +72,7 @@ namespace MG
             return true;
         }
 
-        public bool     Walk()
+        public bool Walk()
         {
             if (!CanChangeState(NpcStateType.Walk))
                 return false;
@@ -103,6 +100,11 @@ namespace MG
             NextState = NpcStateType.Dead;
 
             return true;
+        }
+
+        public void ChangeDir(Dir dir)
+        {
+            States[(int)CurrentState].ChangeDir(dir);
         }
     }
 }
