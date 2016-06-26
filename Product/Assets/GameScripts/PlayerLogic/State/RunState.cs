@@ -26,9 +26,9 @@ namespace MG
 
         public override void Exit() { }
 
-        public override bool CanChange(StateType nextState)
+        public override bool CanChange(PlayerStateType nextPlayerState)
         {
-            if (nextState == StateType.Stand || nextState == StateType.Jump || nextState == StateType.Climb)
+            if (nextPlayerState == PlayerStateType.Stand || nextPlayerState == PlayerStateType.Jump || nextPlayerState == PlayerStateType.Climb)
                 return true;
 
             return false;

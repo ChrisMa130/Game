@@ -5,7 +5,7 @@ using System.Collections;
 
 namespace MG
 {
-    public enum StateType
+    public enum PlayerStateType
     {
         Invalid = -1,
 
@@ -14,6 +14,16 @@ namespace MG
         Jump,
         Climb,
         Dead,
+    }
+
+    public enum NpcStateType
+    {
+        Invalid = -1,
+
+        Stand,
+        Walk,
+        Jump,
+        Dead
     }
 
     public enum Dir

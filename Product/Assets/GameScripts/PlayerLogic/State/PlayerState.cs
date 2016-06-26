@@ -7,8 +7,8 @@ namespace MG
     {
         public Player Owner { get; private set; }
         private BaseState[] States;
-        public StateType CurrentState { get; private set; }
-        public StateType NextState { get; private set; }
+        public PlayerStateType CurrentPlayerState { get; private set; }
+        public PlayerStateType NextPlayerState { get; private set; }
 
         public void Init(Player player)
         {
@@ -23,20 +23,20 @@ namespace MG
                 new DeadState(Owner), 
             };
 
-            CurrentState    = StateType.Stand;
-            NextState       = StateType.Invalid;
+            CurrentPlayerState    = PlayerStateType.Stand;
+            NextPlayerState       = PlayerStateType.Invalid;
         }
 
         public void Activate(float deltaTime)
         {
-            if (NextState != StateType.Invalid)
+            if (NextPlayerState != PlayerStateType.Invalid)
             {
                 ChangeState();
             }
 
-            if (CurrentState != StateType.Invalid)
+            if (CurrentPlayerState != PlayerStateType.Invalid)
             {
-                States[(int)CurrentState].Activate(deltaTime);
+                States[(int)CurrentPlayerState].Activate(deltaTime);
             }
         }
 
@@ -45,77 +45,77 @@ namespace MG
             if (Owner == null)
                 return;
 
-            if (CurrentState != StateType.Invalid)
+            if (CurrentPlayerState != PlayerStateType.Invalid)
             {
-                States[(int)CurrentState].Exit();
+                States[(int)CurrentPlayerState].Exit();
             }
 
-            CurrentState = NextState;
-            NextState = StateType.Invalid;
+            CurrentPlayerState = NextPlayerState;
+            NextPlayerState = PlayerStateType.Invalid;
 
-            var state = States[(int)CurrentState];
+            var state = States[(int)CurrentPlayerState];
             state.Enter();
         }
 
-        public bool CanChangeState(StateType type)
+        public bool CanChangeState(PlayerStateType type)
         {
-            var state = States[(int)CurrentState];
+            var state = States[(int)CurrentPlayerState];
             return state.CanChange(type);
         }
 
         public bool Stand()
         {
-            if (!CanChangeState(StateType.Stand))
+            if (!CanChangeState(PlayerStateType.Stand))
                 return false;
 
-            NextState = StateType.Stand;
+            NextPlayerState = PlayerStateType.Stand;
 
             return true;
         }
 
         public bool Run()
         {
-            if (!CanChangeState(StateType.Run))
+            if (!CanChangeState(PlayerStateType.Run))
                 return false;
 
-            NextState = StateType.Run;
+            NextPlayerState = PlayerStateType.Run;
 
             return true;
         }
 
         public bool Jump()
         {
-            if (!CanChangeState(StateType.Jump))
+            if (!CanChangeState(PlayerStateType.Jump))
                 return false;
 
-            NextState = StateType.Jump;
+            NextPlayerState = PlayerStateType.Jump;
 
             return true;
         }
 
         public bool Climb()
         {
-            if (!CanChangeState(StateType.Climb))
+            if (!CanChangeState(PlayerStateType.Climb))
                 return false;
 
-            NextState = StateType.Climb;
+            NextPlayerState = PlayerStateType.Climb;
 
             return true;
         }
 
         public bool Dead()
         {
-            if (!CanChangeState(StateType.Dead))
+            if (!CanChangeState(PlayerStateType.Dead))
                 return false;
 
-            NextState = StateType.Dead;
+            NextPlayerState = PlayerStateType.Dead;
 
             return true;
         }
 
         public void ApplyInput(GameInput input)
         {
-            var state = States[(int)CurrentState];
+            var state = States[(int)CurrentPlayerState];
             state.ApplyInput(input);
         }
     }

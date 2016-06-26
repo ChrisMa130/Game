@@ -28,7 +28,7 @@ namespace MG
         {
         }
 
-        public override bool CanChange(StateType nextState)
+        public override bool CanChange(PlayerStateType nextPlayerState)
         {
             if (Owner.IsDead)
                 return false;

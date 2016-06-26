@@ -18,9 +18,9 @@ namespace MG
 
         public override void Exit() { }
 
-        public override bool CanChange(StateType nextState)
+        public override bool CanChange(PlayerStateType nextPlayerState)
         {
-            if (nextState != StateType.Stand)
+            if (nextPlayerState != PlayerStateType.Stand)
                 return false;
 
             return true;

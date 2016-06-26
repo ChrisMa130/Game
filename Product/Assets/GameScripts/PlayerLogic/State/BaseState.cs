@@ -17,7 +17,7 @@ namespace MG
         public virtual void Enter() { }
         public virtual void Activate(float deltaTime) { }
         public virtual void Exit() { }
-        public virtual bool CanChange(StateType nextState) { return true; }
+        public virtual bool CanChange(PlayerStateType nextPlayerState) { return true; }
         public virtual void ApplyInput(GameInput input) { }
     }
 }

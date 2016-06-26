@@ -33,9 +33,9 @@ namespace MG
             Rigidbody.gravityScale = OldGravityScale;
         }
 
-        public override bool CanChange(StateType nextState)
+        public override bool CanChange(PlayerStateType nextPlayerState)
         {
-            if (nextState == StateType.Stand || nextState == StateType.Jump)
+            if (nextPlayerState == PlayerStateType.Stand || nextPlayerState == PlayerStateType.Jump)
                 return true;
 
             return false;
