@@ -75,7 +75,7 @@ namespace MG
             return true;
         }
 
-        public bool Walk()
+        public bool     Walk()
         {
             if (!CanChangeState(NpcStateType.Walk))
                 return false;
