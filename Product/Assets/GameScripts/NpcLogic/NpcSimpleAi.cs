@@ -7,13 +7,15 @@ namespace MG
     {
         private Npc NpcObject;
         private float CurrentNpcClimbHeight;
+        private Vector2 NpcC2DSize;
 
         void Start()
         {
             NpcObject = gameObject.GetComponent<Npc>();
 
             var c2d = NpcObject.GetComponent<BoxCollider2D>();
-            CurrentNpcClimbHeight = c2d.bounds.size.y/2 - GameDefine.StairsSlopeHeight;
+            NpcC2DSize = c2d.bounds.size;
+            CurrentNpcClimbHeight = c2d.size.y / 2 - GameDefine.StairsSlopeHeight;
         }
 
         void Update()
@@ -35,16 +37,18 @@ namespace MG
                 Debug.Log("玩家狗带了");
                 return;
             }
-            var myHeight = NpcObject.Position.y - CurrentNpcClimbHeight;
 
             var layer = obj.gameObject.layer;
             if (obj.transform.tag.Equals("ForbiddenZone") && layer == LayerMask.NameToLayer("Ground"))
             {
                 var c2d = obj.gameObject.GetComponent<BoxCollider2D>();
+                var myHeight = NpcObject.Position.y - CurrentNpcClimbHeight;
                 var targetHeight = obj.transform.position.y + c2d.bounds.size.y / 2;
-                if (myHeight > targetHeight)
+                float myBut = NpcObject.Position.y - NpcC2DSize.y / 2;
+                if (myBut < targetHeight && myHeight > targetHeight)
                 {
-                    NpcObject.transform.position = new Vector3(NpcObject.Position.x, NpcObject.Position.y + GameDefine.StairsSlopeHeight, NpcObject.Position.z);
+                    var h = targetHeight - myBut + 0.2f;
+                    NpcObject.transform.position = new Vector3(NpcObject.Position.x, NpcObject.Position.y + h, NpcObject.Position.z);
                 }
             }
 
