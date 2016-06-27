@@ -22,8 +22,6 @@ namespace MG
         {
             NpcObject.Activate(Time.deltaTime);
 
-            var pos = NpcObject.Position;
-
             if (NpcObject.CurrentStateType != NpcStateType.Walk)
                 NpcObject.Walk();
         }
