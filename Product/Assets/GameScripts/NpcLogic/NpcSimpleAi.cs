@@ -6,8 +6,9 @@ namespace MG
     public class NpcSimpleAi : MonoBehaviour
     {
         private Npc NpcObject;
-        private float CurrentNpcClimbHeight;
         private Vector2 NpcC2DSize;
+        private Vector2 NpcC2DOffset;
+        public bool FailDown = true;
 
         void Start()
         {
@@ -15,7 +16,7 @@ namespace MG
 
             var c2d = NpcObject.GetComponent<BoxCollider2D>();
             NpcC2DSize = c2d.bounds.size;
-            CurrentNpcClimbHeight = c2d.size.y / 2 - GameDefine.StairsSlopeHeight;
+            NpcC2DOffset = c2d.offset;
         }
 
         void Update()
@@ -24,6 +25,19 @@ namespace MG
 
             if (NpcObject.CurrentStateType != NpcStateType.Walk)
                 NpcObject.Walk();
+
+            if (CheckWall())
+            {
+                NpcObject.TurnRound();
+                return;
+            }
+
+
+            if (CheckFallDown())
+            {
+                NpcObject.TurnRound();
+                return;
+            }
         }
 
         void OnCollisionEnter2D(Collision2D obj)
@@ -40,7 +54,7 @@ namespace MG
             if (obj.transform.tag.Equals("ForbiddenZone") && layer == LayerMask.NameToLayer("Ground"))
             {
                 var c2d = obj.gameObject.GetComponent<BoxCollider2D>();
-                var myHeight = NpcObject.Position.y - CurrentNpcClimbHeight;
+                var myHeight = NpcObject.Position.y - NpcC2DSize.y / 2 + GameDefine.StairsSlopeHeight;
                 var targetHeight = obj.transform.position.y + c2d.bounds.size.y / 2;
                 float myBut = NpcObject.Position.y - NpcC2DSize.y / 2;
                 if (myBut < targetHeight && myHeight > targetHeight)
@@ -49,11 +63,33 @@ namespace MG
                     NpcObject.transform.position = new Vector3(NpcObject.Position.x, NpcObject.Position.y + h, NpcObject.Position.z);
                 }
             }
+        }
 
-            if (layer == LayerMask.NameToLayer("Wall"))
+        bool CheckWall()
+        {
+            var pos = new Vector3(NpcObject.Position.x, NpcObject.Position.y - NpcC2DSize.y / 2, NpcObject.Position.z);
+            float rayLen = NpcC2DSize.x / 2 + 0.01f;
+            RaycastHit2D hit;
+            if (NpcObject.CurrentDir == Dir.Left)
             {
-               NpcObject.TurnRound();
+                hit = Physics2D.Raycast(pos, Vector2.left, rayLen, 1 << LayerMask.NameToLayer("Wall"));
+                Debug.DrawRay(pos, Vector3.left, Color.blue);
             }
+            else
+            {
+                hit = Physics2D.Raycast(pos, Vector2.right, rayLen, 1 << LayerMask.NameToLayer("Wall"));
+                Debug.DrawRay(pos, Vector3.right, Color.blue);
+            }
+
+            if (hit.collider != null && hit.transform.gameObject.layer == LayerMask.NameToLayer("Wall"))
+                return true;
+
+            return false;
+        }
+
+        bool CheckFallDown()
+        {
+            return false;
         }
     }
 }
