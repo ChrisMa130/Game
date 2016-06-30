@@ -22,6 +22,8 @@ namespace MG
             set { transform.position = value; }
         }
 
+        public Vector3 GroundCheckPosition { get { return GroundCheck.position; } }
+
         public bool IsDead { get; private set; }
 
         void Awake()

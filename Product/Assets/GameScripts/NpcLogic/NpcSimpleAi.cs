@@ -7,7 +7,6 @@ namespace MG
     {
         private Npc NpcObject;
         private Vector2 NpcC2DSize;
-        private Vector2 NpcC2DOffset;
         public bool FailDown = true;
 
         void Start()
@@ -16,7 +15,6 @@ namespace MG
 
             var c2d = NpcObject.GetComponent<BoxCollider2D>();
             NpcC2DSize = c2d.bounds.size;
-            NpcC2DOffset = c2d.offset;
         }
 
         void Update()
@@ -33,7 +31,7 @@ namespace MG
             }
 
 
-            if (CheckFallDown())
+            if (FailDown && CheckFallDown())
             {
                 NpcObject.TurnRound();
                 return;
@@ -54,20 +52,20 @@ namespace MG
             if (obj.transform.tag.Equals("ForbiddenZone") && layer == LayerMask.NameToLayer("Ground"))
             {
                 var c2d = obj.gameObject.GetComponent<BoxCollider2D>();
-                var myHeight = NpcObject.Position.y - NpcC2DSize.y / 2 + GameDefine.StairsSlopeHeight;
+                var myHeight = NpcObject.GroundCheckPosition.y + GameDefine.StairsSlopeHeight;
                 var targetHeight = obj.transform.position.y + c2d.bounds.size.y / 2;
-                float myBut = NpcObject.Position.y - NpcC2DSize.y / 2;
+                float myBut = NpcObject.GroundCheckPosition.y;
                 if (myBut < targetHeight && myHeight > targetHeight)
                 {
-                    var h = targetHeight - myBut + 0.2f;
-                    NpcObject.transform.position = new Vector3(NpcObject.Position.x, NpcObject.Position.y + h, NpcObject.Position.z);
+                    var h = targetHeight - myBut;
+                    NpcObject.transform.position = new Vector3(NpcObject.Position.x, h, NpcObject.Position.z);
                 }
             }
         }
 
         bool CheckWall()
         {
-            var pos = new Vector3(NpcObject.Position.x, NpcObject.Position.y - NpcC2DSize.y / 2, NpcObject.Position.z);
+            var pos = new Vector3(NpcObject.GroundCheckPosition.x, NpcObject.GroundCheckPosition.y, NpcObject.Position.z);
             float rayLen = NpcC2DSize.x / 2 + 0.01f;
             RaycastHit2D hit;
             if (NpcObject.CurrentDir == Dir.Left)
@@ -89,6 +87,17 @@ namespace MG
 
         bool CheckFallDown()
         {
+            float xlen = NpcC2DSize.x/2;
+            if (NpcObject.CurrentDir == Dir.Left)
+                xlen = -Mathf.Abs(xlen);
+            else
+                xlen = Mathf.Abs(xlen);
+
+            Vector3 startPos = new Vector3(NpcObject.GroundCheckPosition.x + xlen, NpcObject.GroundCheckPosition.y, NpcObject.Position.z);
+            RaycastHit2D hit = Physics2D.Raycast(startPos, Vector2.down, 0.1f);
+            if (hit.collider == null)
+                return true;
+
             return false;
         }
     }
