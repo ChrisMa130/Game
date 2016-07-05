@@ -64,6 +64,10 @@ namespace MG
                 {
                     NpcObject.TurnRound();
                 }
+                else if (NpcObject.GroundCheckPosition.y < obj.contacts[0].point.y)
+                {
+                    NpcObject.TurnRound();
+                }
             }
         }
 
