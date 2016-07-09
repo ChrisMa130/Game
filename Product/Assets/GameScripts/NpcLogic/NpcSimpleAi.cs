@@ -8,6 +8,7 @@ namespace MG
         private Npc NpcObject;
         private Vector2 NpcC2DSize;
         public bool FailDown = true;
+        private GameObject LastCollObj;
 
         void Start()
         {
@@ -45,11 +46,17 @@ namespace MG
             {
                 // player.Dead();
                 Debug.Log("玩家狗带了");
+                NpcObject.Jump();
                 return;
             }
 
+            // 测试逻辑，还是先污染，在治理。
+            bool samePlane = LastCollObj != null && LastCollObj.GetInstanceID() == obj.gameObject.GetInstanceID();
+
+            LastCollObj = obj.gameObject;
+
             var layer = obj.gameObject.layer;
-            if (obj.transform.tag.Equals("ForbiddenZone") && layer == LayerMask.NameToLayer("Ground"))
+            if (!samePlane && obj.transform.tag.Equals("ForbiddenZone") && layer == LayerMask.NameToLayer("Ground"))
             {
                 var c2d = obj.gameObject.GetComponent<BoxCollider2D>();
                 var myHeight = NpcObject.GroundCheckPosition.y + GameDefine.StairsSlopeHeight;

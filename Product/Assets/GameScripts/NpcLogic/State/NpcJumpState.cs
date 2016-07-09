@@ -12,11 +12,15 @@ namespace MG
         public override void Enter()
         {
             base.Enter();
+            Rigidbody.AddForce(new Vector2(0f, GameDefine.JumpForce));
         }
 
         public override void Activate(float deltaTime)
         {
             base.Activate(deltaTime);
+
+            if (Owner.Grounded)
+                Owner.Walk();
         }
 
         public override void Exit()
