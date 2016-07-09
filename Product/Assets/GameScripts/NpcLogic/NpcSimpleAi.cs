@@ -46,7 +46,8 @@ namespace MG
             {
                 // player.Dead();
                 Debug.Log("玩家狗带了");
-                NpcObject.Jump();
+                if (!NpcObject.Grounded)
+                    NpcObject.Jump();
                 return;
             }
 
@@ -56,15 +57,16 @@ namespace MG
             LastCollObj = obj.gameObject;
 
             var layer = obj.gameObject.layer;
+            // 以下这个判断需要改变实现方法。太烂了。~~~
             if (!samePlane && obj.transform.tag.Equals("ForbiddenZone") && layer == LayerMask.NameToLayer("Ground"))
             {
                 var c2d = obj.gameObject.GetComponent<BoxCollider2D>();
                 var myHeight = NpcObject.GroundCheckPosition.y + GameDefine.StairsSlopeHeight;
-                var targetHeight = obj.transform.position.y + c2d.bounds.size.y / 2;
+                var targetHeight = obj.transform.position.y + 0.1f;
                 float myBut = NpcObject.GroundCheckPosition.y;
                 if (myBut < targetHeight && myHeight > targetHeight)
                 {
-                    var h = targetHeight - myBut;
+                    var h = targetHeight + (NpcObject.Position.y - NpcObject.GroundCheckPosition.y) + 0.1f;
                     NpcObject.transform.position = new Vector3(NpcObject.Position.x, h, NpcObject.Position.z);
                 }
                 else if (GameMgr.Instance.LineMgr.LineAngle != 45)
