@@ -69,7 +69,7 @@ namespace MG
                     var h = targetHeight + (NpcObject.Position.y - NpcObject.GroundCheckPosition.y) + 0.1f;
                     NpcObject.transform.position = new Vector3(NpcObject.Position.x, h, NpcObject.Position.z);
                 }
-                else if (GameMgr.Instance.LineMgr.LineAngle != 45)
+                else if (GameMgr.Instance.LineMgr.LineAngle != 45 && myBut < targetHeight)
                 {
                     NpcObject.TurnRound();
                 }
