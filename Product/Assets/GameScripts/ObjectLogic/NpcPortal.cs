@@ -6,8 +6,7 @@ namespace MG
     public class NpcPortal : MonoBehaviour
     {
         public int ReviveCount;             // 复活数量
-//        public GameObject NpcObject;        // NPC的预设对象
-//        public GameObject SwitchTigger;     // 对应的开关对象
+        public GameObject[] NpcObjects;        // NPC的预设对象
         public float ReviveTime;            // 复活时间间隔
         public Dir NpcDir;
         public bool FallDown;
@@ -16,6 +15,7 @@ namespace MG
 
         void Start()
         {
+            NpcObjects = new GameObject[ReviveCount];
             NextReviveTime = ReviveTime;
         }
 
@@ -28,10 +28,17 @@ namespace MG
                 return;
 
             NextReviveTime = ReviveTime;
-            ReviveNpc();
+
+            for (int i = 0; i < ReviveCount; i++)
+            {
+                if (NpcObjects[i] == null)
+                {
+                    NpcObjects[i] = ReviveNpc();
+                }
+            }
         }
 
-        void ReviveNpc()
+        GameObject ReviveNpc()
         {
             var o = Resources.Load("prefabs/Enemy") as GameObject;
             var enemy = Instantiate(o);
@@ -41,6 +48,19 @@ namespace MG
 
             var ai = enemy.gameObject.GetComponent<NpcSimpleAi>();
             ai.FailDown = FallDown;
+            return enemy;
+        }
+
+        public void DestoryAllNpc()
+        {
+            for (int i = 0; i < ReviveCount; i++)
+            {
+                if (NpcObjects[i] != null)
+                {
+                    GameObject.DestroyImmediate(NpcObjects[i]);
+                    NpcObjects[i] = null;
+                }
+            }
         }
     }
 }

@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using System.Collections;
 
 namespace MG
 {
@@ -14,6 +13,7 @@ namespace MG
         public override void Enter()
         {
             base.Enter();
+            ChangeDir(Owner.CurrentDir);
         }
 
         public override void Activate(float deltaTime)
@@ -42,7 +42,7 @@ namespace MG
         public override void ChangeDir(Dir dir)
         {
             if (dir == Dir.Left)
-                moveParam = -moveParam;
+                moveParam = -Mathf.Abs(moveParam);
             else
                 moveParam = Mathf.Abs(moveParam);
         }

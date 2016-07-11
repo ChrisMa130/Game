@@ -33,7 +33,7 @@ namespace MG
             }
 
 
-            if (FailDown && NpcObject.Grounded && CheckFallDown())
+            if (!FailDown && NpcObject.Grounded && CheckFallDown())
             {
                 NpcObject.TurnRound();
                 return;
