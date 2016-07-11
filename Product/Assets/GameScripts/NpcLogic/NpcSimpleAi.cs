@@ -27,12 +27,13 @@ namespace MG
 
             if (CheckWall())
             {
+                Debug.Log("没找到墙");
                 NpcObject.TurnRound();
                 return;
             }
 
 
-            if (FailDown && CheckFallDown())
+            if (FailDown && NpcObject.Grounded && CheckFallDown())
             {
                 NpcObject.TurnRound();
                 return;
@@ -74,7 +75,7 @@ namespace MG
                     NpcObject.TurnRound();
                 }
                 else if (NpcObject.GroundCheckPosition.y < obj.contacts[0].point.y)
-                {
+                { 
                     NpcObject.TurnRound();
                 }
             }
