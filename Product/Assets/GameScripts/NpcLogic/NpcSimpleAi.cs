@@ -70,12 +70,14 @@ namespace MG
                     var h = targetHeight + (NpcObject.Position.y - NpcObject.GroundCheckPosition.y) + 0.1f;
                     NpcObject.transform.position = new Vector3(NpcObject.Position.x, h, NpcObject.Position.z);
                 }
-                else if (GameMgr.Instance.LineMgr.LineAngle != 45 && myBut < targetHeight)
+                else if (GameMgr.Instance.LineMgr.LineAngle != 45 && myBut < targetHeight - 0.1f)
                 {
+                    Debug.Log("直线线段上转身。");
                     NpcObject.TurnRound();
                 }
-                else if (NpcObject.GroundCheckPosition.y < obj.contacts[0].point.y)
+                else if (GameMgr.Instance.LineMgr.LineAngle == 45 && NpcObject.GroundCheckPosition.y < obj.contacts[0].point.y)
                 { 
+                    Debug.Log("其他转身");
                     NpcObject.TurnRound();
                 }
             }
@@ -115,6 +117,9 @@ namespace MG
             RaycastHit2D hit = Physics2D.Raycast(startPos, Vector2.down, 0.1f);
             if (hit.collider == null)
                 return true;
+
+            // 对不可划线领域的一个判断
+            // hit.collider.tag.Equals("ForbiddenZone")
 
             return false;
         }
