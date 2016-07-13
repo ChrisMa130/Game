@@ -8,7 +8,7 @@ namespace MG
     {
         public GameObject PlayerObject;
         private Player PlayerLogic;
-        private GameInput InputMgr;
+        public GameInput InputMgr;
         public LineMgr LineMgr;
         private bool IsPause;
 

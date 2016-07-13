@@ -18,8 +18,19 @@ namespace MG
             for (int i = 0; i < len; i++)
             {
                 var portal = Portals[i].GetComponent<NpcPortal>();
-                portal.DestoryAllNpc();
+                if (portal != null)
+                    portal.DestoryAllNpc();
             }
+        }
+
+        void OnTriggerStay2D(Collider2D obj)
+        {
+            var player = obj.gameObject.GetComponent<Player>();
+            if (player == null)
+                return;
+
+            if (GameMgr.Instance.InputMgr.Up)
+                OnSwitch();
         }
     }
 }

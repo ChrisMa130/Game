@@ -57,7 +57,7 @@ namespace MG
             {
                 if (NpcObjects[i] != null)
                 {
-                    GameObject.DestroyImmediate(NpcObjects[i]);
+                    Destroy(NpcObjects[i]);
                     NpcObjects[i] = null;
                 }
             }
