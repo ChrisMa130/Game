@@ -61,7 +61,6 @@ namespace MG
             // 以下这个判断需要改变实现方法。太烂了。~~~
             if (!samePlane && obj.transform.tag.Equals("ForbiddenZone") && layer == LayerMask.NameToLayer("Ground"))
             {
-                var c2d = obj.gameObject.GetComponent<BoxCollider2D>();
                 var myHeight = NpcObject.GroundCheckPosition.y + GameDefine.StairsSlopeHeight;
                 var targetHeight = obj.transform.position.y + 0.1f;
                 float myBut = NpcObject.GroundCheckPosition.y;
@@ -119,7 +118,13 @@ namespace MG
                 return true;
 
             // 对不可划线领域的一个判断
-            // hit.collider.tag.Equals("ForbiddenZone")
+            if (hit.collider.tag.Equals("ForbiddenZone"))
+            {
+                startPos.x = startPos.x + GameDefine.ForbiddenLineAddWidth;
+                hit = Physics2D.Raycast(startPos, Vector2.down, 0.1f);
+                if (hit.collider == null)
+                    return true;
+            }
 
             return false;
         }
