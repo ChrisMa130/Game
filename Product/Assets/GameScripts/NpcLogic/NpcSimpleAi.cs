@@ -74,7 +74,7 @@ namespace MG
                     Debug.Log("直线线段上转身。");
                     NpcObject.TurnRound();
                 }
-                else if (GameMgr.Instance.LineMgr.LineAngle == 45 && NpcObject.GroundCheckPosition.y < obj.contacts[0].point.y)
+                else if (GameMgr.Instance.LineMgr.LineAngle == 45 && NpcObject.GroundCheckPosition.y + 0.1f < obj.contacts[0].point.y)
                 { 
                     Debug.Log("其他转身");
                     NpcObject.TurnRound();
