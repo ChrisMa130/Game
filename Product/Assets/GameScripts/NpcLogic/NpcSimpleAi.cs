@@ -52,7 +52,13 @@ namespace MG
                 return;
             }
 
-            // 测试逻辑，还是先污染，在治理。
+            var npc = obj.gameObject.GetComponent<Npc>();
+            if (npc != null && !NpcObject.Grounded)
+            {
+                NpcObject.Jump();
+            }
+
+        // 测试逻辑，还是先污染，在治理。
             bool samePlane = LastCollObj != null && LastCollObj.GetInstanceID() == obj.gameObject.GetInstanceID();
 
             LastCollObj = obj.gameObject;
