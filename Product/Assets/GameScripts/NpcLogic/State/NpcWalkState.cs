@@ -4,10 +4,11 @@ namespace MG
 {
     public class NpcWalkState : NpcBaseState
     {
-        private float moveParam = 1f;
+        private float moveParam;
 
         public NpcWalkState(Npc npc) : base(npc)
         {
+            moveParam = GameDefine.NpcMoveSpeed;
         }
 
         public override void Enter()

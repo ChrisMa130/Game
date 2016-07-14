@@ -12,7 +12,7 @@ namespace MG
         public override void Enter()
         {
             base.Enter();
-            Rigidbody.AddForce(new Vector2(0f, GameDefine.JumpForce));
+            Rigidbody.AddForce(new Vector2(Owner.CurrentDir == Dir.Right ? GameDefine.NpcJumpPower : -GameDefine.NpcJumpPower, GameDefine.JumpForce));
         }
 
         public override void Activate(float deltaTime)
