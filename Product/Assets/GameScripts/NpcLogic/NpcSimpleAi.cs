@@ -84,7 +84,7 @@ namespace MG
 
         bool CheckWall()
         {
-            var pos = new Vector3(NpcObject.GroundCheckPosition.x, NpcObject.GroundCheckPosition.y, NpcObject.Position.z);
+            var pos = new Vector3(NpcObject.GroundCheckPosition.x, NpcObject.GroundCheckPosition.y + 0.03f, NpcObject.Position.z);
             float rayLen = NpcC2DSize.x / 2 + 0.01f;
             RaycastHit2D hit;
             if (NpcObject.CurrentDir == Dir.Left)
