@@ -48,6 +48,8 @@ namespace MG
         public static readonly float ForbiddenLineAddWidth = 0.4f;
 		public static readonly float StairsSlopeHeight = 0f;
 
+        public static readonly float NpcMoveSpeed = 1.0f;
+
         public static T AddMissingComponent<T>(this GameObject go) where T : Component
         {
             T comp = go.GetComponent<T>();
