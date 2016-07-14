@@ -54,6 +54,11 @@ namespace MG
 
             Owner.transform.localScale = theScale;
         }
+
+        public void IsKinematic(bool isKinematic)
+        {
+            Rigidbody.isKinematic = isKinematic;
+        }
     }
 }
 

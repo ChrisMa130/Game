@@ -88,6 +88,11 @@ namespace MG
             State.ChangeDir(dir);
             CurrentDir = dir;
         }
+
+        public void IsKinematic(bool isKinematic)
+        {
+            Represent.IsKinematic(isKinematic);
+        }
     }
 }
 

@@ -134,5 +134,17 @@ namespace MG
 
             return false;
         }
+
+        void OnCollisionStay2D(Collision2D obj)
+        {
+            var npc = obj.gameObject.GetComponent<Npc>();
+            if (npc == null)
+            {
+                NpcObject.IsKinematic(false);
+                return;
+            }
+
+            NpcObject.IsKinematic(true);
+        }
     }
 }
