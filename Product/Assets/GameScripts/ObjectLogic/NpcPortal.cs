@@ -34,6 +34,7 @@ namespace MG
                 if (NpcObjects[i] == null)
                 {
                     NpcObjects[i] = ReviveNpc();
+                    break;
                 }
             }
         }
