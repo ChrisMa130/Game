@@ -30,6 +30,8 @@ namespace MG
     {
         Left,
         Right,
+        Up,
+        Down
     }
 
     public static class GameDefine
