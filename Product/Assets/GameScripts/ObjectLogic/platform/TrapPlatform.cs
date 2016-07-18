@@ -24,10 +24,18 @@ namespace MG
             if (!CheckObj(obj.gameObject))
                 return;
 
+            Flip();
             foreach (var p in Platforms.Where(p => p != null))
             {
-                    p.TurnOn(obj.gameObject);
+                p.TurnOn(obj.gameObject);
             }
+        }
+
+        private void Flip()
+        {
+            Vector3 theScale = transform.localScale;
+            theScale.x *= -1;
+            transform.localScale = theScale;
         }
     }
 
