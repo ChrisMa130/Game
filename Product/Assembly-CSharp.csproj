@@ -105,10 +105,13 @@
      <Compile Include="Assets\GameScripts\ObjectLogic\npcswitcher.cs" />
      <Compile Include="Assets\GameScripts\ObjectLogic\outdoor.cs" />
      <Compile Include="Assets\GameScripts\ObjectLogic\pickup.cs" />
+     <Compile Include="Assets\GameScripts\ObjectLogic\platform\MovePlatform.cs" />
+     <Compile Include="Assets\GameScripts\ObjectLogic\platform\PlatformBase.cs" />
+     <Compile Include="Assets\GameScripts\ObjectLogic\platform\TrapPlatform.cs" />
      <Compile Include="Assets\GameScripts\PlayerLogic\Collect.cs" />
      <Compile Include="Assets\GameScripts\PlayerLogic\GameDefine.cs" />
+     <Compile Include="Assets\GameScripts\PlayerLogic\GameInput.cs" />
      <Compile Include="Assets\GameScripts\PlayerLogic\GameMgr.cs" />
-     <Compile Include="Assets\GameScripts\PlayerLogic\InputControler.cs" />
      <Compile Include="Assets\GameScripts\PlayerLogic\LineMgr.cs" />
      <Compile Include="Assets\GameScripts\PlayerLogic\ObjectMove.cs" />
      <Compile Include="Assets\GameScripts\PlayerLogic\Player.cs" />

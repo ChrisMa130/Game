@@ -18,8 +18,9 @@ namespace MG
             for (int i = 0; i < len; i++)
             {
                 var portal = Portals[i].GetComponent<NpcPortal>();
-                if (portal != null)
-                    portal.DestoryAllNpc();
+				if (portal != null) {
+					portal.DestoryAllNpc ();
+				}
             }
         }
 
@@ -29,8 +30,10 @@ namespace MG
             if (player == null)
                 return;
 
-            if (GameMgr.Instance.InputMgr.Up)
-                OnSwitch();
+			if (GameMgr.Instance.InputMgr.Up) {
+				OnSwitch ();
+				GetComponent<SpriteRenderer> ().flipX = !GetComponent<SpriteRenderer> ().flipX;
+			}
         }
     }
 }
