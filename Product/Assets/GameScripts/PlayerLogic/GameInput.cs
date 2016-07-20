@@ -13,6 +13,7 @@ namespace MG
         public bool Right       { get; private set; }
         public bool Left        { get; private set; }
         public bool Up          { get; private set; }
+        public bool UpUp        { get; private set; }
         public bool Down        { get; private set; }
         public bool PauseTime   { get; private set; }
         public bool Jump        { get; private set; }
@@ -37,7 +38,8 @@ namespace MG
                 CheckPause,
                 CheckMouse1Down,
                 CheckMouse1Up,
-                CheckMouse1Move
+                CheckMouse1Move,
+                CheckUpUp
             };
         }
 
@@ -146,6 +148,16 @@ namespace MG
             return true;
         }
 
+        private bool CheckUpUp()
+        {
+            if (!Input.GetKeyUp(KeyCode.W))
+                return false;
+
+            UpUp = true;
+            HasInput = true;
+            return true;
+        }
+
         private void Reset()
         {
             Right       = false;
@@ -159,6 +171,7 @@ namespace MG
             Mouse1Up    = false;
             Mouse1Move  = false;
             MouseInput  = false;
+            UpUp        = false;
         }
     }
 }

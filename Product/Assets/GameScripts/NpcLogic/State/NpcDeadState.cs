@@ -11,6 +11,8 @@ namespace MG
         public override void Enter()
         {
             base.Enter();
+            Debug.Log("小兵delad");
+            GameObject.Destroy(Owner.gameObject);
         }
 
         public override void Activate(float deltaTime)

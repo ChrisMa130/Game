@@ -53,10 +53,14 @@ namespace MG
             }
 
             var npc = obj.gameObject.GetComponent<Npc>();
-            if (npc != null && !NpcObject.Grounded)
+            if (npc != null)
             {
-                NpcObject.Jump();
+                if (!NpcObject.Grounded)
+                    NpcObject.Jump();
+                else
+                    NpcObject.TurnRound();
             }
+
 
         // 测试逻辑，还是先污染，在治理。
             bool samePlane = LastCollObj != null && LastCollObj.GetInstanceID() == obj.gameObject.GetInstanceID();
@@ -135,16 +139,13 @@ namespace MG
             return false;
         }
 
-        void OnCollisionStay2D(Collision2D obj)
-        {
-            var npc = obj.gameObject.GetComponent<Npc>();
-            if (npc == null)
-            {
-                NpcObject.IsKinematic(false);
-                return;
-            }
-
-            NpcObject.IsKinematic(true);
-        }
+//        void OnCollisionStay2D(Collision2D obj)
+//        {
+//            var npc = obj.gameObject.GetComponent<Npc>();
+//            if (npc == null)
+//                return;
+//
+//            NpcObject.TurnRound();
+//        }
     }
 }

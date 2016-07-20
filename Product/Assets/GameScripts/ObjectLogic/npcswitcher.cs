@@ -30,7 +30,7 @@ namespace MG
             if (player == null)
                 return;
 
-			if (GameMgr.Instance.InputMgr.Up) {
+			if (GameMgr.Instance.InputMgr.UpUp) {
 				OnSwitch ();
 				GetComponent<SpriteRenderer> ().flipX = !GetComponent<SpriteRenderer> ().flipX;
 			}
