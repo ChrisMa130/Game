@@ -5,6 +5,18 @@ namespace MG
 {
     public class ladder : MonoBehaviour
     {
+        public Vector3 MidPosition
+        {
+            get { return Mid.transform.position; }
+        }
+
+        private GameObject Mid;
+
+        void Start()
+        {
+            Mid = transform.Find("Mid").gameObject;
+        }
+
         void OnTriggerEnter2D(Collider2D other)
         {
             if (other.gameObject.layer == LayerMask.NameToLayer("Player"))

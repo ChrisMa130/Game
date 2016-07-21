@@ -20,11 +20,9 @@ namespace MG
             Move(0);
 
             c2d = Owner.LadderObj.GetComponent<Collider2D>();
-//            var sss = c2d.bounds.size.x/2;
-//            if (Owner.LadderObj.transform.position.x > Owner.Position.x)
-//                Owner.transform.position = new Vector3(Owner.Position.x + sss, Owner.Position.y);
-//            else
-//                Owner.transform.position = new Vector3(Owner.Position.x - sss, Owner.Position.y);
+            ladder ld = Owner.LadderObj.GetComponent<ladder>();
+
+            Owner.transform.position = new Vector3(ld.MidPosition.x, Owner.Position.y);
         }
 
         public override void Activate(float deltaTime)
