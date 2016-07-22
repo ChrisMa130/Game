@@ -54,7 +54,7 @@ namespace MG
         public static readonly float NpcMoveSpeed = 1.0f;
         public static readonly float NpcJumpForce = 600.0f;
 
-        public static readonly float MovePlatformSpeed = 1.0f;
+        public static readonly float MovePlatformSpeed = 0.03f;
 
         // 大炮相关
         public static readonly float CannonBulletSpeed = 4.0f;
