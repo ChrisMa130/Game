@@ -37,6 +37,9 @@ namespace MG
                 DestoryCount = 0;
             }
 
+            if (col.gameObject.tag == "CannonBullet")
+                DestoryCount = 0;
+
             if (DestoryCount <= 0)
                 GameObject.DestroyObject(gameObject);
         }
