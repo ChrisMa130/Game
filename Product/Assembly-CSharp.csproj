@@ -100,6 +100,8 @@
      <Compile Include="Assets\GameScripts\ObjectLogic\SingletonMonoBehaviour.cs" />
      <Compile Include="Assets\GameScripts\ObjectLogic\Spike.cs" />
      <Compile Include="Assets\GameScripts\ObjectLogic\autodestory.cs" />
+     <Compile Include="Assets\GameScripts\ObjectLogic\cannon.cs" />
+     <Compile Include="Assets\GameScripts\ObjectLogic\cannonbullet.cs" />
      <Compile Include="Assets\GameScripts\ObjectLogic\ladder.cs" />
      <Compile Include="Assets\GameScripts\ObjectLogic\line.cs" />
      <Compile Include="Assets\GameScripts\ObjectLogic\npcswitcher.cs" />

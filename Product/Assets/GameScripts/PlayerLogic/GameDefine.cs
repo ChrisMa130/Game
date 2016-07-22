@@ -57,7 +57,7 @@ namespace MG
         public static readonly float MovePlatformSpeed = 1.0f;
 
         // 大炮相关
-        public static readonly float CannonBulletSpeed = 5.0f;
+        public static readonly float CannonBulletSpeed = 2.0f;
         public static readonly float CannonBulletCreateInterval = 2.0f;
         public static readonly int CannonBulletDestoryCount = 2;
 
