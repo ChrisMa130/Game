@@ -59,7 +59,10 @@ namespace MG
                 return;
             }
 
-            if (!input.HasInput && Owner.Grounded)
+            if (input.Left || input.Right)
+                return;
+
+            if ((!input.HasInput || input.Up) && Owner.Grounded)
             {
                 Owner.Stand();
             }
