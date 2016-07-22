@@ -7,8 +7,8 @@ namespace MG
     {
         public Rigidbody2D Bullet;
 
-        public int XAxis;
-        public int YAxis;
+		public float XAxis;
+		public float YAxis;
 
         private float NextCreateBulletTime;
 
