@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using System.Collections;
 
 namespace MG
@@ -11,6 +12,7 @@ namespace MG
         private float Speed;
 
         private bool BeMove;
+        public GameObject[] Partner;
 
         void Start()
         {
@@ -59,23 +61,37 @@ namespace MG
             switch (MoveDir)
             {
                 case Dir.Left:
-                    transform.Translate(Vector2.left * Speed);
+                    Move(Vector2.left * Speed);
                     break;
                 case Dir.Right:
-                    transform.Translate(Vector2.right * Speed);
+                    Move(Vector2.right * Speed);
                     break;
                 case Dir.Up:
-                    transform.Translate(Vector2.up * Speed);
+                    Move(Vector2.up * Speed);
                     break;
                 case Dir.Down:
-                    transform.Translate(Vector2.down * Speed);
+                    Move(Vector2.down * Speed);
                     break;
+            }
+        }
+
+        void Move(Vector2 pos)
+        {
+            if (Partner == null)
+                return;
+
+            for (int i = 0; i < Partner.Length; i++)
+            {
+                var o = Partner[i];
+                if (o)
+                {
+                    o.transform.Translate(pos);
+                }
             }
         }
 
         void OnCollisionEnter2D(Collision2D obj)
         {
-            Debug.Log("adfasdfasdf");
             if (obj.gameObject.tag == "Building")
             {
                 BeMove = false;
@@ -85,6 +101,18 @@ namespace MG
                 BeMove = false;
             }
         }
+
+//        void OnTriggerStay2D(Collider2D obj)
+//        {
+//            var platform = obj.gameObject.GetComponent<npcswitcher>();
+//            if (platform != null)
+//            {
+//                Switcher = obj.gameObject;
+//                return;
+//            }
+//
+//            Switcher = null;
+//        }
     }
 }
 
