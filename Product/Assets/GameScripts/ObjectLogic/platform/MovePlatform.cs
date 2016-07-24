@@ -11,6 +11,7 @@ namespace MG
         private float Speed;
 
         private bool BeMove;
+        private GameObject Switcher;
 
         void Start()
         {
@@ -60,22 +61,29 @@ namespace MG
             {
                 case Dir.Left:
                     transform.Translate(Vector2.left * Speed);
+                    if (Switcher != null)
+                        Switcher.transform.Translate(Vector2.left * Speed);
                     break;
                 case Dir.Right:
                     transform.Translate(Vector2.right * Speed);
+                    if (Switcher != null)
+                        Switcher.transform.Translate(Vector2.right * Speed);
                     break;
                 case Dir.Up:
                     transform.Translate(Vector2.up * Speed);
+                    if (Switcher != null)
+                        Switcher.transform.Translate(Vector2.up * Speed);
                     break;
                 case Dir.Down:
                     transform.Translate(Vector2.down * Speed);
+                    if (Switcher != null)
+                        Switcher.transform.Translate(Vector2.down * Speed);
                     break;
             }
         }
 
         void OnCollisionEnter2D(Collision2D obj)
         {
-            Debug.Log("adfasdfasdf");
             if (obj.gameObject.tag == "Building")
             {
                 BeMove = false;
@@ -84,6 +92,18 @@ namespace MG
             {
                 BeMove = false;
             }
+        }
+
+        void OnTriggerStay2D(Collider2D obj)
+        {
+            var platform = obj.gameObject.GetComponent<npcswitcher>();
+            if (platform != null)
+            {
+                Switcher = obj.gameObject;
+                return;
+            }
+
+            Switcher = null;
         }
     }
 }
