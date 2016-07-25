@@ -55,8 +55,8 @@ namespace MG
 
         void Update()
         {
-            if (!BeMove)
-                return;
+//            if (!BeMove)
+//                return;
 
             switch (MoveDir)
             {
@@ -90,17 +90,17 @@ namespace MG
             }
         }
 
-        void OnCollisionEnter2D(Collision2D obj)
-        {
-            if (obj.gameObject.tag == "Building")
-            {
-                BeMove = false;
-            }
-            else if (obj.gameObject.tag == "ForbiddenZone" && obj.gameObject.layer == LayerMask.NameToLayer("Ground"))
-            {
-                BeMove = false;
-            }
-        }
+//        void OnCollisionEnter2D(Collision2D obj)
+//        {
+//            if (obj.gameObject.tag == "Building")
+//            {
+//                BeMove = false;
+//            }
+//            else if (obj.gameObject.tag == "ForbiddenZone" && obj.gameObject.layer == LayerMask.NameToLayer("Ground"))
+//            {
+//                BeMove = false;
+//            }
+//        }
 
 //        void OnTriggerStay2D(Collider2D obj)
 //        {
