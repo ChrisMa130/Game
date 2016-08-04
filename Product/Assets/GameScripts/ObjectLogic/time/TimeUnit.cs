@@ -238,7 +238,7 @@ namespace MG
                             RtData[i].AnimPoint = RtData[i + 1].AnimPoint;
                         }
                     }
-
+                     
                     SetAllState();
 
                     yield return new WaitForSeconds(Accuracy);
