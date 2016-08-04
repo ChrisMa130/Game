@@ -44,6 +44,14 @@ namespace MG
                 PlayerLogic.ApplyInput(InputMgr);
             }
 
+            if (InputMgr.Timeback)
+            {
+                if (TimeController.Instance.TimebackStart)
+                    TimeController.Instance.StopTimeback();
+                else if (!TimeController.Instance.TimebackStart)
+                    TimeController.Instance.StartTimeback();
+            }
+
             LineMgr.ApplyInput(InputMgr);
         }
 

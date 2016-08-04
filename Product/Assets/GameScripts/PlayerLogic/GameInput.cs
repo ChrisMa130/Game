@@ -22,6 +22,7 @@ namespace MG
         public bool Mouse1Up    { get; private set; }
         public bool Mouse1Move  { get; private set; }
         public bool MouseInput  { get; private set; }
+        public bool Timeback    { get; private set; }
 
         public delegate bool InputChecker();
         private InputChecker[] CheckerList;
@@ -39,7 +40,8 @@ namespace MG
                 CheckMouse1Down,
                 CheckMouse1Up,
                 CheckMouse1Move,
-                CheckUpUp
+                CheckUpUp,
+                CheckTimeback
             };
         }
 
@@ -158,6 +160,16 @@ namespace MG
             return true;
         }
 
+        private bool CheckTimeback()
+        {
+            if (!Input.GetKey(KeyCode.Q))
+                return false;
+
+            Timeback = true;
+            HasInput = true;
+            return true;
+        }
+
         private void Reset()
         {
             Right       = false;
@@ -172,6 +184,7 @@ namespace MG
             Mouse1Move  = false;
             MouseInput  = false;
             UpUp        = false;
+            Timeback    = false;
         }
     }
 }
