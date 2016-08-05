@@ -110,6 +110,9 @@
      <Compile Include="Assets\GameScripts\ObjectLogic\platform\MovePlatform.cs" />
      <Compile Include="Assets\GameScripts\ObjectLogic\platform\PlatformBase.cs" />
      <Compile Include="Assets\GameScripts\ObjectLogic\platform\TrapPlatform.cs" />
+     <Compile Include="Assets\GameScripts\ObjectLogic\time\TimeController.cs" />
+     <Compile Include="Assets\GameScripts\ObjectLogic\time\TimeData.cs" />
+     <Compile Include="Assets\GameScripts\ObjectLogic\time\TimeUnit.cs" />
      <Compile Include="Assets\GameScripts\PlayerLogic\Collect.cs" />
      <Compile Include="Assets\GameScripts\PlayerLogic\GameDefine.cs" />
      <Compile Include="Assets\GameScripts\PlayerLogic\GameInput.cs" />
