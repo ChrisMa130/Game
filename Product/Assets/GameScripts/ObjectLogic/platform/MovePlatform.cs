@@ -58,6 +58,9 @@ namespace MG
             if (!BeMove)
                 return;
 
+            if (!TimeController.Instance.TimebackStart)
+                return;
+
             switch (MoveDir)
             {
                 case Dir.Left:

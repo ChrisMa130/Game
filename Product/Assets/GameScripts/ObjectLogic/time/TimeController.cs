@@ -173,7 +173,7 @@ namespace MG
                 {
                     for (int j = 0; j < TheUnits.Count; j++)
                     {
-                        var unit = TheUnits[i];
+                        var unit = TheUnits[j];
                         if (unit != null)
                         {
                             unit.SetCheck(RecordPoint);
