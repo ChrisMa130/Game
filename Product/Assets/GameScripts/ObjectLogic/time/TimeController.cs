@@ -18,6 +18,7 @@ namespace MG
         private float TimeAccuracy;
         private int RecordPoint;
         private float LastRecordPoint;
+        private float LastRecordTime;
 
         public enum AccuracyType        // 记录精度
         {
@@ -74,11 +75,13 @@ namespace MG
             {
                 if (TheUnits[i] != null)
                 {
+                    TheUnits[i].RestoreAllState(RecordPoint);
                     TheUnits[i].StartRewind();
+                    TheUnits[i].SetActive();
                 }
             }
-
-            StartCoroutine(SetCheck());
+            
+            StopCoroutine("SetCheck");
             TimebackStart = true;
         }
 
@@ -87,13 +90,15 @@ namespace MG
             for (int i = 0; i < TheUnits.Count; i++)
             {
                 if (TheUnits[i] != null)
-                    TheUnits[i].RestoreAllState(RecordPoint);
+                {
+                    TheUnits[i].SetAllState();
+                }
             }
 
             LastRecordPoint = (TimebackDuration * Accuracy) - 1;
-            StopCoroutine(SetCheck());
+            StartCoroutine("SetCheck");
             RecordPoint = (TimebackDuration * Accuracy) - 1;
-
+            LastRecordTime = Time.time;
             TimebackStart = false;
         }
 
@@ -118,7 +123,6 @@ namespace MG
             TheUnits.Add(unit);
         }
 
-
         public void FreezeAll()
         {
             for (int i = 0; i < TheUnits.Count; i++)
@@ -126,7 +130,7 @@ namespace MG
                 var unit = TheUnits[i];
                 if (unit != null)
                 {
-                    unit.SetAllState();
+                    //unit.SetAllState();
                     unit.Freeze();
                 }
             }
@@ -153,7 +157,7 @@ namespace MG
             if (TimebackStart)
                 return;
 
-            var time = (Time.time - LastRecordPoint)*(Accuracy*TimeBackSpeed);
+            var time = (Time.time - LastRecordTime)*(Accuracy*TimeBackSpeed);
             for (int i = 0; i < TheUnits.Count; i++)
             {
                 var unit = TheUnits[i];
@@ -168,7 +172,7 @@ namespace MG
         {
             for (int i = 0; i < TimebackDuration * Accuracy; i++)
             {
-                yield return new WaitForSeconds(Accuracy / TimeBackSpeed);
+                yield return new WaitForSeconds(TimeAccuracy / TimeBackSpeed);
                 if (RecordPoint > 1)
                 {
                     for (int j = 0; j < TheUnits.Count; j++)
@@ -180,6 +184,7 @@ namespace MG
                         }
                     }
 
+                    LastRecordTime = Time.time;
                     RecordPoint--;
                 }
                 if (RecordPoint <= 1 || RecordPoint < LastRecordPoint + 2)

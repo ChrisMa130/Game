@@ -33,7 +33,7 @@ namespace MG
         {
             AnimNames = new List<string>();
 
-            int RtDataLen = 90 * 2;
+            int RtDataLen = Controller.TimebackDuration * Controller.Accuracy;
             RtData = new TimeData[RtDataLen];
             for (int i = 0; i < RtDataLen; i++)
             {
