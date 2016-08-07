@@ -1,0 +1,76 @@
+
+nvzhujue.png
+size: 512,256
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+houfa
+  rotate: false
+  xy: 2, 53
+  size: 226, 201
+  orig: 226, 201
+  offset: 0, 0
+  index: -1
+lian
+  rotate: false
+  xy: 374, 80
+  size: 71, 84
+  orig: 71, 84
+  offset: 0, 0
+  index: -1
+pijian1
+  rotate: false
+  xy: 451, 193
+  size: 39, 61
+  orig: 39, 61
+  offset: 0, 0
+  index: -1
+pijian2
+  rotate: false
+  xy: 374, 2
+  size: 76, 76
+  orig: 76, 76
+  offset: 0, 0
+  index: -1
+qianfa
+  rotate: false
+  xy: 374, 166
+  size: 75, 88
+  orig: 75, 88
+  offset: 0, 0
+  index: -1
+shou1
+  rotate: true
+  xy: 82, 8
+  size: 17, 66
+  orig: 17, 66
+  offset: 0, 0
+  index: -1
+shou2
+  rotate: true
+  xy: 88, 27
+  size: 24, 65
+  orig: 24, 65
+  offset: 0, 0
+  index: -1
+tui1
+  rotate: true
+  xy: 2, 4
+  size: 21, 78
+  orig: 21, 78
+  offset: 0, 0
+  index: -1
+tui2
+  rotate: true
+  xy: 2, 27
+  size: 24, 84
+  orig: 24, 84
+  offset: 0, 0
+  index: -1
+yi
+  rotate: false
+  xy: 230, 69
+  size: 142, 185
+  orig: 142, 185
+  offset: 0, 0
+  index: -1

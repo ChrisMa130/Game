@@ -112,6 +112,7 @@
      <None Include="Assets\Resources\Spine\Examples\Spine\Raggedy Spineboy\Raggedy Spineboy.atlas.txt" />
      <None Include="Assets\GameScripts\Camera\Code\Helpers\TransitionFX\Resources\PC2D_Wipe.shader" />
      <None Include="Assets\Resources\Spine\spine-unity\Shaders\Bones.shader" />
+     <None Include="Assets\Animations\Protagonist_source_files\Source_Animations\nvzhujue.atlas.txt" />
      <None Include="Assets\Resources\Spine\spine-unity\Modules\Ghost\Shaders\SkeletonGhost.shader" />
      <None Include="Assets\GameScripts\Camera\Code\Helpers\TransitionFX\Resources\PC2D_Blinds.shader" />
      <None Include="Assets\GameScripts\Camera\Code\Helpers\Letterbox\Resources\Letterbox.shader" />
