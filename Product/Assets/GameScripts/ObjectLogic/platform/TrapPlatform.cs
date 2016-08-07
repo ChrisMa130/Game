@@ -7,6 +7,12 @@ namespace MG
     public class TrapPlatform : MonoBehaviour
     {
         public PlatformBase[] Platforms;
+        private bool HasPlayer;
+
+        void Start()
+        {
+            HasPlayer = false;
+        }
 
         bool CheckObj(GameObject obj)
         {
@@ -24,11 +30,27 @@ namespace MG
             if (!CheckObj(obj.gameObject))
                 return;
 
+            var player = obj.GetComponent<Player>();
+            if (player != null)
+            {
+                if (HasPlayer)
+                    return;
+                else
+                    HasPlayer = true;
+            }
+            
             Flip();
             foreach (var p in Platforms.Where(p => p != null))
             {
                 p.TurnOn(obj.gameObject);
             }
+        }
+
+        void OnTriggerExit2D(Collider2D obj)
+        {
+            var player = obj.GetComponent<Player>();
+            if (player != null)
+                HasPlayer = false;
         }
 
         private void Flip()
