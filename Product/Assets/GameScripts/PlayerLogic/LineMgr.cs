@@ -223,10 +223,11 @@ namespace MG
             
             float angle = GetAngle(start, end);
             float theTa = Mathf.Round(angle / 45.0f) * (45.0f);
-            if ((int) Mathf.Abs(theTa) == 90)
-            {
+            int nTa = (int) Mathf.Abs(theTa);
+            if (nTa == 90)
                 theTa = 90;
-            }
+            else if (nTa == 45)
+                theTa = 40;
 
             col.transform.Rotate(0, 0, theTa);
             col.offset = new Vector2(0, 0);
