@@ -1,6 +1,7 @@
 ﻿using System;
 using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 namespace MG
 {
@@ -12,13 +13,15 @@ namespace MG
         private float Speed;
 
         private bool BeMove;
-        public GameObject[] Partner;
+        public List<GameObject> Partner;
+        public bool PlayerStay;
 
         void Start()
         {
             Rigidbody = gameObject.GetComponent<Rigidbody2D>();
             Speed = Mathf.Abs(GameDefine.MovePlatformSpeed);
             BeMove = true;
+            PlayerStay = false;
         }
 
         public override void TurnOn(GameObject obj)
@@ -58,8 +61,8 @@ namespace MG
             if (!BeMove)
                 return;
 
-            if (!TimeController.Instance.TimebackStart)
-                return;
+//            if (!TimeController.Instance.TimebackStart)
+//                return;
 
             switch (MoveDir)
             {
@@ -83,13 +86,18 @@ namespace MG
             if (Partner == null)
                 return;
 
-            for (int i = 0; i < Partner.Length; i++)
+            for (int i = 0; i < Partner.Count; i++)
             {
                 var o = Partner[i];
                 if (o)
                 {
                     o.transform.Translate(pos);
                 }
+            }
+
+            if (PlayerStay && GameMgr.Instance.PlayerLogic.MyState.CurrentPlayerState == PlayerStateType.Stand)
+            {
+                GameMgr.Instance.PlayerObject.transform.Translate(pos);
             }
         }
 
@@ -103,19 +111,28 @@ namespace MG
             {
                 BeMove = false;
             }
+
+            if (obj.gameObject.tag == "Player")
+                PlayerStay = true;
         }
 
-//        void OnTriggerStay2D(Collider2D obj)
-//        {
-//            var platform = obj.gameObject.GetComponent<npcswitcher>();
-//            if (platform != null)
-//            {
-//                Switcher = obj.gameObject;
-//                return;
-//            }
-//
-//            Switcher = null;
-//        }
+        void OnCollisionExit2D(Collision2D obj)
+        {
+            if (obj.gameObject.tag == "Player")
+                PlayerStay = false;
+        }
+
+        //        void OnTriggerStay2D(Collider2D obj)
+        //        {
+        //            var platform = obj.gameObject.GetComponent<npcswitcher>();
+        //            if (platform != null)
+        //            {
+        //                Switcher = obj.gameObject;
+        //                return;
+        //            }
+        //
+        //            Switcher = null;
+        //        }
     }
 }
 

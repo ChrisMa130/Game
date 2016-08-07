@@ -7,7 +7,7 @@ namespace MG
     public class GameMgr : SingletonMonoBehaviour<GameMgr>
     {
         public GameObject PlayerObject;
-        private Player PlayerLogic;
+        public Player PlayerLogic;
         public GameInput InputMgr;
         public LineMgr LineMgr;
         private bool IsPause;
