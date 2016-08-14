@@ -19,6 +19,9 @@ namespace MG
 
         void Update()
         {
+//            if (!TimeController.Instance.TimebackStart)
+//                return;
+
             NextCreateBulletTime -= Time.deltaTime;
             if (Bullet == null || NextCreateBulletTime > 0)
                 return;

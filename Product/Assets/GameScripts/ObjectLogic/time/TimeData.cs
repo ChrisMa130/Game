@@ -2,22 +2,25 @@
 
 namespace MG
 {
+    public enum UnitState
+    {
+        Create,
+        Running,
+        Destory,
+        Deaded,
+    }
+
     public class TimeData
     {
+        // 位置信息
         public Vector3 Position;
-        public Quaternion Rotation;
-        public Vector3 Scale;
-        public Vector3 RigVelocity;
-        public Vector3 RigAngVelocity;
-        public float RigMagnitue;
+        public Vector3 Direction;
 
-        public string AnimPoint;
-        public enum AnimPlayType
-        {
-            Play,
-            CrossFade
-        }
-        public AnimPlayType AnimationPlayType;
-        public bool Instantiated; // 是否被实例化
+        // 创建和销毁
+        public UnitState State;
+
+        // TODO 物理信息
+        // TODO 动画信息
+
     }
 }

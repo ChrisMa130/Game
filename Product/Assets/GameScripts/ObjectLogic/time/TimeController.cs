@@ -7,214 +7,27 @@ namespace MG
 {
     public class TimeController : SingletonMonoBehaviour<TimeController>
     {
-        public int TimebackDuration = 90;
-        public int Accuracy = 2;
-        public float ObjectDestroyFlag = 1;
-        public float TimeBackSpeed = 1;
-        public List<TimeUnit> TheUnits;
-        public bool TimebackStart = true;
-        public bool DestroyCreatedObj;
+        /// <summary>
+        /// 所有时间单位存储在这里，无论是否已经销毁
+        /// </summary>
+        private List<TimeUnit> Units = new List<TimeUnit>();
 
-        private float TimeAccuracy;
-        private int RecordPoint;
-        private float LastRecordPoint;
-        private float LastRecordTime;
+        public float TimeSpeed = 0.05f;
 
-        public enum AccuracyType        // 记录精度
+        private bool DoAction;
+
+        public void AddUnit(TimeUnit unit)
         {
-            High,
-            Mid,
-            Low
-        }
-
-        public AccuracyType RecordAccuracy = AccuracyType.Mid;
-
-        void Awake()
-        {
-            if (!object.ReferenceEquals(Instance, null))
-            {
-                GameObject.Destroy(Instance);
-            }
-            Instance = this;
-
-            ObjectDestroyFlag = 1;
-            DestroyCreatedObj = true;
-
-            TheUnits = new List<TimeUnit>();
-
-            switch (RecordAccuracy)
-            {
-                case AccuracyType.High:
-                    TimeAccuracy = 0.1f;
-                    Accuracy = 10;
-                    break;
-                case AccuracyType.Mid:
-                    TimeAccuracy = 0.5f;
-                    Accuracy = 2;
-                    break;
-                case AccuracyType.Low:
-                    TimeAccuracy = 1f;
-                    Accuracy = 1;
-                    break;
-                default:
-                    throw new ArgumentOutOfRangeException();
-            }
-
-            RecordPoint = (TimebackDuration * Accuracy) - 1;
-            LastRecordPoint = RecordPoint;
-        }
-
-        void Start()
-        {
-            StartCoroutine(DecRecordPoint());
-        }
-
-        public void StartTimeback()
-        {
-            for (int i = 0; i < TheUnits.Count; i++)
-            {
-                if (TheUnits[i] != null)
-                {
-                    TheUnits[i].RestoreAllState(RecordPoint);
-                    TheUnits[i].StartRewind();
-                    TheUnits[i].SetActive();
-                }
-            }
-            
-            StopCoroutine("SetCheck");
-            TimebackStart = true;
-        }
-
-        public void StopTimeback()
-        {
-            for (int i = 0; i < TheUnits.Count; i++)
-            {
-                if (TheUnits[i] != null)
-                {
-                    TheUnits[i].SetAllState();
-                }
-            }
-
-            LastRecordPoint = (TimebackDuration * Accuracy) - 1;
-            StartCoroutine("SetCheck");
-            RecordPoint = (TimebackDuration * Accuracy) - 1;
-            LastRecordTime = Time.time;
-            TimebackStart = false;
+            Units.Add(unit);
         }
 
         void Update()
         {
-            if (DestroyCreatedObj)
-            {
-                if (ObjectDestroyFlag >= 0)
-                    ObjectDestroyFlag -= Time.deltaTime;
-            }
-
-            // 暂停开关
-
-//            if (Input.GetKeyDown(KeyCode.Y))
-//                StopRecord();
-//            if (Input.GetKeyDown(KeyCode.U))
-//                StartRecord();
-        }
-
-        public void AddUnit(TimeUnit unit)
-        {
-            TheUnits.Add(unit);
-        }
-
-        public void FreezeAll()
-        {
-            for (int i = 0; i < TheUnits.Count; i++)
-            {
-                var unit = TheUnits[i];
-                if (unit != null)
-                {
-                    //unit.SetAllState();
-                    unit.Freeze();
-                }
-            }
-
-            TimebackStart = true;
-        }
-
-        public void UnfreezeAll()
-        {
-            for (int i = 0; i < TheUnits.Count; i++)
-            {
-                var unit = TheUnits[i];
-                if (unit != null)
-                {
-                    unit.RestoreAllState(RecordPoint);
-                }
-            }
-
-            TimebackStart = false;
-        }
-
-        void FixedUpdate()
-        {
-            if (TimebackStart)
+            TimeSpeed -= Time.deltaTime;
+            if (TimeSpeed > 0)
                 return;
-
-            var time = (Time.time - LastRecordTime)*(Accuracy*TimeBackSpeed);
-            for (int i = 0; i < TheUnits.Count; i++)
-            {
-                var unit = TheUnits[i];
-                if (unit != null)
-                {
-                    unit.Timeback(RecordPoint, time);
-                }
-            }
         }
 
-        IEnumerator SetCheck()
-        {
-            for (int i = 0; i < TimebackDuration * Accuracy; i++)
-            {
-                yield return new WaitForSeconds(TimeAccuracy / TimeBackSpeed);
-                if (RecordPoint > 1)
-                {
-                    for (int j = 0; j < TheUnits.Count; j++)
-                    {
-                        var unit = TheUnits[j];
-                        if (unit != null)
-                        {
-                            unit.SetCheck(RecordPoint);
-                        }
-                    }
-
-                    LastRecordTime = Time.time;
-                    RecordPoint--;
-                }
-                if (RecordPoint <= 1 || RecordPoint < LastRecordPoint + 2)
-                {
-                    for (int j = 0; j < TheUnits.Count; j++)
-                    {
-                        if (TheUnits[j] == null) continue;
-                            TheUnits[j].StopAllAnim();
-                    }
-                }
-            }
-
-        }
-
-        IEnumerator DecRecordPoint()
-        {
-            while (true)
-            {
-                if (!TimebackStart)
-                {
-                    LastRecordPoint--;
-
-                    yield return new WaitForSeconds(Accuracy);
-                }
-                else
-                {
-                    yield return new WaitForSeconds(0.0001f);
-                }
-            }
-        }
     }
 }
 

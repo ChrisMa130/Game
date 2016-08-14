@@ -4,7 +4,7 @@ using System.Collections;
 // 角色逻辑
 namespace MG
 {
-    public class Player : MonoBehaviour
+    public class Player : TimeUnit
     {
         private GameInput InputMgr;
         private Collect CollectItem;

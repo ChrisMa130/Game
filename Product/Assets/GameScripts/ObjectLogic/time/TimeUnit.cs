@@ -1,254 +1,401 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using System.Reflection;
 
 namespace MG
 {
+    public enum TimeUnitState
+    {
+        Recording,  // 正在记录
+        Rewinding,  // 正在倒退
+        Forward,    // 正在前进
+        Freeze,     // 啥不干
+        Destory     // 啥也干不了。。。
+    }
+
+    // 记录每帧的各种数据，回退，暂停记录和前进时间。
     public class TimeUnit : MonoBehaviour
     {
-        public TimeData[] RtData;
-        public TimeController Controller;
+        private readonly Stack<TimeData> FrameTimeData = new Stack<TimeData>();
+        private readonly Stack<TimeData> ForwardTimeData = new Stack<TimeData>();
 
-        private float Accuracy;
-
-        private List<string> AnimNames;
-        private float[] AnimSpeed;
-        private Rigidbody MyRigidbody;
-        private Animation MyAnimation;
+        public TimeUnitState CurrentState { get; private set; }
 
         void Start()
         {
-            MyRigidbody = gameObject.GetComponent<Rigidbody>();
-            MyAnimation = gameObject.GetComponent<Animation>();
+            FrameTimeData.Clear();
+            ForwardTimeData.Clear();
 
-            Controller = TimeController.Instance;
-            Controller.AddUnit(this);
+            CurrentState = TimeUnitState.Recording;
 
-            Init();
+            // 压入第一帧
+            TimeData fristShot = Snapshot(null);
+            fristShot.State = UnitState.Create;
+            FrameTimeData.Push(fristShot);
 
-            StartCoroutine(SaveState());
+            TimeController.Instance.AddUnit(this);
         }
 
-        public void Init()
+        // 记录当前帧
+        public void Record()
         {
-            AnimNames = new List<string>();
+            CurrentState = TimeUnitState.Recording;
 
-            int RtDataLen = Controller.TimebackDuration * Controller.Accuracy;
-            RtData = new TimeData[RtDataLen];
-            for (int i = 0; i < RtDataLen; i++)
+            var prevShot = FrameTimeData.Peek();
+            var oneShot = Snapshot(prevShot);
+            FrameTimeData.Push(oneShot);
+        }
+
+        // 时间倒退
+        public void Rewind()
+        {
+            CurrentState = TimeUnitState.Freeze;
+
+            if (FrameTimeData.Count == 0)
+                return;
+
+            var data = FrameTimeData.Pop();
+            ForwardTimeData.Push(data);
+
+            // 销毁和创建处理
+            switch (data.State)
             {
-                RtData[i] = new TimeData();
-            }
-
-            if (Controller.ObjectDestroyFlag <= 0)
-                RtData[RtDataLen - 1].Instantiated = true;
-
-            switch (Controller.RecordAccuracy)
-            {
-                case TimeController.AccuracyType.High:
-                    Accuracy = 0.1f;
+                case UnitState.Deaded:
+                    return;
+                case UnitState.Create:
+                    DestoryMe();
                     break;
-                case TimeController.AccuracyType.Mid:
-                    Accuracy = 0.5f;
-                    break;
-                case TimeController.AccuracyType.Low:
-                    Accuracy = 1f;
+                case UnitState.Destory:
+                    gameObject.SetActive(true);
                     break;
             }
 
-            if (MyAnimation != null)
-            {
-                foreach (AnimationState state in MyAnimation)
-                {
-                    AnimNames.Add(state.name);
-                }
+            transform.position = transform.position - data.Direction;
 
-                AnimSpeed = new float[AnimNames.Count];
-                for (int i = 0; i < AnimSpeed.Length; i++)
-                {
-                    AnimSpeed[i] = MyAnimation[AnimNames[i]].speed;
-                }
-            }
-
-            SetActive();
+            // TODO 设置物理属性
+            
         }
 
-        public void SetActive()
+        // 前进
+        public void Forward()
         {
-            for (int i = 0; i < RtData.Length; i++)
+            CurrentState = TimeUnitState.Forward;
+
+            if (ForwardTimeData.Count == 0)
             {
-                RtData[i].Position = gameObject.transform.position;
-                RtData[i].Rotation = gameObject.transform.rotation;
-                RtData[i].Scale = gameObject.transform.localScale;
+                return;
             }
 
-            if (MyRigidbody != null)
+            // 轨迹设置
+            var data = ForwardTimeData.Pop();
+            FrameTimeData.Push(data);
+
+            switch (data.State)
             {
-                for (int i = 0; i < RtData.Length; i++)
-                {
-                    RtData[i].RigAngVelocity = MyRigidbody.angularVelocity;
-                    RtData[i].RigVelocity = MyRigidbody.velocity;
-                    RtData[i].RigMagnitue = MyRigidbody.velocity.magnitude;
-                }
+                case UnitState.Deaded:
+                    return;
+                case UnitState.Destory:
+                    DestoryMe();
+                    break;
+                case UnitState.Create:
+                    gameObject.SetActive(true);
+                    break;
             }
-        }
 
-        public void StartRewind()
-        {
-            SetAllState();
+            transform.position = transform.position + data.Direction;
 
-            if (MyRigidbody != null)
-                MyRigidbody.isKinematic = true;
-
-            if (MyAnimation != null)
-            {
-                for (int i = 0; i < AnimSpeed.Length; i++)
-                {
-                    var name = AnimNames[i];
-                    MyAnimation[name].speed = -AnimSpeed[i] * Controller.TimeBackSpeed;
-                }
-            }
-        }
-
-        public void SetAllState()
-        {
-            int slot = RtData.Length - 1;
-            RtData[slot].Position = gameObject.transform.position;
-            RtData[slot].Rotation = gameObject.transform.rotation;
-            RtData[slot].Scale = gameObject.transform.localScale;
-
-            if (MyRigidbody != null)
-            {
-                RtData[slot].RigAngVelocity = MyRigidbody.angularVelocity;
-                RtData[slot].RigVelocity = MyRigidbody.velocity;
-                RtData[slot].RigMagnitue = MyRigidbody.velocity.magnitude;
-            }
+            // TODO 物理属性
         }
 
         public void Freeze()
         {
-            if (MyRigidbody != null)
-            {
-                MyRigidbody.isKinematic = true;
-            }
-
-            if (MyAnimation != null)
-            {
-                foreach (AnimationState state in MyAnimation)
-                {
-                    state.speed = 0;
-                }
-            }
+            CurrentState = TimeUnitState.Freeze;
         }
 
-        public void StopAllAnim()
+        public void DestoryMe()
         {
-            string name;
-            if (MyAnimation != null)
-            {
-                for (int i = 0; i < AnimSpeed.Length; i++)
-                {
-                    name = AnimNames[i];
-                    MyAnimation[name].speed = 0;
-                }
-            }
+            CurrentState = TimeUnitState.Destory;
+
+            gameObject.SetActive(false);
         }
 
-        public void RestoreAllState(int recordPoint)
+        public bool IsDead()
         {
-            if (MyRigidbody != null)
-            {
-                MyRigidbody.isKinematic = false;
-                MyRigidbody.velocity = RtData[recordPoint].RigVelocity;
-                MyRigidbody.angularVelocity = RtData[recordPoint].RigAngVelocity;
-            }
-
-            string name;
-            if (MyAnimation != null)
-            {
-                for (int i = 0; i < AnimSpeed.Length; i++)
-                {
-                    name = AnimNames[i];
-                    MyAnimation[name].speed = AnimSpeed[i];
-                }
-            }
+            return gameObject.activeInHierarchy;
         }
 
-        public void Timeback(int point, float time)
+        private TimeData Snapshot(TimeData PrevData)
         {
-            // 差值计算，平滑回滚
-            gameObject.transform.position = Vector3.Lerp(RtData[point].Position, RtData[point - 1].Position, time);
-            gameObject.transform.rotation = Quaternion.Lerp(RtData[point].Rotation, RtData[point - 1].Rotation, time);
-            gameObject.transform.localScale = Vector3.Lerp(RtData[point].Scale, RtData[point - 1].Scale, time);
+            TimeData data = new TimeData();
 
-            if (RtData[point].Instantiated)
-                Destroy(gameObject);
-        }
-
-        public void SetCheck(int point)
-        {
-            var slot = RtData[point];
-
-            if (MyAnimation != null && slot.AnimPoint != "")
+            if (PrevData != null)
             {
-                if (slot.AnimationPlayType == TimeData.AnimPlayType.Play)
-                {
-                    MyAnimation[slot.AnimPoint].time = MyAnimation[slot.AnimPoint].length;
-                    MyAnimation.Play(slot.AnimPoint);
-                }
-                else if (slot.AnimationPlayType == TimeData.AnimPlayType.CrossFade)
-                {
-                    MyAnimation[slot.AnimPoint].time = MyAnimation[slot.AnimPoint].length;
-                    MyAnimation.CrossFade(slot.AnimPoint);
-                }
+                if (PrevData.State == UnitState.Destory)
+                    data.State = UnitState.Deaded;
+
+                return data;
             }
+
+            data.State = UnitState.Running;
+
+            // 记录移动方向和距离
+            var pos = transform.position;
+            var prevPos = PrevData != null ? PrevData.Position : transform.position;
+            var dist = Vector3.Distance(pos, prevPos);//B - A
+            var dir = (pos - prevPos).normalized;
+
+            data.Direction = dist*dir;
+
+            return data;
         }
 
-        IEnumerator SaveState()
-        {
-            while (true)
-            {
-                if (Controller.TimebackStart)
-                {
-                    for (int i = 0; i < RtData.Length - 1; i++)
-                    {
-                        RtData[i].Position = RtData[i + 1].Position;
-                        RtData[i].Rotation = RtData[i + 1].Rotation;
-                        RtData[i].Scale = RtData[i + 1].Scale;
 
-                        RtData[i].Instantiated = RtData[i + 1].Instantiated;
-                        RtData[i + 1].Instantiated = false;
 
-                    }
 
-                    if (MyRigidbody != null)
-                    {
-                        for (int i = 0; i < RtData.Length - 1; i++)
-                        {
-                            RtData[i].RigVelocity = RtData[i + 1].RigVelocity;
-                            RtData[i].RigMagnitue = RtData[i + 1].RigMagnitue;
-                            RtData[i].RigAngVelocity = RtData[i + 1].RigAngVelocity;
-                        }
-                    }
-
-                    if (MyAnimation != null)
-                    {
-                        for (int i = 0; i < RtData.Length - 1; i++)
-                        {
-                            RtData[i].AnimPoint = RtData[i + 1].AnimPoint;
-                        }
-                    }
-                     
-                    SetAllState();
-
-                    yield return new WaitForSeconds(Accuracy);
-                }
-                else
-                {
-                    yield return new WaitForSeconds(0.0001f);
-                }
-            }
-        }
+//        public TimeData[] RtData;
+//        public TimeController Controller;
+//
+//        private float Accuracy;
+//
+//        private List<string> AnimNames;
+//        private float[] AnimSpeed;
+//        private Rigidbody MyRigidbody;
+//        private Animation MyAnimation;
+//
+//        void Start()
+//        {
+//            MyRigidbody = gameObject.GetComponent<Rigidbody>();
+//            MyAnimation = gameObject.GetComponent<Animation>();
+//
+//            Controller = TimeController.Instance;
+//            Controller.AddUnit(this);
+//
+//            Init();
+//
+//            StartCoroutine(SaveState());
+//        }
+//
+//        public void Init()
+//        {
+//            AnimNames = new List<string>();
+//
+//            int RtDataLen = Controller.TimebackDuration * Controller.Accuracy;
+//            RtData = new TimeData[RtDataLen];
+//            for (int i = 0; i < RtDataLen; i++)
+//            {
+//                RtData[i] = new TimeData();
+//            }
+//
+//            if (Controller.ObjectDestroyFlag <= 0)
+//                RtData[RtDataLen - 1].Instantiated = true;
+//
+//            switch (Controller.RecordAccuracy)
+//            {
+//                case TimeController.AccuracyType.High:
+//                    Accuracy = 0.1f;
+//                    break;
+//                case TimeController.AccuracyType.Mid:
+//                    Accuracy = 0.5f;
+//                    break;
+//                case TimeController.AccuracyType.Low:
+//                    Accuracy = 1f;
+//                    break;
+//            }
+//
+//            if (MyAnimation != null)
+//            {
+//                foreach (AnimationState state in MyAnimation)
+//                {
+//                    AnimNames.Add(state.name);
+//                }
+//
+//                AnimSpeed = new float[AnimNames.Count];
+//                for (int i = 0; i < AnimSpeed.Length; i++)
+//                {
+//                    AnimSpeed[i] = MyAnimation[AnimNames[i]].speed;
+//                }
+//            }
+//
+//            SetActive();
+//        }
+//
+//        public void SetActive()
+//        {
+//            for (int i = 0; i < RtData.Length; i++)
+//            {
+//                RtData[i].Position = gameObject.transform.position;
+//                RtData[i].Rotation = gameObject.transform.rotation;
+//                RtData[i].Scale = gameObject.transform.localScale;
+//            }
+//
+//            if (MyRigidbody != null)
+//            {
+//                for (int i = 0; i < RtData.Length; i++)
+//                {
+//                    RtData[i].RigAngVelocity = MyRigidbody.angularVelocity;
+//                    RtData[i].RigVelocity = MyRigidbody.velocity;
+//                    RtData[i].RigMagnitue = MyRigidbody.velocity.magnitude;
+//                }
+//            }
+//        }
+//
+//        public void StartRewind()
+//        {
+//            SetAllState();
+//
+//            if (MyRigidbody != null)
+//                MyRigidbody.isKinematic = true;
+//
+//            if (MyAnimation != null)
+//            {
+//                for (int i = 0; i < AnimSpeed.Length; i++)
+//                {
+//                    var name = AnimNames[i];
+//                    MyAnimation[name].speed = -AnimSpeed[i] * Controller.TimeBackSpeed;
+//                }
+//            }
+//        }
+//
+//        public void SetAllState()
+//        {
+//            int slot = RtData.Length - 1;
+//            RtData[slot].Position = gameObject.transform.position;
+//            RtData[slot].Rotation = gameObject.transform.rotation;
+//            RtData[slot].Scale = gameObject.transform.localScale;
+//
+//            if (MyRigidbody != null)
+//            {
+//                RtData[slot].RigAngVelocity = MyRigidbody.angularVelocity;
+//                RtData[slot].RigVelocity = MyRigidbody.velocity;
+//                RtData[slot].RigMagnitue = MyRigidbody.velocity.magnitude;
+//            }
+//        }
+//
+//        public void Freeze()
+//        {
+//            if (MyRigidbody != null)
+//            {
+//                MyRigidbody.isKinematic = true;
+//            }
+//
+//            if (MyAnimation != null)
+//            {
+//                foreach (AnimationState state in MyAnimation)
+//                {
+//                    state.speed = 0;
+//                }
+//            }
+//        }
+//
+//        public void StopAllAnim()
+//        {
+//            string name;
+//            if (MyAnimation != null)
+//            {
+//                for (int i = 0; i < AnimSpeed.Length; i++)
+//                {
+//                    name = AnimNames[i];
+//                    MyAnimation[name].speed = 0;
+//                }
+//            }
+//        }
+//
+//        public void RestoreAllState(int recordPoint)
+//        {
+//            if (MyRigidbody != null)
+//            {
+//                MyRigidbody.isKinematic = false;
+//                MyRigidbody.velocity = RtData[recordPoint].RigVelocity;
+//                MyRigidbody.angularVelocity = RtData[recordPoint].RigAngVelocity;
+//            }
+//
+//            string name;
+//            if (MyAnimation != null)
+//            {
+//                for (int i = 0; i < AnimSpeed.Length; i++)
+//                {
+//                    name = AnimNames[i];
+//                    MyAnimation[name].speed = AnimSpeed[i];
+//                }
+//            }
+//        }
+//
+//        public void Timeback(int point, float time)
+//        {
+//            // 差值计算，平滑回滚
+//            gameObject.transform.position = Vector3.Lerp(RtData[point].Position, RtData[point - 1].Position, time);
+//            gameObject.transform.rotation = Quaternion.Lerp(RtData[point].Rotation, RtData[point - 1].Rotation, time);
+//            gameObject.transform.localScale = Vector3.Lerp(RtData[point].Scale, RtData[point - 1].Scale, time);
+//
+//            if (RtData[point].Instantiated)
+//                Destroy(gameObject);
+//        }
+//
+//        public void SetCheck(int point)
+//        {
+//            var slot = RtData[point];
+//
+//            if (MyAnimation != null && slot.AnimPoint != "")
+//            {
+//                if (slot.AnimationPlayType == TimeData.AnimPlayType.Play)
+//                {
+//                    MyAnimation[slot.AnimPoint].time = MyAnimation[slot.AnimPoint].length;
+//                    MyAnimation.Play(slot.AnimPoint);
+//                }
+//                else if (slot.AnimationPlayType == TimeData.AnimPlayType.CrossFade)
+//                {
+//                    MyAnimation[slot.AnimPoint].time = MyAnimation[slot.AnimPoint].length;
+//                    MyAnimation.CrossFade(slot.AnimPoint);
+//                }
+//            }
+//        }
+//
+//        IEnumerator SaveState()
+//        {
+//            while (true)
+//            {
+//                if (Controller.TimebackStart)
+//                {
+//                    for (int i = 0; i < RtData.Length - 1; i++)
+//                    {
+//                        RtData[i].Position = RtData[i + 1].Position;
+//                        RtData[i].Rotation = RtData[i + 1].Rotation;
+//                        RtData[i].Scale = RtData[i + 1].Scale;
+//
+//                        RtData[i].Instantiated = RtData[i + 1].Instantiated;
+//                        RtData[i + 1].Instantiated = false;
+//
+//                    }
+//
+//                    if (MyRigidbody != null)
+//                    {
+//                        for (int i = 0; i < RtData.Length - 1; i++)
+//                        {
+//                            RtData[i].RigVelocity = RtData[i + 1].RigVelocity;
+//                            RtData[i].RigMagnitue = RtData[i + 1].RigMagnitue;
+//                            RtData[i].RigAngVelocity = RtData[i + 1].RigAngVelocity;
+//                        }
+//                    }
+//
+//                    if (MyAnimation != null)
+//                    {
+//                        for (int i = 0; i < RtData.Length - 1; i++)
+//                        {
+//                            RtData[i].AnimPoint = RtData[i + 1].AnimPoint;
+//                        }
+//                    }
+//                     
+//                    SetAllState();
+//
+//                    yield return new WaitForSeconds(Accuracy);
+//                }
+//                else
+//                {
+//                    yield return new WaitForSeconds(0.0001f);
+//                }
+//            }
+//        }
     }
 }
 
