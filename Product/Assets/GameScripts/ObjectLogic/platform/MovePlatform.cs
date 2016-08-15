@@ -18,6 +18,8 @@ namespace MG
 
         void Start()
         {
+            Init();
+
             Rigidbody = gameObject.GetComponent<Rigidbody2D>();
             Speed = Mathf.Abs(GameDefine.MovePlatformSpeed);
             BeMove = true;
@@ -61,8 +63,8 @@ namespace MG
             if (!BeMove)
                 return;
 
-//            if (!TimeController.Instance.TimebackStart)
-//                return;
+            if (TimeController.Instance.CurrentState != TimeControllState.Recording)
+                return;
 
             switch (MoveDir)
             {

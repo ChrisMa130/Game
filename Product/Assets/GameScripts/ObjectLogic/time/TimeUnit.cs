@@ -1,33 +1,18 @@
 ﻿using UnityEngine;
-using System.Collections;
 using System.Collections.Generic;
-using System.Reflection;
 
 namespace MG
 {
-    public enum TimeUnitState
-    {
-        Recording,  // 正在记录
-        Rewinding,  // 正在倒退
-        Forward,    // 正在前进
-        Freeze,     // 啥不干
-        Destory     // 啥也干不了。。。
-    }
-
     // 记录每帧的各种数据，回退，暂停记录和前进时间。
     public class TimeUnit : MonoBehaviour
     {
         private readonly Stack<TimeData> FrameTimeData = new Stack<TimeData>();
         private readonly Stack<TimeData> ForwardTimeData = new Stack<TimeData>();
 
-        public TimeUnitState CurrentState { get; private set; }
-
-        void Start()
+        protected void Init()
         {
             FrameTimeData.Clear();
             ForwardTimeData.Clear();
-
-            CurrentState = TimeUnitState.Recording;
 
             // 压入第一帧
             TimeData fristShot = Snapshot(null);
@@ -40,8 +25,6 @@ namespace MG
         // 记录当前帧
         public void Record()
         {
-            CurrentState = TimeUnitState.Recording;
-
             var prevShot = FrameTimeData.Peek();
             var oneShot = Snapshot(prevShot);
             FrameTimeData.Push(oneShot);
@@ -50,8 +33,6 @@ namespace MG
         // 时间倒退
         public void Rewind()
         {
-            CurrentState = TimeUnitState.Freeze;
-
             if (FrameTimeData.Count == 0)
                 return;
 
@@ -80,8 +61,6 @@ namespace MG
         // 前进
         public void Forward()
         {
-            CurrentState = TimeUnitState.Forward;
-
             if (ForwardTimeData.Count == 0)
             {
                 return;
@@ -110,13 +89,10 @@ namespace MG
 
         public void Freeze()
         {
-            CurrentState = TimeUnitState.Freeze;
         }
 
         public void DestoryMe()
         {
-            CurrentState = TimeUnitState.Destory;
-
             gameObject.SetActive(false);
         }
 
@@ -129,11 +105,9 @@ namespace MG
         {
             TimeData data = new TimeData();
 
-            if (PrevData != null)
+            if (PrevData != null && PrevData.State == UnitState.Destory)
             {
-                if (PrevData.State == UnitState.Destory)
-                    data.State = UnitState.Deaded;
-
+                data.State = UnitState.Deaded;
                 return data;
             }
 
@@ -146,12 +120,10 @@ namespace MG
             var dir = (pos - prevPos).normalized;
 
             data.Direction = dist*dir;
+            data.Position = pos;
 
             return data;
         }
-
-
-
 
 //        public TimeData[] RtData;
 //        public TimeController Controller;
