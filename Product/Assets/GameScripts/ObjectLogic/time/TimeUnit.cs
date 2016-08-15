@@ -14,17 +14,22 @@ namespace MG
             FrameTimeData.Clear();
             ForwardTimeData.Clear();
 
-            // 压入第一帧
-            TimeData fristShot = Snapshot(null);
-            fristShot.State = UnitState.Create;
-            FrameTimeData.Push(fristShot);
-
             TimeController.Instance.AddUnit(this);
         }
 
         // 记录当前帧
         public void Record()
         {
+            if (FrameTimeData.Count == 0)
+            {
+                // 压入第一帧
+                TimeData fristShot = Snapshot(null);
+                fristShot.State = UnitState.Create;
+                FrameTimeData.Push(fristShot);
+
+                return;
+            }
+
             var prevShot = FrameTimeData.Peek();
             var oneShot = Snapshot(prevShot);
             FrameTimeData.Push(oneShot);

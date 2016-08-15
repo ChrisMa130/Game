@@ -164,7 +164,7 @@ namespace MG
 
         private bool CheckTimebackDown()
         {
-            if (!Input.GetKeyDown(KeyCode.Q))
+            if (!Input.GetKey(KeyCode.Q))
                 return false;
 
             TimebackDown = true;
@@ -177,7 +177,7 @@ namespace MG
             if (!Input.GetKeyUp(KeyCode.Q))
                 return false;
 
-            TimebackDown = true;
+            Timebackup = true;
             HasInput = true;
             return true;
         }
@@ -197,6 +197,7 @@ namespace MG
             MouseInput  = false;
             UpUp        = false;
             TimebackDown    = false;
+            Timebackup  = false;
         }
     }
 }
