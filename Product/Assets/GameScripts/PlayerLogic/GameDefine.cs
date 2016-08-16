@@ -62,7 +62,7 @@ namespace MG
         public static readonly int CannonBulletDestoryCount = 2;
 
         // 时间控制相关
-        public static readonly float RecordInterval = 0.05f; // 每秒记录20帧
+        public static readonly float RecordInterval = 0.02f;
 
         public static T AddMissingComponent<T>(this GameObject go) where T : Component
         {

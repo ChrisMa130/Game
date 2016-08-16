@@ -3,13 +3,13 @@ using System.Collections;
 
 namespace MG
 {
-    public class cannonbullet : TimeUnit
+    public class cannonbullet : MonoBehaviour
     {
         private int DestoryCount;
 
         void Start()
         {
-            Init();
+            // Init();
             DestoryCount = GameDefine.CannonBulletDestoryCount;
         }
 
@@ -43,7 +43,19 @@ namespace MG
                 DestoryCount = 0;
 
             if (DestoryCount <= 0)
-                GameObject.DestroyObject(gameObject);
+            {
+                var unit = gameObject.GetComponent<TimeUnit>();
+                if (unit != null)
+                {
+                    unit.DestoryMe();
+                }
+                else
+                {
+                    Debug.Log("销毁");
+                    GameObject.DestroyObject(gameObject);
+                }
+            }
+                
         }
     }
 }

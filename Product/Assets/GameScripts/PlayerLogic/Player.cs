@@ -4,7 +4,7 @@ using System.Collections;
 // 角色逻辑
 namespace MG
 {
-    public class Player : TimeUnit
+    public class Player : MonoBehaviour
     {
         private GameInput InputMgr;
         private Collect CollectItem;
@@ -40,7 +40,7 @@ namespace MG
 
         void Start()
         {
-            Init();
+            // Init();
 
             Stand();
             GroundCheck = transform.Find("GroundCheck");

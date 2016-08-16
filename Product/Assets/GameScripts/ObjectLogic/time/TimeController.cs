@@ -98,6 +98,11 @@ namespace MG
             // nothing to do.... :)
         }
 
+        void DoReStore()
+        {
+            TraversalUnit(o => { o.Restore(); });
+        }
+
         void TraversalUnit(Action<TimeUnit> OnHit)
         {
             if (OnHit == null)
@@ -118,7 +123,6 @@ namespace MG
 
         public void RewindTime()
         {
-            Debug.Log("Rewind");
             CurrentState = TimeControllState.Rewinding;
         }
 
@@ -129,6 +133,9 @@ namespace MG
 
         public void RecordTime()
         {
+            if (CurrentState != TimeControllState.Recording)
+                DoReStore();
+
             CurrentState = TimeControllState.Recording;
         }
     }

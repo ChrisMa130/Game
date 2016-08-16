@@ -10,7 +10,16 @@ namespace MG
         {
             if (DestoryTime <= 0)
             {
-                GameObject.Destroy(gameObject);
+                var unit = gameObject.GetComponent<TimeUnit>();
+                if (unit != null)
+                {
+                    unit.DestoryMe();
+                }
+                else
+                {
+                    GameObject.Destroy(gameObject);
+                }
+                
             }
 
             DestoryTime -= Time.unscaledDeltaTime;

@@ -6,7 +6,6 @@ namespace MG
     {
         Create,
         Running,
-        Destory,
         Deaded,
     }
 
@@ -20,6 +19,9 @@ namespace MG
         public UnitState State;
 
         // TODO 物理信息
+        public Vector2 Velocity;
+        public float angularVelocity;
+
         // TODO 动画信息
 
     }

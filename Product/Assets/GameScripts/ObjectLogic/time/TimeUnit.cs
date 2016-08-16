@@ -6,13 +6,20 @@ namespace MG
     // 记录每帧的各种数据，回退，暂停记录和前进时间。
     public class TimeUnit : MonoBehaviour
     {
-        private readonly Stack<TimeData> FrameTimeData = new Stack<TimeData>();
-        private readonly Stack<TimeData> ForwardTimeData = new Stack<TimeData>();
+        private Stack<TimeData> FrameTimeData;
+        private Stack<TimeData> ForwardTimeData;
+        private TimeData CreateData;
+
+        private Rigidbody2D Rigid;
 
         protected void Init()
         {
-            FrameTimeData.Clear();
-            ForwardTimeData.Clear();
+            Rigid = gameObject.GetComponent<Rigidbody2D>();
+
+            FrameTimeData = new Stack<TimeData>();
+            ForwardTimeData = new Stack<TimeData>();
+
+            CreateData = Snapshot(null);
 
             TimeController.Instance.AddUnit(this);
         }
@@ -22,17 +29,16 @@ namespace MG
         {
             if (FrameTimeData.Count == 0)
             {
-                // 压入第一帧
-                TimeData fristShot = Snapshot(null);
-                fristShot.State = UnitState.Create;
-                FrameTimeData.Push(fristShot);
-
+                FrameTimeData.Push(CreateData);
                 return;
             }
 
             var prevShot = FrameTimeData.Peek();
             var oneShot = Snapshot(prevShot);
             FrameTimeData.Push(oneShot);
+
+            if (Rigid != null)
+                Rigid.isKinematic = false;
         }
 
         // 时间倒退
@@ -48,19 +54,25 @@ namespace MG
             switch (data.State)
             {
                 case UnitState.Deaded:
+                    gameObject.SetActive(false);
                     return;
-                case UnitState.Create:
-                    DestoryMe();
-                    break;
-                case UnitState.Destory:
+                case UnitState.Running:
                     gameObject.SetActive(true);
+                    break;
+                case UnitState.Create:
+                    gameObject.SetActive(false);
                     break;
             }
 
             transform.position = transform.position - data.Direction;
 
             // TODO 设置物理属性
-            
+            if (Rigid != null)
+            {
+                Rigid.isKinematic = true;
+                Rigid.velocity = Vector2.zero;
+                Rigid.angularVelocity = 0;
+            }
         }
 
         // 前进
@@ -78,10 +90,9 @@ namespace MG
             switch (data.State)
             {
                 case UnitState.Deaded:
+                    gameObject.SetActive(false);
                     return;
-                case UnitState.Destory:
-                    DestoryMe();
-                    break;
+                case UnitState.Running:
                 case UnitState.Create:
                     gameObject.SetActive(true);
                     break;
@@ -90,12 +101,30 @@ namespace MG
             transform.position = transform.position + data.Direction;
 
             // TODO 物理属性
+            if (Rigid != null)
+            {
+                Rigid.isKinematic = true;
+                Rigid.velocity = Vector2.zero;
+                Rigid.angularVelocity = 0;
+            }
         }
 
         public void Freeze()
         {
         }
 
+        public void Restore()
+        {
+            if (Rigid != null)
+            {
+                TimeData data = FrameTimeData.Count > 0 ? FrameTimeData.Peek() : CreateData;
+                Rigid.isKinematic = false;
+                Rigid.velocity = data.Velocity;
+                Rigid.angularVelocity = data.angularVelocity;
+            }
+        }
+
+        // TODO
         public void DestoryMe()
         {
             gameObject.SetActive(false);
@@ -110,7 +139,7 @@ namespace MG
         {
             TimeData data = new TimeData();
 
-            if (PrevData != null && PrevData.State == UnitState.Destory)
+            if (PrevData != null && !gameObject.activeInHierarchy)
             {
                 data.State = UnitState.Deaded;
                 return data;
@@ -126,6 +155,14 @@ namespace MG
 
             data.Direction = dist*dir;
             data.Position = pos;
+
+            // 物理部分
+            if (Rigid != null)
+            {
+                data.Velocity = Rigid.velocity;
+                data.angularVelocity = Rigid.angularVelocity;
+            }
+
 
             return data;
         }
