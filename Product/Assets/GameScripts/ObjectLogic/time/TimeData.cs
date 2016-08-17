@@ -11,6 +11,8 @@ namespace MG
 
     public class TimeData
     {
+        public int Frame;
+
         // 位置信息
         public Vector3 Position;
         public Vector3 Direction;

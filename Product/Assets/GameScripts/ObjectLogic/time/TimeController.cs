@@ -26,8 +26,14 @@ namespace MG
         public TimeControllState CurrentState { get; private set; }
         public float TimeSpeed;
 
+        /// <summary>
+        /// 时间关键字，用于同步每个对象每帧应该做的事情
+        /// </summary>
+        public int CurrentFrame { get; private set; }
+
         void Start()
         {
+            CurrentFrame = 0;
             CurrentState = TimeControllState.Recording;
             TimeSpeed = 0.1f;
         }
@@ -66,7 +72,8 @@ namespace MG
 
             RecordTimeInterval = GameDefine.RecordInterval;
 
-            TraversalUnit(o => { o.Record(); });
+            TraversalUnit(o => { o.Record(CurrentFrame); });
+            CurrentFrame++;
         }
 
         void DoForwardTime()
@@ -77,8 +84,8 @@ namespace MG
                 return;
 
             CurrentTimeSpeed = TimeSpeed;
-
-            TraversalUnit(o => { o.Forward(); });
+            TraversalUnit(o => { o.Forward(CurrentFrame); });
+            CurrentFrame++;
         }
 
         void DoRewindTime()
@@ -90,7 +97,8 @@ namespace MG
 
             CurrentTimeSpeed = TimeSpeed;
 
-            TraversalUnit(o => { o.Rewind(); });
+            TraversalUnit(o => { o.Rewind(CurrentFrame); });
+            CurrentFrame--;
         }
 
         void DoStopTimeAction()

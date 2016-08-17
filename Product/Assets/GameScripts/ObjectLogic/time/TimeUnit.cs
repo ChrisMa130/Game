@@ -19,13 +19,13 @@ namespace MG
             FrameTimeData = new Stack<TimeData>();
             ForwardTimeData = new Stack<TimeData>();
 
-            CreateData = Snapshot(null);
+            CreateData = Snapshot(null, TimeController.Instance.CurrentFrame);
 
             TimeController.Instance.AddUnit(this);
         }
 
         // 记录当前帧
-        public void Record()
+        public void Record(int frame)
         {
             if (FrameTimeData.Count == 0)
             {
@@ -34,7 +34,10 @@ namespace MG
             }
 
             var prevShot = FrameTimeData.Peek();
-            var oneShot = Snapshot(prevShot);
+            if (prevShot.Frame == frame)
+                return;
+
+            var oneShot = Snapshot(prevShot, frame);
             FrameTimeData.Push(oneShot);
 
             if (Rigid != null)
@@ -42,9 +45,13 @@ namespace MG
         }
 
         // 时间倒退
-        public void Rewind()
+        public void Rewind(int frame)
         {
             if (FrameTimeData.Count == 0)
+                return;
+
+            var prev = FrameTimeData.Peek();
+            if (frame != prev.Frame)
                 return;
 
             var data = FrameTimeData.Pop();
@@ -66,7 +73,7 @@ namespace MG
 
             transform.position = transform.position - data.Direction;
 
-            // TODO 设置物理属性
+            // 设置物理属性
             if (Rigid != null)
             {
                 Rigid.isKinematic = true;
@@ -76,7 +83,7 @@ namespace MG
         }
 
         // 前进
-        public void Forward()
+        public void Forward(int frame)
         {
             if (ForwardTimeData.Count == 0)
             {
@@ -84,6 +91,10 @@ namespace MG
             }
 
             // 轨迹设置
+            var prev = ForwardTimeData.Peek();
+            if (prev.Frame != frame)
+                return;
+
             var data = ForwardTimeData.Pop();
             FrameTimeData.Push(data);
 
@@ -135,9 +146,10 @@ namespace MG
             return gameObject.activeInHierarchy;
         }
 
-        private TimeData Snapshot(TimeData PrevData)
+        private TimeData Snapshot(TimeData PrevData, int frame)
         {
             TimeData data = new TimeData();
+            data.Frame = frame;
 
             if (PrevData != null && !gameObject.activeInHierarchy)
             {
