@@ -63,6 +63,9 @@ namespace MG
             if (!BeMove)
                 return;
 
+            if (GameMgr.Instance.IsPause)
+                return;
+
             if (TimeController.Instance.CurrentState != TimeControllState.Recording)
                 return;
 

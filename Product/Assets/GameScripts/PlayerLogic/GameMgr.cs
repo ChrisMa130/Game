@@ -10,10 +10,12 @@ namespace MG
         public Player PlayerLogic;
         public GameInput InputMgr;
         public LineMgr LineMgr;
-        private bool IsPause;
+        public bool IsPause { get; private set; }
+        private bool RecordingTime;
 
         void Start()
         {
+            RecordingTime = true;
             IsPause = false;
             InputMgr = gameObject.AddComponent<GameInput>();
             PlayerLogic = PlayerObject.AddMissingComponent<Player>();
@@ -22,12 +24,23 @@ namespace MG
 
         void Update()
         {
+            // TODO 场景加载完毕后才能做这件事情
             float timeDelta = Time.deltaTime;
 
             InputMgr.Activate();
 
             UpdateInput();
-            
+
+            if (TimeController.Instance != null)
+            {
+                ProcessTime();
+
+                if (RecordingTime && !IsPause)
+                {
+                    TimeController.Instance.RecordTime();
+                }
+            }
+
             PlayerLogic.Activate(timeDelta);  // 暂时不拆，因为可能回滚时间要active的。
         }
 
@@ -44,21 +57,49 @@ namespace MG
                 PlayerLogic.ApplyInput(InputMgr);
             }
 
+            LineMgr.ApplyInput(InputMgr);
+        }
+
+        void ProcessTime()
+        {
+            TimeController ctrl = TimeController.Instance;
+
             if (InputMgr.TimebackDown)
             {
-                TimeController.Instance.RewindTime();
+                RecordingTime = false;
+                PauseGame(false);
+                ctrl.RewindTime();
             }
-            else
+            else if (InputMgr.TimebackUp)
             {
-                TimeController.Instance.RecordTime();
+                RecordingTime = false;
+                PauseGame(true);
+                ctrl.Freeze();
             }
-
-            LineMgr.ApplyInput(InputMgr);
+            else if (InputMgr.TimeForwardDown)
+            {
+                RecordingTime = false;
+                PauseGame(false);
+                ctrl.ForwardTime();
+            }
+            else if (InputMgr.TimeForwardup)
+            {
+                RecordingTime = false;
+                PauseGame(true);
+                ctrl.Freeze();
+            }
         }
 
         public void PauseGame(bool pause)
         {
             Time.timeScale = pause ? 0 : 1;
+
+            if (pause && TimeController.Instance.CurrentState == TimeControllState.Freeze)
+            {
+
+                RecordingTime = true;
+            }
+                
         }
     }
 }

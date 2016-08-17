@@ -10,20 +10,22 @@ namespace MG
 {
     public class GameInput : MonoBehaviour
     {
-        public bool Right       { get; private set; }
-        public bool Left        { get; private set; }
-        public bool Up          { get; private set; }
-        public bool UpUp        { get; private set; }
-        public bool Down        { get; private set; }
-        public bool PauseTime   { get; private set; }
-        public bool Jump        { get; private set; }
-        public bool HasInput    { get; private set; }
-        public bool Mouse1Down  { get; private set; }
-        public bool Mouse1Up    { get; private set; }
-        public bool Mouse1Move  { get; private set; }
-        public bool MouseInput  { get; private set; }
-        public bool TimebackDown { get; private set; }
-        public bool Timebackup  { get; private set; }
+        public bool Right           { get; private set; }
+        public bool Left            { get; private set; }
+        public bool Up              { get; private set; }
+        public bool UpUp            { get; private set; }
+        public bool Down            { get; private set; }
+        public bool PauseTime       { get; private set; }
+        public bool Jump            { get; private set; }
+        public bool HasInput        { get; private set; }
+        public bool Mouse1Down      { get; private set; }
+        public bool Mouse1Up        { get; private set; }
+        public bool Mouse1Move      { get; private set; }
+        public bool MouseInput      { get; private set; }
+        public bool TimebackDown    { get; private set; }
+        public bool TimebackUp      { get; private set; }
+        public bool TimeForwardDown  { get; private set; }
+        public bool TimeForwardup    { get; private set; }
 
         public delegate bool InputChecker();
         private InputChecker[] CheckerList;
@@ -43,7 +45,9 @@ namespace MG
                 CheckMouse1Move,
                 CheckUpUp,
                 CheckTimebackDown,
-                CheckTimebackUp
+                CheckTimebackUp,
+                CheckTimeRewindDown,
+                CheckTimeRewindUp
             };
         }
 
@@ -177,27 +181,49 @@ namespace MG
             if (!Input.GetKeyUp(KeyCode.Q))
                 return false;
 
-            Timebackup = true;
+            TimebackUp = true;
+            HasInput = true;
+            return true;
+        }
+
+        private bool CheckTimeRewindDown()
+        {
+            if (!Input.GetKey(KeyCode.E))
+                return false;
+
+            TimeForwardDown = true;
+            HasInput = true;
+            return true;
+        }
+
+        private bool CheckTimeRewindUp()
+        {
+            if (!Input.GetKeyUp(KeyCode.E))
+                return false;
+
+            TimeForwardup = true;
             HasInput = true;
             return true;
         }
 
         private void Reset()
         {
-            Right       = false;
-            Left        = false;
-            Up          = false;
-            Down        = false;
-            PauseTime   = false;
-            Jump        = false;
-            HasInput    = false;
-            Mouse1Down  = false;
-            Mouse1Up    = false;
-            Mouse1Move  = false;
-            MouseInput  = false;
-            UpUp        = false;
+            Right           = false;
+            Left            = false;
+            Up              = false;
+            Down            = false;
+            PauseTime       = false;
+            Jump            = false;
+            HasInput        = false;
+            Mouse1Down      = false;
+            Mouse1Up        = false;
+            Mouse1Move      = false;
+            MouseInput      = false;
+            UpUp            = false;
             TimebackDown    = false;
-            Timebackup  = false;
+            TimebackUp      = false;
+            TimeForwardDown  = false;
+            TimeForwardup    = false;
         }
     }
 }

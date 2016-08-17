@@ -1,6 +1,5 @@
 ﻿using System;
 using UnityEngine;
-using System.Collections;
 using System.Collections.Generic;
 
 namespace MG
@@ -145,6 +144,11 @@ namespace MG
                 DoReStore();
 
             CurrentState = TimeControllState.Recording;
+        }
+
+        public void Freeze()
+        {
+            CurrentState = TimeControllState.Freeze;
         }
     }
 }
