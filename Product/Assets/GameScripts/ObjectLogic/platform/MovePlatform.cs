@@ -16,14 +16,25 @@ namespace MG
         public List<GameObject> Partner;
         public bool PlayerStay;
 
+        class UserData
+        {
+            public float Speed;
+            public bool BeMove;
+        }
+
+        private Dictionary<int, UserData> UserDataTable;
+        // private Stack<UserData> UserDataTable; 
+
         void Start()
         {
-            Init();
+            UserDataTable = new Dictionary<int, UserData>();
 
             Rigidbody = gameObject.GetComponent<Rigidbody2D>();
             Speed = Mathf.Abs(GameDefine.MovePlatformSpeed);
             BeMove = true;
             PlayerStay = false;
+
+            Init();
         }
 
         public override void TurnOn(GameObject obj)
@@ -94,7 +105,7 @@ namespace MG
             for (int i = 0; i < Partner.Count; i++)
             {
                 var o = Partner[i];
-                if (o)
+                if (o != null)
                 {
                     o.transform.Translate(pos);
                 }
@@ -125,6 +136,54 @@ namespace MG
         {
             if (obj.gameObject.tag == "Player")
                 PlayerStay = false;
+        }
+
+        protected override void SaveUserData(int frame)
+        {
+            base.SaveUserData(frame);
+            UserData data;
+
+            if (UserDataTable.Count == 0)
+            {
+                data = new UserData();
+
+                data.BeMove = BeMove;
+                data.Speed = Speed;
+
+                UserDataTable.Add(0, data);
+                return;
+            }
+
+            UserDataTable.TryGetValue(frame, out data);
+            if (data != null)
+                return;
+
+            data = new UserData
+            {
+                BeMove = BeMove,
+                Speed = Speed
+            };
+
+            UserDataTable.Add(frame, data);
+        }
+
+        protected override void LoadUserData(int frame)
+        {
+            base.LoadUserData(frame);
+
+            UserData data = null;
+            UserDataTable.TryGetValue(frame, out data);
+            if (data == null)
+                return;
+
+            BeMove = data.BeMove;
+            Speed = data.Speed;
+        }
+
+        protected override void ClearUserData()
+        {
+            base.ClearUserData();
+            UserDataTable.Clear();
         }
 
         //        void OnTriggerStay2D(Collider2D obj)
