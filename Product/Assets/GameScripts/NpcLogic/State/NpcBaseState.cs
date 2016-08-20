@@ -5,9 +5,9 @@ namespace MG
 {
     public class NpcBaseState
     {
-        protected readonly Npc Owner;
-        protected readonly NpcRepresent Animator;
-        protected readonly Rigidbody2D Rigidbody;
+        protected Npc Owner;
+        protected NpcRepresent Animator;
+        protected Rigidbody2D Rigidbody;
         protected NpcBaseState(Npc npc)
         {
             Owner = npc;

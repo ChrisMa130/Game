@@ -74,10 +74,7 @@ namespace MG
             if (!BeMove)
                 return;
 
-            if (GameMgr.Instance.IsPause)
-                return;
-
-            if (TimeController.Instance.CurrentState != TimeControllState.Recording)
+            if (TimeController.Instance.IsOpTime())
                 return;
 
             switch (MoveDir)

@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
 using UnityEditor;
+using UnityEngine.Assertions;
 
 namespace MG
 {
@@ -41,8 +42,8 @@ namespace MG
             var oneShot = Snapshot(prevShot, frame);
             FrameTimeData.Push(oneShot);
 
-            if (Rigid != null)
-                Rigid.isKinematic = false;
+//            if (Rigid != null)
+//                Rigid.isKinematic = false;
         }
 
         // 时间倒退
@@ -77,8 +78,9 @@ namespace MG
             // 设置物理属性
             if (Rigid != null)
             {
-                Rigid.isKinematic = true;
+                // Rigid.isKinematic = true;
                 Rigid.velocity = Vector2.zero;
+                Rigid.gravityScale = 0;
                 Rigid.angularVelocity = 0;
             }
         }
@@ -93,8 +95,7 @@ namespace MG
 
             // 轨迹设置
             var prev = ForwardTimeData.Peek();
-            if (prev.Frame != frame)
-                return;
+            Assert.IsTrue(prev.Frame == frame, string.Format("{0} -> {1}", prev.Frame, frame));
 
             var data = ForwardTimeData.Pop();
             FrameTimeData.Push(data);
@@ -115,8 +116,9 @@ namespace MG
             // TODO 物理属性
             if (Rigid != null)
             {
-                Rigid.isKinematic = true;
+                // Rigid.isKinematic = true;
                 Rigid.velocity = Vector2.zero;
+                Rigid.gravityScale = 0;
                 Rigid.angularVelocity = 0;
             }
         }
@@ -130,8 +132,9 @@ namespace MG
             if (Rigid != null)
             {
                 TimeData data = FrameTimeData.Count > 0 ? FrameTimeData.Peek() : CreateData;
-                Rigid.isKinematic = false;
+                // Rigid.isKinematic = false;
                 Rigid.velocity = data.Velocity;
+                Rigid.gravityScale = data.gravityScale;
                 Rigid.angularVelocity = data.angularVelocity;
             }
         }
@@ -174,6 +177,7 @@ namespace MG
             {
                 data.Velocity = Rigid.velocity;
                 data.angularVelocity = Rigid.angularVelocity;
+                data.gravityScale = Rigid.gravityScale;
             }
 
             // 自主数据

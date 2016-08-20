@@ -3,7 +3,7 @@ using System.Collections;
 
 namespace MG
 {
-    public class Npc : MonoBehaviour
+    public class Npc : TimeUnit
     {
         public NpcState State { get; private set; }
         public NpcStateType CurrentStateType
@@ -37,6 +37,8 @@ namespace MG
 
         void Start()
         {
+            Init();
+
             Stand();
             GroundCheck = transform.Find("GroundCheck");
             // CurrentDir = Dir.Right;
@@ -45,6 +47,9 @@ namespace MG
 
         public void Activate(float deltaTime)
         {
+            if (TimeController.Instance.IsOpTime())
+                return;
+
             Grounded = Physics2D.Linecast(transform.position, GroundCheck.position, 1 << LayerMask.NameToLayer("Ground"));
             if (!Grounded)
                 Grounded = Physics2D.Linecast(transform.position, GroundCheck.position, 1 << LayerMask.NameToLayer("Wall"));

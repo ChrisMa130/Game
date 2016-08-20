@@ -12,6 +12,8 @@ namespace MG
 
         void Start()
         {
+            // Init();
+
             NpcObject = gameObject.GetComponent<Npc>();
 
             var c2d = NpcObject.GetComponent<BoxCollider2D>();
@@ -20,6 +22,9 @@ namespace MG
 
         void Update()
         {
+            if (TimeController.Instance.IsOpTime())
+                return;
+
             NpcObject.Activate(Time.deltaTime);
 
             if (NpcObject.CurrentStateType != NpcStateType.Walk)
@@ -42,6 +47,9 @@ namespace MG
 
         void OnCollisionEnter2D(Collision2D obj)
         {
+            if (TimeController.Instance.IsOpTime())
+                return;
+
             var player = obj.gameObject.GetComponent<Player>();
             if (player != null)
             {

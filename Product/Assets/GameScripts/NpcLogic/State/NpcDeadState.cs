@@ -12,7 +12,7 @@ namespace MG
         {
             base.Enter();
             Debug.Log("小兵delad");
-            GameObject.Destroy(Owner.gameObject);
+            GameObject.Destroy(Owner.gameObject);  // TODO 这个死亡要调回NPC
         }
 
         public override void Activate(float deltaTime)

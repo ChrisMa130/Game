@@ -30,10 +30,14 @@ namespace MG
         /// </summary>
         public int CurrentFrame { get; private set; }
 
+        private int LastFrame; // 当前记录的最高帧
+        private TimeControllState LastState;
+
         void Start()
         {
             CurrentFrame = 0;
             CurrentState = TimeControllState.Recording;
+            LastState = TimeControllState.Recording;
             TimeSpeed = 0.1f;
         }
 
@@ -47,7 +51,7 @@ namespace MG
             switch (CurrentState)
             {
                 case TimeControllState.Recording:
-                    DoRecordTime();
+                    DoRecordTime(false);
                     break;
                 case TimeControllState.Forward:
                     DoForwardTime();
@@ -58,46 +62,67 @@ namespace MG
                 case TimeControllState.Rewinding:
                     DoRewindTime();
                     break;
-
             }
         }
 
-        void DoRecordTime()
+        void DoRecordTime(bool force)
         {
             RecordTimeInterval -= Time.deltaTime;
 
-            if (RecordTimeInterval > 0)
-                return;
+//            if (!force)
+//            {
+//                if (RecordTimeInterval > 0)
+//                    return;
+//
+//                RecordTimeInterval = GameDefine.RecordInterval;
+//            }
 
-            RecordTimeInterval = GameDefine.RecordInterval;
+            // 这里不需要补帧，因为当再次执行到这里的时候，时间堆栈已经被清空了
+            LastState = TimeControllState.Recording;
 
             TraversalUnit(o => { o.Record(CurrentFrame); });
             CurrentFrame++;
+            LastFrame = CurrentFrame;
         }
 
         void DoForwardTime()
         {
-            CurrentTimeSpeed -= Time.deltaTime;
-
-            if (CurrentTimeSpeed > 0)
+            // 前进不可以超过最高帧
+            if (LastFrame < CurrentFrame)
                 return;
 
-            CurrentTimeSpeed = TimeSpeed;
-            TraversalUnit(o => { o.Forward(CurrentFrame); });
-            CurrentFrame++;
+            if (LastState == TimeControllState.Rewinding)
+            {
+                TraversalUnit(o => { o.Forward(CurrentFrame); });
+                CurrentFrame++;
+            }   
+            else
+            {
+                // CurrentFrame++;
+                TraversalUnit(o => { o.Forward(CurrentFrame); });
+                CurrentFrame++;
+            }
+
+            LastState = TimeControllState.Forward;
         }
 
         void DoRewindTime()
         {
-            CurrentTimeSpeed -= Time.deltaTime;
-
-            if (CurrentTimeSpeed > 0)
+            if (CurrentFrame < 0)
                 return;
 
-            CurrentTimeSpeed = TimeSpeed;
+            if (LastState == TimeControllState.Forward)
+            {
+                TraversalUnit(o => { o.Rewind(CurrentFrame); });
+                CurrentFrame--;
+            }
+            else
+            {
+                CurrentFrame--;
+                TraversalUnit(o => { o.Rewind(CurrentFrame); });
+            }
 
-            TraversalUnit(o => { o.Rewind(CurrentFrame); });
-            CurrentFrame--;
+            LastState = TimeControllState.Rewinding;
         }
 
         void DoStopTimeAction()
@@ -107,6 +132,8 @@ namespace MG
 
         void DoReStore()
         {
+            CurrentFrame = 0;
+            LastFrame = 0;
             TraversalUnit(o => { o.Restore(); });
         }
 
@@ -130,11 +157,19 @@ namespace MG
 
         public void RewindTime()
         {
+            if (CurrentState == TimeControllState.Recording)
+            {
+                DoRecordTime(true);
+            }
+
             CurrentState = TimeControllState.Rewinding;
         }
 
         public void ForwardTime()
         {
+            if (CurrentState == TimeControllState.Recording)
+                return;
+
             CurrentState = TimeControllState.Forward;
         }
 
@@ -149,6 +184,17 @@ namespace MG
         public void Freeze()
         {
             CurrentState = TimeControllState.Freeze;
+        }
+
+        public bool IsOpTime()
+        {
+            if (GameMgr.Instance.IsPause)
+                return true;
+
+            if (TimeController.Instance.CurrentState != TimeControllState.Recording)
+                return true;
+
+            return false;
         }
     }
 }

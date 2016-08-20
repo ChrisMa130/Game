@@ -22,7 +22,9 @@ namespace MG
 
         // TODO 物理信息
         public Vector2 Velocity;
+        public float gravityScale;
         public float angularVelocity;
+        public RigidbodyConstraints2D constraints;
 
         // TODO 动画信息
 

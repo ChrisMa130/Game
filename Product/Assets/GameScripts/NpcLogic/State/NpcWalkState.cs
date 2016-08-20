@@ -36,6 +36,10 @@ namespace MG
 
         private void Move()
         {
+            if (TimeController.Instance.IsOpTime())
+                return;
+
+            Rigidbody = Owner.gameObject.GetComponent<Rigidbody2D>();
             Animator.Run(moveParam);
             Rigidbody.velocity = new Vector2(moveParam, Rigidbody.velocity.y);
         }
