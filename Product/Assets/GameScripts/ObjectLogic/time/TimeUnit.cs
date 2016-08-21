@@ -11,7 +11,6 @@ namespace MG
         private Stack<TimeData> FrameTimeData;
         private Stack<TimeData> ForwardTimeData;
         private TimeData CreateData;
-
         private Rigidbody2D Rigid;
 
         protected void Init()
@@ -21,7 +20,7 @@ namespace MG
             FrameTimeData = new Stack<TimeData>();
             ForwardTimeData = new Stack<TimeData>();
 
-            CreateData = Snapshot(null, TimeController.Instance.CurrentFrame);
+            CreateData = Snapshot(null, 0);
 
             TimeController.Instance.AddUnit(this);
         }
@@ -31,7 +30,8 @@ namespace MG
         {
             if (FrameTimeData.Count == 0)
             {
-                FrameTimeData.Push(CreateData);
+                var d = Snapshot(null, frame);
+                FrameTimeData.Push(d);
                 return;
             }
 
@@ -129,10 +129,9 @@ namespace MG
 
         public void Restore()
         {
-            if (Rigid != null)
+            if (Rigid != null && CreateData != null)
             {
                 TimeData data = FrameTimeData.Count > 0 ? FrameTimeData.Peek() : CreateData;
-                // Rigid.isKinematic = false;
                 Rigid.velocity = data.Velocity;
                 Rigid.gravityScale = data.gravityScale;
                 Rigid.angularVelocity = data.angularVelocity;

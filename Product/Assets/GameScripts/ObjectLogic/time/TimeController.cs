@@ -19,7 +19,6 @@ namespace MG
         /// </summary>
         private readonly List<TimeUnit> Units = new List<TimeUnit>();
 
-        private float RecordTimeInterval;
         private float CurrentTimeSpeed;
 
         public TimeControllState CurrentState { get; private set; }
@@ -30,7 +29,7 @@ namespace MG
         /// </summary>
         public int CurrentFrame { get; private set; }
 
-        private int LastFrame; // 当前记录的最高帧
+        private int LastFrame; 
         private TimeControllState LastState;
 
         void Start()
@@ -51,7 +50,7 @@ namespace MG
             switch (CurrentState)
             {
                 case TimeControllState.Recording:
-                    DoRecordTime(false);
+                    DoRecordTime();
                     break;
                 case TimeControllState.Forward:
                     DoForwardTime();
@@ -65,62 +64,33 @@ namespace MG
             }
         }
 
-        void DoRecordTime(bool force)
+        void DoRecordTime()
         {
-            RecordTimeInterval -= Time.deltaTime;
-
-//            if (!force)
-//            {
-//                if (RecordTimeInterval > 0)
-//                    return;
-//
-//                RecordTimeInterval = GameDefine.RecordInterval;
-//            }
-
-            // 这里不需要补帧，因为当再次执行到这里的时候，时间堆栈已经被清空了
             LastState = TimeControllState.Recording;
 
             TraversalUnit(o => { o.Record(CurrentFrame); });
-            CurrentFrame++;
-            LastFrame = CurrentFrame;
+            LastFrame = CurrentFrame++;
         }
 
         void DoForwardTime()
         {
             // 前进不可以超过最高帧
-            if (LastFrame < CurrentFrame)
+            if (LastFrame + 1 >= CurrentFrame)
                 return;
 
-            if (LastState == TimeControllState.Rewinding)
-            {
-                TraversalUnit(o => { o.Forward(CurrentFrame); });
-                CurrentFrame++;
-            }   
-            else
-            {
-                // CurrentFrame++;
-                TraversalUnit(o => { o.Forward(CurrentFrame); });
-                CurrentFrame++;
-            }
+            LastFrame++;
+            TraversalUnit(o => { o.Forward(LastFrame); });
 
             LastState = TimeControllState.Forward;
         }
 
         void DoRewindTime()
         {
-            if (CurrentFrame < 0)
+            if (LastFrame - 1 < 0)
                 return;
 
-            if (LastState == TimeControllState.Forward)
-            {
-                TraversalUnit(o => { o.Rewind(CurrentFrame); });
-                CurrentFrame--;
-            }
-            else
-            {
-                CurrentFrame--;
-                TraversalUnit(o => { o.Rewind(CurrentFrame); });
-            }
+            TraversalUnit(o => { o.Rewind(LastFrame); });
+            LastFrame--;
 
             LastState = TimeControllState.Rewinding;
         }
@@ -159,7 +129,7 @@ namespace MG
         {
             if (CurrentState == TimeControllState.Recording)
             {
-                DoRecordTime(true);
+                DoRecordTime();
             }
 
             CurrentState = TimeControllState.Rewinding;
