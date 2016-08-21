@@ -94,7 +94,8 @@ namespace MG
 
             // 轨迹设置
             var prev = ForwardTimeData.Peek();
-            Assert.IsTrue(prev.Frame == frame, string.Format("当前前进帧{0} -> 要求前进帧{1}", prev.Frame, frame));
+            if (prev.Frame != frame)
+                return;
 
             var data = ForwardTimeData.Pop();
             FrameTimeData.Push(data);
