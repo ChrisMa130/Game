@@ -39,7 +39,6 @@ namespace MG
                     HasPlayer = true;
             }
             
-            Flip();
             foreach (var p in Platforms.Where(p => p != null))
             {
                 p.TurnOn(obj.gameObject);
@@ -52,13 +51,7 @@ namespace MG
             if (player != null)
                 HasPlayer = false;
         }
-
-        private void Flip()
-        {
-            Vector3 theScale = transform.localScale;
-            theScale.x *= -1;
-            transform.localScale = theScale;
-        }
+			
     }
 
 }
