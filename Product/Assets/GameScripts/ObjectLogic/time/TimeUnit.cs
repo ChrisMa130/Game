@@ -155,7 +155,7 @@ namespace MG
             TimeData data = new TimeData();
             data.Frame = frame;
 
-            if (PrevData != null && !gameObject.activeInHierarchy)
+            if (PrevData != null && !gameObject.activeSelf)
             {
                 data.State = UnitState.Deaded;
                 return data;
