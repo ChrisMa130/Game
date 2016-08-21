@@ -22,7 +22,6 @@ namespace MG
         private float CurrentTimeSpeed;
 
         public TimeControllState CurrentState { get; private set; }
-        public float TimeSpeed;
 
         /// <summary>
         /// 时间关键字，用于同步每个对象每帧应该做的事情
@@ -37,7 +36,6 @@ namespace MG
             CurrentFrame = 0;
             CurrentState = TimeControllState.Recording;
             LastState = TimeControllState.Recording;
-            TimeSpeed = 0.1f;
         }
 
         void Update()
@@ -78,7 +76,11 @@ namespace MG
             if (LastFrame + 1 >= CurrentFrame)
                 return;
 
-            LastFrame++;
+            if (LastFrame < 0)
+                LastFrame = 0;
+            else
+                LastFrame++;
+
             TraversalUnit(o => { o.Forward(LastFrame); });
 
             LastState = TimeControllState.Forward;
@@ -86,7 +88,7 @@ namespace MG
 
         void DoRewindTime()
         {
-            if (LastFrame - 1 < 0)
+            if (LastFrame < 0)
                 return;
 
             TraversalUnit(o => { o.Rewind(LastFrame); });

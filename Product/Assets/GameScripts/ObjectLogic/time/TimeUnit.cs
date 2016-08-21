@@ -20,7 +20,8 @@ namespace MG
             FrameTimeData = new Stack<TimeData>();
             ForwardTimeData = new Stack<TimeData>();
 
-            CreateData = Snapshot(null, 0);
+            CreateData = Snapshot(null, TimeController.Instance.CurrentFrame, true);
+            FrameTimeData.Push(CreateData);
 
             TimeController.Instance.AddUnit(this);
         }
@@ -30,7 +31,7 @@ namespace MG
         {
             if (FrameTimeData.Count == 0)
             {
-                var d = Snapshot(null, frame);
+                var d = Snapshot(null, frame, false);
                 FrameTimeData.Push(d);
                 return;
             }
@@ -39,11 +40,8 @@ namespace MG
             if (prevShot.Frame == frame)
                 return;
 
-            var oneShot = Snapshot(prevShot, frame);
+            var oneShot = Snapshot(prevShot, frame, false);
             FrameTimeData.Push(oneShot);
-
-//            if (Rigid != null)
-//                Rigid.isKinematic = false;
         }
 
         // 时间倒退
@@ -70,6 +68,7 @@ namespace MG
                     break;
                 case UnitState.Create:
                     gameObject.SetActive(false);
+                    Debug.Log("gameObject.SetActive(false);");
                     break;
             }
 
@@ -95,7 +94,7 @@ namespace MG
 
             // 轨迹设置
             var prev = ForwardTimeData.Peek();
-            Assert.IsTrue(prev.Frame == frame, string.Format("{0} -> {1}", prev.Frame, frame));
+            Assert.IsTrue(prev.Frame == frame, string.Format("当前前进帧{0} -> 要求前进帧{1}", prev.Frame, frame));
 
             var data = ForwardTimeData.Pop();
             FrameTimeData.Push(data);
@@ -106,6 +105,7 @@ namespace MG
                     gameObject.SetActive(false);
                     return;
                 case UnitState.Running:
+                    break;
                 case UnitState.Create:
                     gameObject.SetActive(true);
                     break;
@@ -149,7 +149,7 @@ namespace MG
             return gameObject.activeInHierarchy;
         }
 
-        private TimeData Snapshot(TimeData PrevData, int frame)
+        private TimeData Snapshot(TimeData PrevData, int frame, bool bCreate)
         {
             TimeData data = new TimeData();
             data.Frame = frame;
@@ -160,7 +160,7 @@ namespace MG
                 return data;
             }
 
-            data.State = UnitState.Running;
+            data.State = bCreate ? UnitState.Create : UnitState.Running;
 
             // 记录移动方向和距离
             var pos = transform.position;
