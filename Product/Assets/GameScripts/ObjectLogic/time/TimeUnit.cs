@@ -1,10 +1,10 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
-using UnityEditor;
-using UnityEngine.Assertions;
 
 namespace MG
 {
+    public class TimeUnitUserData {}
+
     // 记录每帧的各种数据，回退，暂停记录和前进时间。
     public class TimeUnit : MonoBehaviour
     {
@@ -13,12 +13,15 @@ namespace MG
         private TimeData CreateData;
         private Rigidbody2D Rigid;
 
+        private Dictionary<int, TimeUnitUserData> UserDataTable;
+
         protected void Init()
         {
             Rigid = gameObject.GetComponent<Rigidbody2D>();
 
             FrameTimeData = new Stack<TimeData>();
             ForwardTimeData = new Stack<TimeData>();
+            UserDataTable = new Dictionary<int, TimeUnitUserData>();
 
             CreateData = Snapshot(null, TimeController.Instance.CurrentFrame, true);
             FrameTimeData.Push(CreateData);
@@ -82,6 +85,8 @@ namespace MG
                 Rigid.gravityScale = 0;
                 Rigid.angularVelocity = 0;
             }
+
+            LoadUserData(frame);
         }
 
         // 前进
@@ -122,6 +127,8 @@ namespace MG
                 Rigid.gravityScale = 0;
                 Rigid.angularVelocity = 0;
             }
+
+            LoadUserData(frame);
         }
 
         public void Freeze()
@@ -137,6 +144,8 @@ namespace MG
                 Rigid.gravityScale = data.gravityScale;
                 Rigid.angularVelocity = data.angularVelocity;
             }
+
+            ClearUserData();
         }
 
         // TODO
@@ -186,20 +195,50 @@ namespace MG
             return data;
         }
 
-        protected virtual void SaveUserData(int frame)
+        void SaveUserData(int frame)
         {
-            
+            TimeUnitUserData data;
+
+            if (UserDataTable.Count == 0)
+            {
+                data = GetUserData();
+                UserDataTable.Add(0, data);
+                return;
+            }
+
+            UserDataTable.TryGetValue(frame, out data);
+            if (data != null)
+                return;
+
+            data = GetUserData();
+            UserDataTable.Add(frame, data);
         }
 
-        protected virtual void LoadUserData(int frame)
+        void LoadUserData(int frame)
         {
-            
+            TimeUnitUserData data = null;
+            UserDataTable.TryGetValue(frame, out data);
+            if (data == null)
+                return;
+
+            SetUserData(data);
         }
 
-        protected virtual void ClearUserData()
+        void ClearUserData()
         {
-
+            UserDataTable.Clear();
         }
+
+        protected virtual TimeUnitUserData GetUserData()
+        {
+            return null;
+        }
+
+        protected virtual void SetUserData(TimeUnitUserData data)
+        {
+        }
+
+
         //        public TimeData[] RtData;
         //        public TimeController Controller;
         //

@@ -1,6 +1,4 @@
 ﻿using UnityEngine;
-using System.Collections;
-using System.Collections.Generic;
 
 namespace MG
 {
@@ -8,65 +6,33 @@ namespace MG
     {
         private int DestoryCount;
 
-        class UserData
+        class UserData : TimeUnitUserData
         {
             public int DestoryCount;
         }
 
-        private Dictionary<int, UserData> UserDataTable;
-
         void Start()
         {
-            UserDataTable = new Dictionary<int, UserData>();
             DestoryCount = GameDefine.CannonBulletDestoryCount;
 
             Init();
         }
 
-        protected override void SaveUserData(int frame)
+        protected override TimeUnitUserData GetUserData()
         {
-            base.SaveUserData(frame);
+            var data = new UserData();
+            data.DestoryCount = DestoryCount;
 
-            UserData data;
-
-            if (UserDataTable.Count == 0)
-            {
-                data = new UserData();
-
-                data.DestoryCount = DestoryCount;
-
-                UserDataTable.Add(0, data);
-                return;
-            }
-
-            UserDataTable.TryGetValue(frame, out data);
-            if (data != null)
-                return;
-
-            data = new UserData
-            {
-                DestoryCount = DestoryCount,
-            };
-
-            UserDataTable.Add(frame, data);
+            return data;
         }
 
-        protected override void LoadUserData(int frame)
+        protected override void SetUserData(TimeUnitUserData data)
         {
-            base.LoadUserData(frame);
-
-            UserData data = null;
-            UserDataTable.TryGetValue(frame, out data);
-            if (data == null)
+            UserData d = data as UserData;
+            if (d == null)
                 return;
 
-            DestoryCount = data.DestoryCount;
-        }
-
-        protected override void ClearUserData()
-        {
-            base.ClearUserData();
-            UserDataTable.Clear();
+            DestoryCount = d.DestoryCount;
         }
 
         void OnCollisionEnter2D(Collision2D col)

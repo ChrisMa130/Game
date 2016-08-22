@@ -9,27 +9,22 @@ namespace MG
     {
         public Dir MoveDir;
 
-        private Rigidbody2D Rigidbody;
+        //private Rigidbody2D Rigidbody;
         private float Speed;
 
         private bool BeMove;
         public List<GameObject> Partner;
         public bool PlayerStay;
 
-        class UserData
+        class UserData : TimeUnitUserData
         {
             public float Speed;
             public bool BeMove;
         }
 
-        private Dictionary<int, UserData> UserDataTable;
-        // private Stack<UserData> UserDataTable; 
-
         void Start()
         {
-            UserDataTable = new Dictionary<int, UserData>();
-
-            Rigidbody = gameObject.GetComponent<Rigidbody2D>();
+            //Rigidbody = gameObject.GetComponent<Rigidbody2D>();
             Speed = Mathf.Abs(GameDefine.MovePlatformSpeed);
             BeMove = true;
             PlayerStay = false;
@@ -135,52 +130,25 @@ namespace MG
                 PlayerStay = false;
         }
 
-        protected override void SaveUserData(int frame)
+        protected override TimeUnitUserData GetUserData()
         {
-            base.SaveUserData(frame);
-            UserData data;
-
-            if (UserDataTable.Count == 0)
-            {
-                data = new UserData();
-
-                data.BeMove = BeMove;
-                data.Speed = Speed;
-
-                UserDataTable.Add(0, data);
-                return;
-            }
-
-            UserDataTable.TryGetValue(frame, out data);
-            if (data != null)
-                return;
-
-            data = new UserData
+            var data = new UserData
             {
                 BeMove = BeMove,
                 Speed = Speed
             };
 
-            UserDataTable.Add(frame, data);
+            return data;
         }
 
-        protected override void LoadUserData(int frame)
+        protected override void SetUserData(TimeUnitUserData data)
         {
-            base.LoadUserData(frame);
-
-            UserData data = null;
-            UserDataTable.TryGetValue(frame, out data);
-            if (data == null)
+            UserData d = data as UserData;
+            if (d == null)
                 return;
 
-            BeMove = data.BeMove;
-            Speed = data.Speed;
-        }
-
-        protected override void ClearUserData()
-        {
-            base.ClearUserData();
-            UserDataTable.Clear();
+            BeMove = d.BeMove;
+            Speed = d.Speed;
         }
 
         //        void OnTriggerStay2D(Collider2D obj)
