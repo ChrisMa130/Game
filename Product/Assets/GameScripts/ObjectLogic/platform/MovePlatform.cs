@@ -124,14 +124,19 @@ namespace MG
             //    PlayerStay = true;
 			if (obj.gameObject.tag == "Player")
 				obj.gameObject.transform.parent = transform;
-				
+//			if (obj.gameObject.tag == "NPC") {
+//				obj.gameObject.transform.parent = transform;
+//				obj.gameObject.transform.GetComponent<Rigidbody2D> ().velocity -= new Vector2 (10, 0);
+//			}
         }
 
         void OnCollisionExit2D(Collision2D obj)
         {
             //if (obj.gameObject.tag == "Player")
             //    PlayerStay = false;
-			if (obj.gameObject.tag == "Player")
+			if (obj.gameObject.tag == "NPC")
+				obj.gameObject.transform.GetComponent<Rigidbody2D> ().velocity += new Vector2 (10, 0);
+			if (obj.gameObject.tag == "Player" || obj.gameObject.tag == "NPC")
 				transform.DetachChildren ();
         }
 

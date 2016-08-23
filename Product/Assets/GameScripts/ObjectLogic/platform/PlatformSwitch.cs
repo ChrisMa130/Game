@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace MG
 {
-    public class TrapPlatform : MonoBehaviour
+	public class PlatformSwitch : MonoBehaviour
     {
         public PlatformBase[] Platforms;
         private bool HasPlayer;

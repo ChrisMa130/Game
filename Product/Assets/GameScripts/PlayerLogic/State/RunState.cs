@@ -76,7 +76,6 @@ namespace MG
         private void Move()
         {
             Animator.Run(moveParam);
-			Debug.Log (Rigidbody.velocity);
             Rigidbody.velocity = new Vector2(moveParam * GameDefine.PlayerMaxSpeed, Rigidbody.velocity.y);
         }
     }
