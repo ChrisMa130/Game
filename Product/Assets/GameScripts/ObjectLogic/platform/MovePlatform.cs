@@ -103,10 +103,10 @@ namespace MG
                 }
             }
 
-            if (PlayerStay && GameMgr.Instance.PlayerLogic.MyState.CurrentPlayerState == PlayerStateType.Stand)
-            {
-                GameMgr.Instance.PlayerObject.transform.Translate(pos);
-            }
+            //if (PlayerStay && GameMgr.Instance.PlayerLogic.MyState.CurrentPlayerState == PlayerStateType.Stand)
+            //{
+            //    GameMgr.Instance.PlayerObject.transform.Translate(pos);
+            //}
         }
 
         void OnCollisionEnter2D(Collision2D obj)
@@ -120,14 +120,19 @@ namespace MG
                 BeMove = false;
             }
 
-            if (obj.gameObject.tag == "Player")
-                PlayerStay = true;
+            //if (obj.gameObject.tag == "Player")
+            //    PlayerStay = true;
+			if (obj.gameObject.tag == "Player")
+				obj.gameObject.transform.parent = transform;
+				
         }
 
         void OnCollisionExit2D(Collision2D obj)
         {
-            if (obj.gameObject.tag == "Player")
-                PlayerStay = false;
+            //if (obj.gameObject.tag == "Player")
+            //    PlayerStay = false;
+			if (obj.gameObject.tag == "Player")
+				transform.DetachChildren ();
         }
 
         protected override TimeUnitUserData GetUserData()

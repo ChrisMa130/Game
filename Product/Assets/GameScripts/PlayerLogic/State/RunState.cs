@@ -21,7 +21,12 @@ namespace MG
         {
             // 如果移动速度为0了，那么就变成stand
             base.Activate(deltaTime);
-            moveParam = Input.GetAxis("Horizontal");
+            //moveParam = Input.GetAxis("Horizontal");
+			float temp = Input.GetAxis("Horizontal");
+			if (temp > 0)
+				moveParam = 1;
+			else
+				moveParam = -1;
         }
 
         public override void Exit() { }
@@ -71,6 +76,7 @@ namespace MG
         private void Move()
         {
             Animator.Run(moveParam);
+			Debug.Log (Rigidbody.velocity);
             Rigidbody.velocity = new Vector2(moveParam * GameDefine.PlayerMaxSpeed, Rigidbody.velocity.y);
         }
     }
