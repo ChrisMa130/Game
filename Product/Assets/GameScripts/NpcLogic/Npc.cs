@@ -26,6 +26,38 @@ namespace MG
 
         public bool IsDead { get; private set; }
 
+        class UserData : TimeUnitUserData
+        {
+            // 基本数据
+            public Dir dir;
+            public bool IsDead;
+
+            // 状态数据
+            public NpcStateUserData StateData;
+        }
+
+        protected override TimeUnitUserData GetUserData()
+        {
+            UserData data = new UserData();
+            data.dir = CurrentDir;
+            data.IsDead = IsDead;
+            data.StateData = State.GetUserData();
+
+            return data;
+        }
+
+        protected override void SetUserData(TimeUnitUserData data)
+        {
+            UserData d = data as UserData;
+            if (d == null)
+                return;
+
+            TurnRound(d.dir);
+            IsDead = d.IsDead;
+
+            State.SetUserData(d.StateData);
+        }
+
         void Awake()
         {
             Represent = gameObject.AddComponent<NpcRepresent>();

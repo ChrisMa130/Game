@@ -3,6 +3,12 @@ using System.Collections;
 
 namespace MG
 {
+    public class NpcStateUserData
+    {
+        public NpcStateType CurrentState;
+        public NpcStateType NextState;
+    }
+
     public class NpcState : MonoBehaviour
     {
         public Npc Owner { get; private set; }
@@ -105,6 +111,25 @@ namespace MG
         public void ChangeDir(Dir dir)
         {
             States[(int)CurrentState].ChangeDir(dir);
+        }
+
+        public NpcStateUserData GetUserData()
+        {
+            NpcStateUserData data = new NpcStateUserData();
+            data.CurrentState = CurrentState;
+            data.NextState = NextState;
+
+            return null;
+        }
+
+        public void SetUserData(NpcStateUserData data)
+        {
+            if (data == null)
+                return;
+
+            CurrentState = data.CurrentState;
+            NextState = data.NextState;
+            NextState = data.NextState;
         }
     }
 }
