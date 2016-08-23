@@ -9,6 +9,12 @@ namespace MG
         private float OldGravityScale;
         private Collider2D c2d;
 
+        class ClimbUserData : PlayerStateRunTime
+        {
+            public float moveParam;
+            public float OldGravityScale;
+        }
+
         public ClimbState(Player player) : base(player)
         {
         }
@@ -89,6 +95,25 @@ namespace MG
             {
                 Rigidbody.velocity = new Vector2(Rigidbody.velocity.x, param * GameDefine.PlayerMaxSpeed);
             }
+        }
+
+        public override PlayerStateRunTime GetUserData()
+        {
+            ClimbUserData data = new ClimbUserData();
+            data.moveParam = moveParam;
+            data.OldGravityScale = OldGravityScale;
+
+            return data;
+        }
+
+        public override void SetUserData(PlayerStateRunTime data)
+        {
+            ClimbUserData d = data as ClimbUserData;
+            if (d == null)
+                return;
+
+            moveParam = d.moveParam;
+            OldGravityScale = d.OldGravityScale;
         }
     }
 

@@ -1,10 +1,9 @@
 ﻿using UnityEngine;
-using System.Collections;
 
 // 角色逻辑
 namespace MG
 {
-    public class Player : MonoBehaviour
+    public class Player : TimeUnit
     {
         private GameInput InputMgr;
         private Collect CollectItem;
@@ -20,6 +19,21 @@ namespace MG
         {
             get { return transform.position; }
             set { transform.position = value; }
+        }
+
+        class UserData : TimeUnitUserData
+        {
+            // 物品收集的信息
+            public int[] Items = new int[GameDefine.CollectCount];
+
+            // 基础信息
+            public bool Grounded;
+            public bool OnTheLine;
+            public bool OnTheClimbAera;
+            public bool IsDead;
+
+            // 角色状态
+            public PlayerStateUserData StateUD;
         }
 
         // 猪脚一些属性
@@ -40,10 +54,10 @@ namespace MG
 
         void Start()
         {
-            // Init();
-
             Stand();
             GroundCheck = transform.Find("GroundCheck");
+
+            Init();
         }
 
         void Update()
@@ -52,6 +66,9 @@ namespace MG
 
         public void Activate(float deltaTime)
         {
+            if (TimeController.Instance.IsOpTime())
+                return;
+
             Grounded = Physics2D.Linecast(transform.position, GroundCheck.position, 1 << LayerMask.NameToLayer("Ground"));
             if (!Grounded)
                 Grounded = Physics2D.Linecast(transform.position, GroundCheck.position, 1 << LayerMask.NameToLayer("Wall"));
@@ -104,6 +121,46 @@ namespace MG
         public int GetCollectCount(int key)
         {
             return CollectItem.GetCount(key);
+        }
+
+        protected override TimeUnitUserData GetUserData()
+        {
+            UserData data = new UserData();
+
+            data.Items = new int[GameDefine.CollectCount];
+            for (int i = 0; i < GameDefine.CollectCount; i++)
+            {
+                data.Items[i] = CollectItem.GetCount(i);
+            }
+
+            data.Grounded = Grounded;
+            data.IsDead = IsDead;
+            data.OnTheLine = OnTheLine;
+            data.OnTheClimbAera = OnTheClimbAera;
+
+            data.StateUD = MyState.GetUserData();
+
+            return data;
+        }
+
+        protected override void SetUserData(TimeUnitUserData data)
+        {
+            UserData d = data as UserData;
+            if (d == null)
+                return;
+
+            for (int i = 0; i < GameDefine.CollectCount; i++)
+            {
+                CollectItem.AddCollectItem(i, d.Items[i]);
+            }
+
+            Grounded = d.Grounded;
+            IsDead = d.IsDead;
+            OnTheLine = d.OnTheLine;
+            OnTheClimbAera = d.OnTheClimbAera;
+
+            if (d.StateUD != null)
+                MyState.SetUserData(d.StateUD);
         }
     }
 }

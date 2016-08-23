@@ -19,6 +19,16 @@ namespace MG
         public virtual void Exit() { }
         public virtual bool CanChange(PlayerStateType nextPlayerState) { return true; }
         public virtual void ApplyInput(GameInput input) { }
+
+        public virtual PlayerStateRunTime GetUserData()
+        {
+            return null;
+        }
+
+        public virtual void SetUserData(PlayerStateRunTime data)
+        {
+            
+        }
     }
 }
 

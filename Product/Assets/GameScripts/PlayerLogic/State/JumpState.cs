@@ -6,6 +6,13 @@ namespace MG
     {
         private bool IsJumped;
         private float DisableTime;
+
+        class JumpUserData : PlayerStateRunTime
+        {
+            public bool IsJumped;
+            public float DisableTime;
+        }
+
         public JumpState(Player player) : base(player)
         {
             IsJumped = false;
@@ -65,6 +72,25 @@ namespace MG
         {
             var moveParam = Input.GetAxis("Horizontal");
             Rigidbody.velocity = new Vector2(moveParam * GameDefine.PlayerMaxSpeed, Rigidbody.velocity.y);
+        }
+
+        public override PlayerStateRunTime GetUserData()
+        {
+            JumpUserData data = new JumpUserData();
+            data.DisableTime = DisableTime;
+            data.IsJumped = IsJumped;
+
+            return data;
+        }
+
+        public override void SetUserData(PlayerStateRunTime data)
+        {
+            JumpUserData d = data as JumpUserData;
+            if (d == null)
+                return;
+
+            d.IsJumped = IsJumped;
+            d.DisableTime = DisableTime;
         }
     }
 

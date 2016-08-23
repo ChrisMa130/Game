@@ -1,8 +1,18 @@
 ﻿using UnityEngine;
-using System.Collections;
 
 namespace MG
 {
+    public class PlayerStateUserData
+    {
+        public PlayerStateType CurrentState;
+        public PlayerStateType NextState;
+
+        public PlayerStateRunTime RunTime;
+    }
+
+    public class PlayerStateRunTime
+    { }
+
     public class PlayerState : MonoBehaviour
     {
         public Player Owner { get; private set; }
@@ -117,6 +127,27 @@ namespace MG
         {
             var state = States[(int)CurrentPlayerState];
             state.ApplyInput(input);
+        }
+
+        public PlayerStateUserData GetUserData()
+        {
+            PlayerStateUserData data = new PlayerStateUserData();
+            data.CurrentState = CurrentPlayerState;
+            data.NextState = NextPlayerState;
+            data.RunTime = States[(int) CurrentPlayerState].GetUserData();
+
+            return data;
+        }
+
+        public void SetUserData(PlayerStateUserData data)
+        {
+            if (data == null)
+                return;
+
+            CurrentPlayerState = data.CurrentState;
+            NextPlayerState = data.NextState;
+            if (data.RunTime != null)
+                States[(int)CurrentPlayerState].SetUserData(data.RunTime);
         }
     }
 }
