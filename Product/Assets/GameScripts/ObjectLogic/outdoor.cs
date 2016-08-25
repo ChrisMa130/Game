@@ -3,9 +3,19 @@ using System.Collections;
 
 namespace MG
 {
-    public class outdoor : MonoBehaviour
+    public class outdoor : TimeUnit
     {
         public int[] NeedCollects = new int[GameDefine.CollectCount];
+
+        class UserData : TimeUnitUserData
+        {
+            public int[] NeedCollects = new int[GameDefine.CollectCount];
+        }
+
+        void Start()
+        {
+            Init();
+        }
 
         void OnTriggerEnter2D(Collider2D other)
         {
@@ -36,7 +46,24 @@ namespace MG
             }
 
             // 胜利通关逻辑，什么切换下一关，显示胜利界面拉。balbala
+        }
 
+        protected override TimeUnitUserData GetUserData()
+        {
+            UserData data = new UserData();
+
+            NeedCollects.CopyTo(data.NeedCollects, 0);
+
+            return data;
+        }
+
+        protected override void SetUserData(TimeUnitUserData data)
+        {
+            UserData d = data as UserData;
+            if (d == null)
+                return;
+
+            d.NeedCollects.CopyTo(NeedCollects, 0);
         }
     }
 }
