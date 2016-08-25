@@ -81,7 +81,7 @@ namespace MG
             else
                 LastFrame++;
 
-            Debug.Log("当前前进帧 = " + LastFrame);
+            // Debug.Log("当前前进帧 = " + LastFrame);
             TraversalUnit(o => { o.Forward(LastFrame); });
 
             LastState = TimeControllState.Forward;
@@ -92,7 +92,7 @@ namespace MG
             if (LastFrame < 0)
                 return;
 
-            Debug.Log("当前回退帧 = " + LastFrame);
+            // Debug.Log("当前回退帧 = " + LastFrame);
             TraversalUnit(o => { o.Rewind(LastFrame); });
             LastFrame--;
 
