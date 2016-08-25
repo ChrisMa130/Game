@@ -10,6 +10,7 @@ namespace MG
 
         private Vector3 StartPos;
         private Vector3 EndPos;
+		private bool Changed;
 
         private bool ValidLine;
 
@@ -24,6 +25,7 @@ namespace MG
         void Start()
         {
             CanDraw = true;
+			Changed = false;
             LineCount = 1;
             LineAngle = 0;
         }
@@ -69,6 +71,21 @@ namespace MG
                 CreateLine();
             }
 
+			if (Line != null)
+			{
+				// 当前线段消失
+				// 给领域加一个自动消失的脚本
+				if (ForbiddenLine != null)
+				{
+					var s = ForbiddenLine.AddComponent<autodestory>();
+					s.DestoryTime = GameDefine.DisableLineLiveTime;
+					ForbiddenLine = null;
+				}
+
+				GameObject.DestroyImmediate(Line);
+				Line = null;
+			}
+
             var mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             mousePos.z = 0;
             CurrentLineRenderer.SetPosition(0, mousePos);
@@ -81,7 +98,7 @@ namespace MG
 
         void SetEndPos()
         {
-            if (!ValidLine || !CanDraw)
+			if (!ValidLine || !CanDraw || !Changed)
             {
 //                if (ForbiddenLine != null)
 //                {
@@ -95,20 +112,20 @@ namespace MG
 
             SetCollider(CurrentOpLine, StartPos, EndPos);
 
-            if (Line != null)
-            {
-                // 当前线段消失
-                // 给领域加一个自动消失的脚本
-                if (ForbiddenLine != null)
-                {
-                    var s = ForbiddenLine.AddComponent<autodestory>();
-                    s.DestoryTime = GameDefine.DisableLineLiveTime;
-                    ForbiddenLine = null;
-                }
-
-                GameObject.DestroyImmediate(Line);
-                Line = null;
-            }
+//            if (Line != null)
+//            {
+//                // 当前线段消失
+//                // 给领域加一个自动消失的脚本
+//                if (ForbiddenLine != null)
+//                {
+//                    var s = ForbiddenLine.AddComponent<autodestory>();
+//                    s.DestoryTime = GameDefine.DisableLineLiveTime;
+//                    ForbiddenLine = null;
+//                }
+//
+//                GameObject.DestroyImmediate(Line);
+//                Line = null;
+//            }
 
             Line = CurrentOpLine;
 
@@ -119,6 +136,7 @@ namespace MG
 
             CurrentOpLine = null;
             CurrentLineRenderer = null;
+			Changed = false;
         }
 
         void CreateForbiddenZone()
@@ -157,7 +175,8 @@ namespace MG
 
             float angle = GetAngle(StartPos, mousePos);
             var len = mousePos.x - StartPos.x;
-            float theTa = Mathf.Round(angle/45.0f)*(45.0f);
+//            float theTa = Mathf.Round(angle/45.0f)*(45.0f);
+			float theTa = Mathf.Round(angle/90.0f)*(90.0f);
             LineAngle = (int)Mathf.Abs(theTa);
             if (LineAngle == 90)
             {
@@ -170,6 +189,7 @@ namespace MG
             CurrentLineRenderer.SetPosition(1, mousePos);
 
             EndPos = mousePos;
+			Changed = true;
 
             Vector3 dir = EndPos - StartPos;
             float dist = Vector3.Distance(StartPos, EndPos);
