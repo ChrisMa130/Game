@@ -1,9 +1,8 @@
 ﻿using UnityEngine;
-using System.Collections;
 
 namespace MG
 {
-    public class pickup : MonoBehaviour
+    public class pickup : TimeUnit
     {
         public int Key      = 0;
         public int Value    = 0;
@@ -16,7 +15,8 @@ namespace MG
                 if (player != null)
                 {
                     player.AddCollectItem(Key, Value);
-                    GameObject.DestroyObject(gameObject);
+                    DestoryMe();
+                    // GameObject.DestroyObject(gameObject);
                 }
             }
         }
