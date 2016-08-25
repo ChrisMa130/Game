@@ -1,9 +1,8 @@
 ﻿using UnityEngine;
-using System.Collections;
 
 namespace MG
 {
-    public class NpcPortal : MonoBehaviour
+    public class NpcPortal : TimeUnit
     {
         public int ReviveCount;             // 复活数量
         public GameObject[] NpcObjects;        // NPC的预设对象
@@ -13,10 +12,18 @@ namespace MG
 
         private float NextReviveTime = 0;
 
+        class UserData : TimeUnitUserData
+        {
+            public float NextReviveTime;
+            public GameObject[] NpcObjects;
+        }
+
         void Start()
         {
             NpcObjects = new GameObject[ReviveCount];
             NextReviveTime = ReviveTime;
+
+            Init();
         }
 
         void Update()
@@ -62,6 +69,27 @@ namespace MG
                     NpcObjects[i] = null;
                 }
             }
+        }
+
+        protected override TimeUnitUserData GetUserData()
+        {
+            UserData data = new UserData();
+
+            data.NextReviveTime = NextReviveTime;
+            data.NpcObjects = new GameObject[ReviveCount];
+            NpcObjects.CopyTo(data.NpcObjects, 0);
+
+            return data;
+        }
+
+        protected override void SetUserData(TimeUnitUserData data)
+        {
+            UserData d = data as UserData;
+            if (d == null)
+                return;
+
+            NextReviveTime = d.NextReviveTime;
+            d.NpcObjects.CopyTo(NpcObjects, 0);
         }
     }
 }
