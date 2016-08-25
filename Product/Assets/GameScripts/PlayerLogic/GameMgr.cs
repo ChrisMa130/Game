@@ -92,11 +92,12 @@ namespace MG
 
         public void PauseGame(bool pause)
         {
+            // Debug.Log("PauseGame " + pause);
             Time.timeScale = pause ? 0 : 1;
+            IsPause = pause;
 
-            if (pause && TimeController.Instance.CurrentState == TimeControllState.Freeze)
+            if (TimeController.Instance.CurrentState == TimeControllState.Freeze)
             {
-
                 RecordingTime = true;
             }
                 
