@@ -11,6 +11,11 @@ namespace MG
             {
                 player.Dead();
             }
+
+			//temp
+			var npc = other.GetComponent<Npc>();
+			if (npc)
+				Destroy (npc.gameObject);
         }
     }
 }

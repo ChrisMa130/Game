@@ -49,7 +49,7 @@ namespace MG
         public static readonly float DisableLineLiveTime = 0.001f;
         public static readonly float ForbiddenLineAddLen = 0.6f;
         public static readonly float ForbiddenLineAddWidth = 0.4f;
-		public static readonly float StairsSlopeHeight = 0.5f;
+		public static readonly float StairsSlopeHeight = 0.1f;
 
         public static readonly float NpcMoveSpeed = 1.0f;
         public static readonly float NpcJumpForce = 600.0f;
