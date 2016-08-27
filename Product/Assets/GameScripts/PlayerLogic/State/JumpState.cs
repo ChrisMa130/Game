@@ -31,10 +31,11 @@ namespace MG
             if (DisableTime > 0)
                 return;
 
-            if (Owner.Grounded)
-            {
-                Owner.Stand();
-            }
+			if (Owner.Grounded && Rigidbody.velocity == Vector2.zero) {
+				Owner.Stand ();
+			} else if (Owner.Grounded && Rigidbody.velocity != Vector2.zero) {
+				Owner.Run ();
+			}
         }
 
         public override void Exit() { }

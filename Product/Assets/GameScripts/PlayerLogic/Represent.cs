@@ -17,11 +17,14 @@ namespace MG
 
         public void Run(float moveParam)
         {
+			Anim.SetBool ("Move", true);
+			Anim.SetBool ("Ground", true);
             Anim.SetFloat("Speed", Mathf.Abs(moveParam));
         }
 
         public void Stand()
         {
+			Anim.SetBool ("Move", false);
             Anim.SetBool("Ground", true);
             // Anim.SetFloat("vSpeed", Rigidbody.velocity.y);
             Anim.SetFloat("Speed", 0);
