@@ -67,7 +67,7 @@ namespace MG
             if (InputMgr.TimebackDown)
             {
                 RecordingTime = false;
-                PauseGame(false);
+                PauseGame(true);
                 ctrl.RewindTime();
             }
             else if (InputMgr.TimebackUp)
@@ -79,7 +79,7 @@ namespace MG
             else if (InputMgr.TimeForwardDown)
             {
                 RecordingTime = false;
-                PauseGame(false);
+                PauseGame(true);
                 ctrl.ForwardTime();
             }
             else if (InputMgr.TimeForwardup)
