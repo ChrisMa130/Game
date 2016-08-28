@@ -27,7 +27,6 @@ namespace MG
 
         // TODO 动画信息
         public int AnimHash;
-        public int AnimLayer;
         public float AnimTime;
     }
 }
