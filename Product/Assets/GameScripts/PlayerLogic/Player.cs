@@ -15,6 +15,8 @@ namespace MG
         public bool OnTheClimbAera { get; set; }
         public GameObject LadderObj { get; set; }
 
+        private Dir CurrentDir;
+
         public Vector3 Position
         {
             get { return transform.position; }
@@ -31,6 +33,8 @@ namespace MG
             public bool OnTheLine;
             public bool OnTheClimbAera;
             public bool IsDead;
+
+            public Dir dir;
 
             // 角色状态
             public PlayerStateUserData StateUD;
@@ -115,6 +119,7 @@ namespace MG
 
         public void TurnRound(Dir dir)
         {
+            CurrentDir = dir;
             MyRepresent.TurnRound(dir);
         }
 
@@ -137,6 +142,7 @@ namespace MG
             data.IsDead = IsDead;
             data.OnTheLine = OnTheLine;
             data.OnTheClimbAera = OnTheClimbAera;
+            data.dir = CurrentDir;
 
             data.StateUD = MyState.GetUserData();
 
@@ -158,6 +164,7 @@ namespace MG
             IsDead = d.IsDead;
             OnTheLine = d.OnTheLine;
             OnTheClimbAera = d.OnTheClimbAera;
+            TurnRound(d.dir);
 
             if (d.StateUD != null)
                 MyState.SetUserData(d.StateUD);
