@@ -63,6 +63,7 @@ namespace MG
         void ProcessTime()
         {
             TimeController ctrl = TimeController.Instance;
+            var state = TimeController.Instance.CurrentState;
 
             if (InputMgr.TimebackDown)
             {
@@ -76,13 +77,13 @@ namespace MG
                 PauseGame(true);
                 ctrl.Freeze();
             }
-            else if (InputMgr.TimeForwardDown)
+            else if (InputMgr.TimeForwardDown && state != TimeControllState.Recording)
             {
                 RecordingTime = false;
                 PauseGame(true);
                 ctrl.ForwardTime();
             }
-            else if (InputMgr.TimeForwardup)
+            else if (InputMgr.TimeForwardup && state != TimeControllState.Recording)
             {
                 RecordingTime = false;
                 PauseGame(true);
