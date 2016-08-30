@@ -8,7 +8,7 @@ namespace MG
     public class MovePlatform : PlatformBase
     {
         public Dir MoveDir;
-
+		public bool Parent;
         //private Rigidbody2D Rigidbody;
         private float Speed;
 
@@ -16,6 +16,7 @@ namespace MG
         public List<GameObject> Partner;
         public bool PlayerStay;
 
+		public float MySpeed;
         class UserData : TimeUnitUserData
         {
             public float Speed;
@@ -26,9 +27,10 @@ namespace MG
         {
             //Rigidbody = gameObject.GetComponent<Rigidbody2D>();
             Speed = Mathf.Abs(GameDefine.MovePlatformSpeed);
+			if (MySpeed > 0.0f)
+				Speed = Mathf.Abs (MySpeed);
             BeMove = true;
             PlayerStay = false;
-
             Init();
         }
 
@@ -122,7 +124,7 @@ namespace MG
 
             //if (obj.gameObject.tag == "Player")
             //    PlayerStay = true;
-			if (obj.gameObject.tag == "Player")
+			if (obj.gameObject.tag == "Player" && Parent)
 				obj.gameObject.transform.parent = transform;
 //			if (obj.gameObject.tag == "NPC") {
 //				obj.gameObject.transform.parent = transform;

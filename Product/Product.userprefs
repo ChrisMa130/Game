@@ -1,21 +1,15 @@
 ﻿<Properties StartupItem="Assembly-CSharp.csproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="Unity.Instance.Unity Editor" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\GameScripts\PlayerLogic\State\PlayerState.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\GameScripts\ObjectLogic\platform\MovePlatform.cs">
     <Files>
-      <File FileName="Assets\GameScripts\PlayerLogic\Player.cs" Line="1" Column="1" />
-      <File FileName="Assets\GameScripts\PlayerLogic\LineMgr.cs" Line="1" Column="1" />
-      <File FileName="Assets\GameScripts\ObjectLogic\platform\MovePlatform.cs" Line="1" Column="1" />
-      <File FileName="Assets\GameScripts\PlayerLogic\GameDefine.cs" Line="1" Column="1" />
-      <File FileName="Assets\GameScripts\PlayerLogic\GameMgr.cs" Line="1" Column="1" />
-      <File FileName="Assets\GameScripts\PlayerLogic\State\JumpState.cs" Line="1" Column="1" />
-      <File FileName="Assets\GameScripts\PlayerLogic\State\StandState.cs" Line="18" Column="1" />
-      <File FileName="Assets\GameScripts\PlayerLogic\Represent.cs" Line="28" Column="1" />
-      <File FileName="Assets\GameScripts\PlayerLogic\State\PlayerState.cs" Line="47" Column="1" />
+      <File FileName="Assets\GameScripts\ObjectLogic\platform\MovePlatform.cs" Line="35" Column="1" />
+      <File FileName="Assets\GameScripts\PlayerLogic\GameDefine.cs" Line="57" Column="62" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore>
-      <Breakpoint file="D:\Github\Game\Product\Assets\GameScripts\PlayerLogic\State\StandState.cs" line="17" column="30" />
+      <Breakpoint file="D:\Github\Game\Product\Assets\GameScripts\PlayerLogic\State\JumpState.cs" line="34" column="1" />
+      <Breakpoint file="D:\Github\Game\Product\Assets\GameScripts\ObjectLogic\platform\MovePlatform.cs" line="29" column="1" />
     </BreakpointStore>
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
