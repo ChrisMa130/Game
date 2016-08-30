@@ -49,7 +49,7 @@ namespace MG
             if (InputMgr.PauseTime)
             {
                 IsPause = !IsPause;
-                PauseGame(IsPause);
+                PauseGame(IsPause, true);
             }
 
             if (!IsPause)
@@ -68,36 +68,36 @@ namespace MG
             if (InputMgr.TimebackDown)
             {
                 RecordingTime = false;
-                PauseGame(true);
+                PauseGame(false, false);
                 ctrl.RewindTime();
             }
             else if (InputMgr.TimebackUp)
             {
                 RecordingTime = false;
-                PauseGame(true);
+                PauseGame(true, false);
                 ctrl.Freeze();
             }
             else if (InputMgr.TimeForwardDown && state != TimeControllState.Recording)
             {
                 RecordingTime = false;
-                PauseGame(true);
+                PauseGame(false, false);
                 ctrl.ForwardTime();
             }
             else if (InputMgr.TimeForwardup && state != TimeControllState.Recording)
             {
                 RecordingTime = false;
-                PauseGame(true);
+                PauseGame(true, false);
                 ctrl.Freeze();
             }
         }
 
-        public void PauseGame(bool pause)
+        public void PauseGame(bool pause, bool DoRecord)
         {
             // Debug.Log("PauseGame " + pause);
             Time.timeScale = pause ? 0 : 1;
             IsPause = pause;
 
-            if (TimeController.Instance.CurrentState == TimeControllState.Freeze)
+            if (DoRecord)
             {
                 RecordingTime = true;
             }
