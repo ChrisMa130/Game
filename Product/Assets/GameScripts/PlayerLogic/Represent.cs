@@ -17,6 +17,7 @@ namespace MG
 
         public void Run(float moveParam)
         {
+			Reset ();
 			Anim.SetBool ("Move", true);
 			Anim.SetBool ("Ground", true);
             Anim.SetFloat("Speed", Mathf.Abs(moveParam));
@@ -24,6 +25,7 @@ namespace MG
 
         public void Stand()
         {
+			Reset ();
 			Anim.SetBool ("Move", false);
             Anim.SetBool("Ground", true);
             // Anim.SetFloat("vSpeed", Rigidbody.velocity.y);
@@ -32,17 +34,20 @@ namespace MG
 
         public void Climb(float moveParam)
         {
+			Reset ();
             Anim.SetFloat("Speed", Mathf.Abs(moveParam));
         }
 
         public void Dead()
         {
+			Reset ();
             Anim.SetBool("Dead", true);
             Rigidbody.isKinematic = true;
         }
 
         public void Jump()
         {
+			Reset ();
             Anim.SetBool("Ground", false);
         }
 
@@ -57,6 +62,15 @@ namespace MG
 
             Owner.transform.localScale = theScale;
         }
+
+		private void Reset() {
+			var spineRenderer = Anim.gameObject.GetComponent<Spine.Unity.SkeletonRenderer>();
+
+			if (spineRenderer == null)
+				return;
+
+			spineRenderer.skeleton.SetBonesToSetupPose();
+		}
     }
 }
 
