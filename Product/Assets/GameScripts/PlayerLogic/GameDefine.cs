@@ -41,7 +41,7 @@ namespace MG
         public static readonly int CollectCount = 3;
         public static readonly float Epsilon = 0.0000001f;      // 为什么要自定义呢，因为编译手机的话，在mono的Epsilon是0.这是一个bug。
         public static readonly float PlayerMaxSpeed = 3.7f;
-        public static readonly float JumpForce = 700f;
+        public static readonly float JumpForce = 1400f;
 
         public static readonly float LineMaxLimit = 2.5f;
         public static readonly float LineMinLimit = 0.5f;
@@ -52,7 +52,7 @@ namespace MG
 		public static readonly float StairsSlopeHeight = 0.1f;
 
         public static readonly float NpcMoveSpeed = 1.3f;
-        public static readonly float NpcJumpForce = 600.0f;
+        public static readonly float NpcJumpForce = 2000.0f;
 
         public static readonly float MovePlatformSpeed = 0.03f;
 

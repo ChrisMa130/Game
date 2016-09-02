@@ -203,9 +203,11 @@ namespace MG
             // 动画部分
             if (Anim != null)
             {
-                var state = Anim.GetCurrentAnimatorStateInfo(0);
-                data.AnimHash = state.fullPathHash;
-                data.AnimTime = state.normalizedTime;
+				if (Anim.gameObject.tag.Equals ("Player")) {                //TEMP!!!! ERASE WHEN ANIMATION IS FINISHED
+					var state = Anim.GetCurrentAnimatorStateInfo (0);
+					data.AnimHash = state.fullPathHash;
+					data.AnimTime = state.normalizedTime;
+				}
             }
 
             // 自主数据
