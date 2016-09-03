@@ -17,18 +17,18 @@ namespace MG
 
         public void Run(float moveParam)
         {
-			Reset ();
-			Anim.SetBool ("Move", true);
-			Anim.SetBool ("Ground", true);
+			Reset();
+			Anim.SetBool("Move", true);
+			Anim.SetBool("Ground", true);
             Anim.SetFloat("Speed", Mathf.Abs(moveParam));
         }
 
         public void Stand()
         {
-			Reset ();
-			Anim.SetBool ("Move", false);
+			Reset();
+			Anim.SetBool("Move", false);
             Anim.SetBool("Ground", true);
-            // Anim.SetFloat("vSpeed", Rigidbody.velocity.y);
+            Anim.SetBool("Dead", false);
             Anim.SetFloat("Speed", 0);
         }
 
@@ -42,7 +42,6 @@ namespace MG
         {
 			Reset ();
             Anim.SetBool("Dead", true);
-            Rigidbody.isKinematic = true;
         }
 
         public void Jump()
@@ -71,6 +70,11 @@ namespace MG
 
 			spineRenderer.skeleton.SetBonesToSetupPose();
 		}
+
+        public Animator GetAnimator()
+        {
+            return Anim;
+        }
     }
 }
 

@@ -8,6 +8,8 @@ namespace MG
         private GameInput InputMgr;
         private Collect CollectItem;
         private Represent MyRepresent;
+        private Vector3 RevivePoint;
+
         public PlayerState MyState;
         private Transform GroundCheck;
         public bool Grounded { get; private set; }
@@ -60,6 +62,8 @@ namespace MG
         {
             Stand();
             GroundCheck = transform.Find("GroundCheck");
+
+            SetRevivePoint(transform.position);
 
             Init();
         }
@@ -168,6 +172,19 @@ namespace MG
 
             if (d.StateUD != null)
                 MyState.SetUserData(d.StateUD);
+        }
+
+        public void SetRevivePoint(Vector3 pos)
+        {
+            RevivePoint = pos;
+        }
+
+        public void Revive()
+        {
+            GameMgr.Instance.LineMgr.CanDraw = true;
+            IsDead = false;
+            transform.position = RevivePoint;
+            Stand();
         }
     }
 }

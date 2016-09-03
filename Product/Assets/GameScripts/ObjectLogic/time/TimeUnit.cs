@@ -203,7 +203,10 @@ namespace MG
             // 动画部分
             if (Anim != null)
             {
-				if (Anim.gameObject.tag.Equals ("Player")) {                //TEMP!!!! ERASE WHEN ANIMATION IS FINISHED
+				if (Anim.gameObject.tag.Equals ("Player"))
+                {                
+                    //TEMP!!!! ERASE WHEN ANIMATION IS FINISHED
+                    //  =。= 
 					var state = Anim.GetCurrentAnimatorStateInfo (0);
 					data.AnimHash = state.fullPathHash;
 					data.AnimTime = state.normalizedTime;

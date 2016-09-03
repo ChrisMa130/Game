@@ -36,6 +36,9 @@ namespace MG
 
         public void ApplyInput(GameInput input)
         {
+            if (!CanDraw)
+                return;
+
             // 如果是鼠标按下
             if (input.Mouse1Down)
             {

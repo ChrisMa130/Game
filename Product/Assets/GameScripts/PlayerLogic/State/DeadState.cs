@@ -11,7 +11,10 @@ namespace MG
 
         public override void Enter()
         {
+
+
             Animator.Dead();
+            Rigidbody.velocity = Vector2.zero;
         }
 
         public override void Activate(float deltaTime) { }
@@ -28,16 +31,18 @@ namespace MG
 
         public override void ApplyInput(GameInput input)
         {
-            if (input.Jump)
+            var anim = Animator.GetAnimator();
+
+            var state = anim.GetCurrentAnimatorStateInfo(0);
+            if (state.IsName("die") && state.length - state.normalizedTime < 0.1f)
             {
-                // TODO 返回检查点。
-                Owner.Stand();
+                // 动画时间外
+                GameMgr.Instance.LineMgr.CanDraw = false;
+                if (input.Jump)
+                {
+                    Owner.Revive();
+                }
             }
-                
         }
-
-
     }
-
-
 }

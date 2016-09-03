@@ -29,7 +29,7 @@ namespace MG
 
         public override bool CanChange(PlayerStateType nextPlayerState)
         {
-            if (Owner.IsDead)
+            if (Owner.IsDead && nextPlayerState != PlayerStateType.Stand)
                 return false;
 
             return true;

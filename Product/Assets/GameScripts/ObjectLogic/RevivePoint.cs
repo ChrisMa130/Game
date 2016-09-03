@@ -1,9 +1,12 @@
 ﻿using UnityEngine;
+using System.Collections;
 
 namespace MG
 {
-    public class Spike : MonoBehaviour
+    public class RevivePoint : MonoBehaviour
     {
+        public Vector3 Pos;
+
         void OnTriggerEnter2D(Collider2D other)
         {
             if (TimeController.Instance.IsOpTime())
@@ -11,13 +14,10 @@ namespace MG
 
             var player = other.GetComponent<Player>();
             if (player != null)
-                player.Dead();
-
-			//temp
-			var npc = other.GetComponent<Npc>();
-			if (npc != null)
-				npc.Dead();
+                player.SetRevivePoint(Pos);
         }
     }
+
+
 }
 

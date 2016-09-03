@@ -32,6 +32,9 @@ namespace MG
 
         public override bool CanChange(PlayerStateType nextPlayerState)
         {
+            if (nextPlayerState == PlayerStateType.Dead)
+                return true;
+
             if (nextPlayerState == PlayerStateType.Stand || nextPlayerState == PlayerStateType.Jump || nextPlayerState == PlayerStateType.Climb)
                 return true;
 
