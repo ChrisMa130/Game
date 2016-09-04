@@ -79,15 +79,29 @@ namespace MG
             }
             else if (InputMgr.TimeForwardDown && state != TimeControllState.Recording)
             {
-                RecordingTime = false;
-                PauseGame(false, false);
-                ctrl.ForwardTime();
+                if (!ctrl.IsForwardEnd())
+                {
+                    RecordingTime = false;
+                    PauseGame(false, false);
+                    ctrl.ForwardTime();
+                }
+                else
+                {
+                    PauseGame(true, false);
+                }
             }
             else if (InputMgr.TimeForwardup && state != TimeControllState.Recording)
             {
-                RecordingTime = false;
-                PauseGame(true, false);
-                ctrl.Freeze();
+                if (!ctrl.IsForwardEnd())
+                {
+                    RecordingTime = false;
+                    PauseGame(true, false);
+                    ctrl.Freeze();
+                }
+                else
+                {
+                    PauseGame(true, false);
+                }
             }
         }
 
@@ -101,7 +115,6 @@ namespace MG
             {
                 RecordingTime = true;
             }
-                
         }
     }
 }

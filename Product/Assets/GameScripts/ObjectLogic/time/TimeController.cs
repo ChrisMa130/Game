@@ -170,6 +170,14 @@ namespace MG
 
             return false;
         }
+
+        public bool IsForwardEnd()
+        {
+            if (LastFrame + 1 >= CurrentFrame)
+                return true;
+
+            return false;
+        }
     }
 }
 
