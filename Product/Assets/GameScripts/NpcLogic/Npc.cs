@@ -69,7 +69,7 @@ namespace MG
 
         void Start()
         {
-            Init();
+            Init(true);
 
             Stand();
             GroundCheck = transform.Find("GroundCheck");

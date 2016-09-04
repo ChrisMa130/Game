@@ -65,7 +65,7 @@ namespace MG
 
             SetRevivePoint(transform.position);
 
-            Init();
+            Init(false);
         }
 
         void Update()

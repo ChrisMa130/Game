@@ -14,7 +14,7 @@ namespace MG
 
         void Start()
         {
-            Init();
+            Init(false);
         }
 
         void OnTriggerEnter2D(Collider2D other)

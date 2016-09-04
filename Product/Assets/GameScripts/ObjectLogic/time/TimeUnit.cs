@@ -16,7 +16,7 @@ namespace MG
 
         private Dictionary<int, TimeUnitUserData> UserDataTable;
 
-        protected void Init()
+        protected void Init(bool bCrate)
         {
             Rigid = gameObject.GetComponent<Rigidbody2D>();
             Anim = gameObject.GetComponent<Animator>();
@@ -25,7 +25,7 @@ namespace MG
             ForwardTimeData = new Stack<TimeData>();
             UserDataTable = new Dictionary<int, TimeUnitUserData>();
 
-            CreateData = Snapshot(null, TimeController.Instance.CurrentFrame, true);
+            CreateData = Snapshot(null, TimeController.Instance.CurrentFrame, bCrate);
             FrameTimeData.Push(CreateData);
 
             TimeController.Instance.AddUnit(this);

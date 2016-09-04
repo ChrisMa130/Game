@@ -31,7 +31,7 @@ namespace MG
 				Speed = Mathf.Abs (MySpeed);
             BeMove = true;
             PlayerStay = false;
-            Init();
+            Init(false);
         }
 
         public override void TurnOn(GameObject obj)

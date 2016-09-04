@@ -19,8 +19,6 @@ namespace MG
         /// </summary>
         private readonly List<TimeUnit> Units = new List<TimeUnit>();
 
-        private float CurrentTimeSpeed;
-
         public TimeControllState CurrentState { get; private set; }
 
         /// <summary>

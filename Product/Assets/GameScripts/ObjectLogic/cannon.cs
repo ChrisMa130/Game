@@ -23,7 +23,7 @@ namespace MG
         {
             NextCreateBulletTime = GameDefine.CannonBulletCreateInterval;
 
-            Init();
+            Init(false);
         }
 
         void Update()

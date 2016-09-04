@@ -15,7 +15,7 @@ namespace MG
         {
             DestoryCount = GameDefine.CannonBulletDestoryCount;
 
-            Init();
+            Init(true);
         }
 
         protected override TimeUnitUserData GetUserData()

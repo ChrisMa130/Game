@@ -23,7 +23,7 @@ namespace MG
             NpcObjects = new GameObject[ReviveCount];
             NextReviveTime = ReviveTime;
 
-            Init();
+            Init(false);
         }
 
         void Update()
