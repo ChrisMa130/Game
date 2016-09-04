@@ -1,11 +1,14 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.SceneManagement;
 
 namespace MG
 {
     public class outdoor : TimeUnit
     {
         public int[] NeedCollects = new int[GameDefine.CollectCount];
+
+        public string NextLevelName;
 
         class UserData : TimeUnitUserData
         {
@@ -46,6 +49,14 @@ namespace MG
             }
 
             // 胜利通关逻辑，什么切换下一关，显示胜利界面拉。balbala
+
+            if (string.IsNullOrEmpty(NextLevelName))
+            {
+                Debug.Log("呵呵哒了，没下一关了。GGWP");
+                return;
+            }
+
+            SceneManager.LoadSceneAsync(NextLevelName);
         }
 
         protected override TimeUnitUserData GetUserData()
