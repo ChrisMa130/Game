@@ -28,6 +28,9 @@ namespace MG
 
         void Update()
         {
+            if (TimeController.Instance.IsOpTime())
+                return;
+
             float deltaTime = Time.deltaTime;
             NextReviveTime -= deltaTime;
 

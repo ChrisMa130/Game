@@ -67,15 +67,29 @@ namespace MG
 
             if (InputMgr.TimebackDown)
             {
-                RecordingTime = false;
-                PauseGame(false, false);
-                ctrl.RewindTime();
+                if (!ctrl.IsRewindEnd())
+                {
+                    RecordingTime = false;
+                    PauseGame(false, false);
+                    ctrl.RewindTime();
+                }
+                else
+                {
+                    PauseGame(true, false);
+                }
             }
             else if (InputMgr.TimebackUp)
             {
-                RecordingTime = false;
-                PauseGame(true, false);
-                ctrl.Freeze();
+                if (!ctrl.IsRewindEnd())
+                {
+                    RecordingTime = false;
+                    PauseGame(true, false);
+                    ctrl.Freeze();
+                }
+                else
+                {
+                    PauseGame(true, false);
+                }
             }
             else if (InputMgr.TimeForwardDown && state != TimeControllState.Recording)
             {

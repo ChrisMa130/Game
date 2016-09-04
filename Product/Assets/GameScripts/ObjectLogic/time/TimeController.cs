@@ -176,6 +176,14 @@ namespace MG
 
             return false;
         }
+
+        public bool IsRewindEnd()
+        {
+            if (LastFrame < 0)
+                return true;
+
+            return false;
+        }
     }
 }
 
