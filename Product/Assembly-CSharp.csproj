@@ -97,6 +97,7 @@
      <Compile Include="Assets\GameScripts\NpcLogic\State\NpcState.cs" />
      <Compile Include="Assets\GameScripts\NpcLogic\State\NpcWalkState.cs" />
      <Compile Include="Assets\GameScripts\ObjectLogic\NpcPortal.cs" />
+     <Compile Include="Assets\GameScripts\ObjectLogic\RevivePoint.cs" />
      <Compile Include="Assets\GameScripts\ObjectLogic\SingletonMonoBehaviour.cs" />
      <Compile Include="Assets\GameScripts\ObjectLogic\Spike.cs" />
      <Compile Include="Assets\GameScripts\ObjectLogic\autodestory.cs" />
@@ -114,6 +115,7 @@
      <Compile Include="Assets\GameScripts\ObjectLogic\time\TimeController.cs" />
      <Compile Include="Assets\GameScripts\ObjectLogic\time\TimeData.cs" />
      <Compile Include="Assets\GameScripts\ObjectLogic\time\TimeUnit.cs" />
+     <Compile Include="Assets\GameScripts\PlayerLogic\AudioManager.cs" />
      <Compile Include="Assets\GameScripts\PlayerLogic\Collect.cs" />
      <Compile Include="Assets\GameScripts\PlayerLogic\GameDefine.cs" />
      <Compile Include="Assets\GameScripts\PlayerLogic\GameInput.cs" />

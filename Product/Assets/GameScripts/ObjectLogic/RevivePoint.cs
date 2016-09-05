@@ -5,7 +5,6 @@ namespace MG
 {
     public class RevivePoint : MonoBehaviour
     {
-        public Vector3 Pos;
 
         void OnTriggerEnter2D(Collider2D other)
         {
@@ -14,10 +13,8 @@ namespace MG
 
             var player = other.GetComponent<Player>();
             if (player != null)
-                player.SetRevivePoint(Pos);
+				player.SetRevivePoint(transform.position);
         }
     }
-
-
 }
 
