@@ -172,6 +172,8 @@ namespace MG
 
             if (d.StateUD != null)
                 MyState.SetUserData(d.StateUD);
+
+            MyRepresent.Reset();
         }
 
         public void SetRevivePoint(Vector3 pos)

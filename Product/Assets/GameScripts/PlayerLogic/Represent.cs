@@ -62,7 +62,8 @@ namespace MG
             Owner.transform.localScale = theScale;
         }
 
-		private void Reset() {
+		public void Reset()
+        {
 			var spineRenderer = Anim.gameObject.GetComponent<Spine.Unity.SkeletonRenderer>();
 
 			if (spineRenderer == null)
