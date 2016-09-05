@@ -56,7 +56,7 @@ namespace MG
 
         void CreateLine()
         {
-            var o = Resources.Load("prefabs/line") as GameObject;
+            var o = Resources.Load("prefabs/Utilities/line") as GameObject;
             CurrentOpLine = Instantiate(o);
             CurrentOpLine.name = "Line" + LineCount++;
             CurrentLineRenderer = CurrentOpLine.GetComponent<LineRenderer>();
@@ -144,7 +144,7 @@ namespace MG
 
         void CreateForbiddenZone()
         {
-            var o = Resources.Load("prefabs/ForbiddenZone") as GameObject;
+            var o = Resources.Load("prefabs/Utilities/ForbiddenZone") as GameObject;
             ForbiddenLine = Instantiate(o);
             ForbiddenLine.name = "Forbidden" + LineCount;
 

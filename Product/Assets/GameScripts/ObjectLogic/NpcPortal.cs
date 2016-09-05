@@ -51,7 +51,7 @@ namespace MG
 
         GameObject ReviveNpc()
         {
-            var o = Resources.Load("prefabs/Enemy") as GameObject;
+            var o = Resources.Load("prefabs/MovingObjects/Enemy") as GameObject;
             var enemy = Instantiate(o);
             enemy.transform.position = gameObject.transform.position;
             var npc = enemy.gameObject.GetComponent<Npc>();

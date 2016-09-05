@@ -29,7 +29,7 @@ namespace MG
         {
             if (!CheckObj(obj.gameObject))
                 return;
-
+			
             var player = obj.GetComponent<Player>();
             if (player != null)
             {
@@ -52,6 +52,7 @@ namespace MG
                 HasPlayer = false;
         }
 			
+
     }
 
 }
