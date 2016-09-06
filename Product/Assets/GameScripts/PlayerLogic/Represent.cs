@@ -18,7 +18,7 @@ namespace MG
         public void Run(float moveParam)
         {
 			Reset();
-			Anim.SetBool("Move", true);
+			Anim.SetBool ("Move", true);
 			Anim.SetBool("Ground", true);
             Anim.SetFloat("Speed", Mathf.Abs(moveParam));
         }
