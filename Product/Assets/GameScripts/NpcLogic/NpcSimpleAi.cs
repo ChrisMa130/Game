@@ -32,12 +32,10 @@ namespace MG
 
             if (CheckWall())
             {
-                Debug.Log("没找到墙");
                 NpcObject.TurnRound();
                 return;
             }
-
-
+				
             if (!FailDown && NpcObject.Grounded && CheckFallDown())
             {
                 NpcObject.TurnRound();
@@ -77,7 +75,7 @@ namespace MG
 
             var layer = obj.gameObject.layer;
             // 以下这个判断需要改变实现方法。太烂了。~~~
-            if (!samePlane && obj.transform.tag.Equals("ForbiddenZone") && layer == LayerMask.NameToLayer("Ground"))
+			if (!samePlane && obj.transform.tag.Equals("ForbiddenZone") && layer == LayerMask.NameToLayer("Ground"))
             {
                 var myHeight = NpcObject.GroundCheckPosition.y + GameDefine.StairsSlopeHeight;
                 var targetHeight = obj.transform.position.y + 0.1f;

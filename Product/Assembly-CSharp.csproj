@@ -121,10 +121,12 @@
      <Compile Include="Assets\GameScripts\PlayerLogic\GameDefine.cs" />
      <Compile Include="Assets\GameScripts\PlayerLogic\GameInput.cs" />
      <Compile Include="Assets\GameScripts\PlayerLogic\GameMgr.cs" />
+     <Compile Include="Assets\GameScripts\PlayerLogic\GameSaveData.cs" />
      <Compile Include="Assets\GameScripts\PlayerLogic\LineMgr.cs" />
      <Compile Include="Assets\GameScripts\PlayerLogic\ObjectMove.cs" />
      <Compile Include="Assets\GameScripts\PlayerLogic\Player.cs" />
      <Compile Include="Assets\GameScripts\PlayerLogic\Represent.cs" />
+     <Compile Include="Assets\GameScripts\PlayerLogic\SimpleJson.cs" />
      <Compile Include="Assets\GameScripts\PlayerLogic\State\BaseState.cs" />
      <Compile Include="Assets\GameScripts\PlayerLogic\State\ClimbState.cs" />
      <Compile Include="Assets\GameScripts\PlayerLogic\State\DeadState.cs" />

@@ -1,17 +1,20 @@
 ﻿<Properties StartupItem="Assembly-CSharp.csproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="Unity.Instance.Unity Editor" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\GameScripts\PlayerLogic\LineMgr.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\GameScripts\NpcLogic\NpcSimpleAi.cs">
     <Files>
       <File FileName="Assets\GameScripts\ObjectLogic\Spike.cs" Line="1" Column="1" />
       <File FileName="Assets\GameScripts\PlayerLogic\Represent.cs" Line="1" Column="1" />
-      <File FileName="Assets\GameScripts\ObjectLogic\platform\PlatformSwitch.cs" Line="48" Column="29" />
+      <File FileName="Assets\GameScripts\ObjectLogic\platform\PlatformSwitch.cs" Line="1" Column="1" />
+      <File FileName="Assets\GameScripts\PlayerLogic\GameDefine.cs" Line="52" Column="55" />
       <File FileName="Assets\GameScripts\ObjectLogic\platform\MovePlatform.cs" Line="29" Column="1" />
-      <File FileName="Assets\GameScripts\ObjectLogic\npcswitcher.cs" Line="53" Column="57" />
-      <File FileName="Assets\GameScripts\PlayerLogic\LineMgr.cs" Line="59" Column="54" />
+      <File FileName="Assets\GameScripts\NpcLogic\NpcSimpleAi.cs" Line="101" Column="1" />
+      <File FileName="Assets\GameScripts\NpcLogic\Npc.cs" Line="29" Column="42" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
-    <BreakpointStore />
+    <BreakpointStore>
+      <Breakpoint file="D:\Github\Game\Product\Assets\GameScripts\NpcLogic\NpcSimpleAi.cs" line="80" column="1" />
+    </BreakpointStore>
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
 </Properties>
