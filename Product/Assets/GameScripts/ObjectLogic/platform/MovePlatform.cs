@@ -17,6 +17,10 @@ namespace MG
         public bool PlayerStay;
 
 		public float MySpeed;
+
+        private GameObject Line;
+        bool HasLine;
+
         class UserData : TimeUnitUserData
         {
             public float Speed;
@@ -30,6 +34,7 @@ namespace MG
 			if (MySpeed > 0.0f)
 				Speed = Mathf.Abs (MySpeed);
             BeMove = true;
+            HasLine = false;
             PlayerStay = false;
             Init(false);
         }
@@ -69,7 +74,15 @@ namespace MG
         void Update()
         {
             if (!BeMove)
-                return;
+            {
+                if (HasLine && Line == null)
+                {
+                    BeMove = true;
+                    HasLine = false;
+                }
+                else
+                    return;
+            }
 
             if (TimeController.Instance.IsOpTime())
                 return;
@@ -119,6 +132,8 @@ namespace MG
             }
             else if (obj.gameObject.tag == "ForbiddenZone" && obj.gameObject.layer == LayerMask.NameToLayer("Ground"))
             {
+                Line = obj.gameObject;
+                HasLine = true;
 				BeMove = false;
             }
 
@@ -134,9 +149,18 @@ namespace MG
 
         void OnCollisionExit2D(Collision2D obj)
         {
+            if (obj.gameObject.tag == "Building")
+            {
+                BeMove = true;
+            }
+            else if (obj.gameObject.tag == "ForbiddenZone" && obj.gameObject.layer == LayerMask.NameToLayer("Ground"))
+            {
+                BeMove = true;
+            }
+
             //if (obj.gameObject.tag == "Player")
             //    PlayerStay = false;
-			if (obj.gameObject.tag == "NPC")
+            if (obj.gameObject.tag == "NPC")
 				obj.gameObject.transform.GetComponent<Rigidbody2D> ().velocity += new Vector2 (10, 0);
 			if (obj.gameObject.tag == "Player" || obj.gameObject.tag == "NPC")
 				transform.DetachChildren ();
