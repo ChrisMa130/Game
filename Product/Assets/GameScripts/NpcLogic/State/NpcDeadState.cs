@@ -11,7 +11,6 @@ namespace MG
         public override void Enter()
         {
             base.Enter();
-            Debug.Log("小兵delad");
             GameObject.Destroy(Owner.gameObject);  // TODO 这个死亡要调回NPC
         }
 

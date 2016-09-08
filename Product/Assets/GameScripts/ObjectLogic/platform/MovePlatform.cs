@@ -119,7 +119,7 @@ namespace MG
             }
             else if (obj.gameObject.tag == "ForbiddenZone" && obj.gameObject.layer == LayerMask.NameToLayer("Ground"))
             {
-                BeMove = false;
+				BeMove = false;
             }
 
             //if (obj.gameObject.tag == "Player")

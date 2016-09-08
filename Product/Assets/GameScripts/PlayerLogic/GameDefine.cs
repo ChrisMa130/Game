@@ -59,7 +59,7 @@ namespace MG
         // 大炮相关
         public static readonly float CannonBulletSpeed = 4.0f;
         public static readonly float CannonBulletCreateInterval = 2.0f;
-        public static readonly int CannonBulletDestoryCount = 2;
+        public static readonly int CannonBulletDestoryCount = 1;
 
         // 时间控制相关
         public static readonly float RecordInterval = 0.02f;
