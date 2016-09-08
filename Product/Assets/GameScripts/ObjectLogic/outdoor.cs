@@ -4,20 +4,14 @@ using UnityEngine.SceneManagement;
 
 namespace MG
 {
-    public class outdoor : TimeUnit
+    public class outdoor : MonoBehaviour
     {
         public int[] NeedCollects = new int[GameDefine.CollectCount];
 
         public string NextLevelName;
 
-        class UserData : TimeUnitUserData
-        {
-            public int[] NeedCollects = new int[GameDefine.CollectCount];
-        }
-
         void Start()
         {
-            Init(false);
         }
 
         void OnTriggerStay2D(Collider2D other)
@@ -58,24 +52,6 @@ namespace MG
 			if (GameMgr.Instance.InputMgr.UpUp) {
 				SceneManager.LoadSceneAsync (NextLevelName);
 			}
-        }
-
-        protected override TimeUnitUserData GetUserData()
-        {
-            UserData data = new UserData();
-
-            NeedCollects.CopyTo(data.NeedCollects, 0);
-
-            return data;
-        }
-
-        protected override void SetUserData(TimeUnitUserData data)
-        {
-            UserData d = data as UserData;
-            if (d == null)
-                return;
-
-            d.NeedCollects.CopyTo(NeedCollects, 0);
         }
     }
 }

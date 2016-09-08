@@ -184,6 +184,11 @@ namespace MG
 
             return false;
         }
+
+        public void ClearAllData()
+        {
+            TraversalUnit(o => { o.ClearAllData(); });
+        }
     }
 }
 

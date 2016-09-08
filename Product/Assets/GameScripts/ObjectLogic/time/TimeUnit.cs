@@ -258,6 +258,13 @@ namespace MG
         protected virtual void SetUserData(TimeUnitUserData data)
         {
         }
+
+        public void ClearAllData()
+        {
+            UserDataTable.Clear();
+            ForwardTimeData.Clear();
+            FrameTimeData.Clear();
+        }
     }
 }
 
