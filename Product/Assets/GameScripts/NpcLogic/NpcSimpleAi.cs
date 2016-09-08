@@ -129,17 +129,44 @@ namespace MG
                 xlen = Mathf.Abs(xlen);
 
             Vector3 startPos = new Vector3(NpcObject.GroundCheckPosition.x + xlen, NpcObject.GroundCheckPosition.y, NpcObject.Position.z);
-            RaycastHit2D hit = Physics2D.Raycast(startPos, Vector2.down, 0.1f);
-            if (hit.collider == null)
+            RaycastHit2D[] hits = Physics2D.RaycastAll(startPos, Vector2.down, 0.1f);
+            if (hits == null || hits.Length == 0)
                 return true;
 
-            // 对不可划线领域的一个判断
-            if (hit.collider.tag.Equals("ForbiddenZone"))
+            bool HasGround = false;
+            for (int i = 0; i < hits.Length; i++)
             {
-                startPos.x = startPos.x + GameDefine.ForbiddenLineAddWidth;
-                hit = Physics2D.Raycast(startPos, Vector2.down, 0.1f);
-                if (hit.collider == null)
-                    return true;
+                var h = hits[i];
+                if (h.collider == null)
+                    continue;
+
+                if (h.collider.gameObject.layer == LayerMask.NameToLayer("Ground") || h.collider.gameObject.layer == LayerMask.NameToLayer("Wall"))
+                {
+                    HasGround = true;
+                    break;
+                }
+            }
+
+            if (HasGround)
+                return false;
+
+            for (int i = 0; i < hits.Length; i++)
+            {
+                var h = hits[i];
+                if (h.collider == null)
+                    continue;
+
+                if (h.collider.tag.Equals("ForbiddenZone"))
+                {
+                    startPos.x = startPos.x + GameDefine.ForbiddenLineAddWidth;
+                    var downHit = Physics2D.Raycast(startPos, Vector2.down, 0.1f);
+                    if (downHit.collider == null)
+                        return true;
+
+                    if (downHit.collider.tag.Equals("ForbiddenZone"))
+                        return true;
+                }
+
             }
 
             return false;
