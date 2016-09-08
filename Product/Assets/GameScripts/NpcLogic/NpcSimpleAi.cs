@@ -63,7 +63,7 @@ namespace MG
             {
                 if (!NpcObject.Grounded)
                     NpcObject.Jump();
-                else
+                else if (NpcObject.Grounded && npc.Grounded)
                     NpcObject.TurnRound();
             }
 
