@@ -110,6 +110,7 @@ namespace MG
 //                }
                     
                 GameObject.DestroyImmediate(CurrentOpLine);
+				DisplayNotifi ();
                 return;
             }
 
@@ -141,6 +142,15 @@ namespace MG
             CurrentLineRenderer = null;
 			Changed = false;
         }
+
+		private void DisplayNotifi() {
+			var notifi = Resources.Load("prefabs/Utilities/Invalid") as GameObject;
+			foreach (Transform child in Camera.main.transform){
+				if (child.tag.Equals ("Hint"))
+					Destroy (child.gameObject);
+			}
+			Instantiate (notifi);
+		}
 
         void CreateForbiddenZone()
         {

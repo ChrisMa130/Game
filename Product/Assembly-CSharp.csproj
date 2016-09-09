@@ -172,7 +172,8 @@
      <Compile Include="Assets\GameScripts\NpcLogic\State\NpcStandState.cs" />
      <Compile Include="Assets\GameScripts\NpcLogic\State\NpcState.cs" />
      <Compile Include="Assets\GameScripts\NpcLogic\State\NpcWalkState.cs" />
-     <Compile Include="Assets\GameScripts\ObjectLogic\Fade.cs" />
+     <Compile Include="Assets\GameScripts\ObjectLogic\Notification\Fade.cs" />
+     <Compile Include="Assets\GameScripts\ObjectLogic\Notification\OnScreen.cs" />
      <Compile Include="Assets\GameScripts\ObjectLogic\NpcPortal.cs" />
      <Compile Include="Assets\GameScripts\ObjectLogic\RevivePoint.cs" />
      <Compile Include="Assets\GameScripts\ObjectLogic\SingletonMonoBehaviour.cs" />
