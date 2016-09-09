@@ -15,6 +15,9 @@ namespace MG
     public class GameSaveData
     {
         public LevelInfo CurrentLevel;
+        public float X;
+        public float Y;
+        public float Z;
         public List<LevelInfo> PassLevel;
 
         public bool Load()
@@ -33,6 +36,11 @@ namespace MG
             {
                 CurrentLevel = cl;
             }
+
+            // 最后一次的储存点
+            X = int.Parse(obj["X"].ToString());
+            Y = int.Parse(obj["Y"].ToString());
+            Z = int.Parse(obj["Z"].ToString());
 
             if (obj["PassLevel"] != null)
             {
@@ -121,8 +129,12 @@ namespace MG
             for (int i = 0; i < GameDefine.CollectCount; i++)
             {
                 int count = player.GetCollectCount(i);
-                CurrentLevel.CollectItem.Add(i);
+                CurrentLevel.CollectItem.Add(count);
             }
+
+            X = player.Position.x;
+            Y = player.Position.y;
+            Z = player.Position.z;
         }
     }
 }
