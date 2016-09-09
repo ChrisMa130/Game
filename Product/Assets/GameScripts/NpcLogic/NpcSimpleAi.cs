@@ -67,25 +67,29 @@ namespace MG
                     NpcObject.TurnRound();
             }
 
-
-        // 测试逻辑，还是先污染，在治理。
             bool samePlane = LastCollObj != null && LastCollObj.GetInstanceID() == obj.gameObject.GetInstanceID();
 
             LastCollObj = obj.gameObject;
 
             var layer = obj.gameObject.layer;
-            // 以下这个判断需要改变实现方法。太烂了。~~~
-			if (!samePlane && obj.transform.tag.Equals("ForbiddenZone") && layer == LayerMask.NameToLayer("Ground"))
+			if (!samePlane && (obj.transform.tag.Equals("Building") || obj.transform.tag.Equals("ForbiddenZone")) && layer == LayerMask.NameToLayer("Ground"))
             {
                 var myHeight = NpcObject.GroundCheckPosition.y + GameDefine.StairsSlopeHeight;
-                var targetHeight = obj.transform.position.y + 0.1f;
+                
+                float addonesHigh = 0;
+                if (obj.transform.tag.Equals("Building"))
+                    addonesHigh = GameDefine.StairsSlopeHeight + 0.1f;
+                else
+                    addonesHigh = 0.1f;
+
+                var targetHeight = obj.transform.position.y + addonesHigh;
                 float myBut = NpcObject.GroundCheckPosition.y;
                 if (myBut < targetHeight && myHeight > targetHeight)
                 {
                     var h = targetHeight + (NpcObject.Position.y - NpcObject.GroundCheckPosition.y) + 0.1f;
                     NpcObject.transform.position = new Vector3(NpcObject.Position.x, h, NpcObject.Position.z);
                 }
-                else if (GameMgr.Instance.LineMgr.LineAngle != 45 && myBut < targetHeight - 0.1f)
+                else if (GameMgr.Instance.LineMgr.LineAngle != 45 && myBut < targetHeight - addonesHigh)
                 {
                     Debug.Log("直线线段上转身。");
                     NpcObject.TurnRound();
@@ -102,20 +106,27 @@ namespace MG
         {
             var pos = new Vector3(NpcObject.GroundCheckPosition.x, NpcObject.GroundCheckPosition.y + 0.03f, NpcObject.Position.z);
             float rayLen = NpcC2DSize.x / 2 + 0.01f;
-            RaycastHit2D hit;
+            RaycastHit2D[] hit;
             if (NpcObject.CurrentDir == Dir.Left)
             {
-                hit = Physics2D.Raycast(pos, Vector2.left, rayLen, 1 << LayerMask.NameToLayer("Wall"));
+                hit = Physics2D.RaycastAll(pos, Vector2.left, rayLen, 1 << LayerMask.NameToLayer("Wall"));
                 Debug.DrawRay(pos, Vector3.left, Color.blue);
             }
             else
             {
-                hit = Physics2D.Raycast(pos, Vector2.right, rayLen, 1 << LayerMask.NameToLayer("Wall"));
+                hit = Physics2D.RaycastAll(pos, Vector2.right, rayLen, 1 << LayerMask.NameToLayer("Wall"));
                 Debug.DrawRay(pos, Vector3.right, Color.blue);
             }
 
-            if (hit.collider != null && hit.transform.gameObject.layer == LayerMask.NameToLayer("Wall"))
-                return true;
+            if (hit == null || hit.Length == 0)
+                return false;
+
+            for (int i = 0; i < hit.Length; i++)
+            {
+                var h = hit[i];
+                if (h.collider != null && h.transform.gameObject.layer == LayerMask.NameToLayer("Wall"))
+                    return true;
+            }
 
             return false;
         }
