@@ -1,13 +1,15 @@
 ﻿<Properties StartupItem="Assembly-CSharp.csproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="Unity.Instance.Unity Editor" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\GameScripts\PlayerLogic\LineMgr.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\GameScripts\Camera\Code\Extensions\ProCamera2DTransitionsFX.cs">
     <Files>
-      <File FileName="Assets\GameScripts\PlayerLogic\LineMgr.cs" Line="148" Column="55" />
+      <File FileName="Assets\GameScripts\ObjectLogic\cannon.cs" Line="1" Column="1" />
+      <File FileName="Assets\GameScripts\PlayerLogic\LineMgr.cs" Line="1" Column="1" />
       <File FileName="Assets\2DxFX\Scripts\_2dxFX_IcedFX.cs" Line="1" Column="1" />
       <File FileName="Assets\GameScripts\ObjectLogic\cannonbullet.cs" Line="1" Column="1" />
       <File FileName="Assets\GameScripts\ObjectLogic\platform\MovePlatform.cs" Line="1" Column="1" />
       <File FileName="Assets\GameScripts\ObjectLogic\Notification\OnScreen.cs" Line="1" Column="1" />
       <File FileName="Assets\GameScripts\ObjectLogic\Notification\Fade.cs" Line="1" Column="1" />
+      <File FileName="Assets\GameScripts\Camera\Code\Extensions\ProCamera2DTransitionsFX.cs" Line="1" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
