@@ -5,7 +5,7 @@ namespace MG
     public class cannonbullet : TimeUnit
     {
         private int DestoryCount;
-
+		public int myCount = 0;
         class UserData : TimeUnitUserData
         {
             public int DestoryCount;
@@ -14,7 +14,8 @@ namespace MG
         void Start()
         {
             DestoryCount = GameDefine.CannonBulletDestoryCount;
-
+			if (myCount != 0)
+				DestoryCount = myCount;
             Init(true);
         }
 

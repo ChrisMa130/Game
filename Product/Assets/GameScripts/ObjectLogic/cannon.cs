@@ -13,6 +13,7 @@ namespace MG
         private float NextCreateBulletTime;
 		public float myRate;
 
+		public int myCount = 0;
 		public float myBulletSpeed;
 
         class UserData : TimeUnitUserData
@@ -48,7 +49,8 @@ namespace MG
 
 			Rigidbody2D bulletInstance = Instantiate(Bullet, transform.position, transform.rotation) as Rigidbody2D;
 			bulletInstance.velocity = new Vector3(myBulletSpeed * XAxis, myBulletSpeed * YAxis);
-
+			if (myCount != 0)
+				bulletInstance.gameObject.GetComponent<cannonbullet> ().myCount = myCount;
         }
 
         protected override TimeUnitUserData GetUserData()
