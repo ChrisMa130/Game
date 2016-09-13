@@ -139,6 +139,7 @@
      <None Include="Assets\2DxFX\Resources\_2dxFX_Frozen.shader" />
      <None Include="Assets\2DxFX\Resources\_2dxFX_Distortion_Additive.shader" />
      <None Include="Assets\2DxFX\Resources\_2dxFX_ColorRGB.shader" />
+     <None Include="Assets\Resources\Editor\CM Tools\TileMasterReadme.txt" />
      <None Include="Assets\2DxFX\Resources\_2dxFX_IcedFX.shader" />
      <None Include="Assets\Resources\Spine\Examples\Spine\Spineunitygirl\Doi.atlas.txt" />
      <None Include="Assets\2DxFX\Resources\_2dxFX_PlasmaRainbow.shader" />

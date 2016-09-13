@@ -121,6 +121,10 @@
      <Compile Include="Assets\2DxFX\Scripts\_2dxFX_Waterfall.cs" />
      <Compile Include="Assets\2DxFX\Scripts\_2dxFX_Wave.cs" />
      <Compile Include="Assets\2DxFX\Scripts\_2dxFX_WoodFX.cs" />
+     <Compile Include="Assets\52SpecialEffectPack\EffectEditor\Legacy Effect Editor\csLegacyEffectChanger.cs" />
+     <Compile Include="Assets\52SpecialEffectPack\EffectEditor\Legacy Effect Editor\csLegacyEffectEditor.cs" />
+     <Compile Include="Assets\52SpecialEffectPack\EffectEditor\ShurikenEffectEditor\csShurikenEffectChanger.cs" />
+     <Compile Include="Assets\52SpecialEffectPack\EffectEditor\ShurikenEffectEditor\csShurikenEffectEditor.cs" />
      <Compile Include="Assets\GameScripts\Camera\Code\Core\BasePC2D.cs" />
      <Compile Include="Assets\GameScripts\Camera\Code\Core\BaseTrigger.cs" />
      <Compile Include="Assets\GameScripts\Camera\Code\Core\BoundariesAnimator.cs" />
