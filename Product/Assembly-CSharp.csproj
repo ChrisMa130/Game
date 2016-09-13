@@ -172,8 +172,6 @@
      <Compile Include="Assets\GameScripts\NpcLogic\State\NpcStandState.cs" />
      <Compile Include="Assets\GameScripts\NpcLogic\State\NpcState.cs" />
      <Compile Include="Assets\GameScripts\NpcLogic\State\NpcWalkState.cs" />
-     <Compile Include="Assets\GameScripts\ObjectLogic\Notification\Fade.cs" />
-     <Compile Include="Assets\GameScripts\ObjectLogic\Notification\OnScreen.cs" />
      <Compile Include="Assets\GameScripts\ObjectLogic\NpcPortal.cs" />
      <Compile Include="Assets\GameScripts\ObjectLogic\RevivePoint.cs" />
      <Compile Include="Assets\GameScripts\ObjectLogic\SingletonMonoBehaviour.cs" />
@@ -193,8 +191,6 @@
      <Compile Include="Assets\GameScripts\ObjectLogic\time\TimeController.cs" />
      <Compile Include="Assets\GameScripts\ObjectLogic\time\TimeData.cs" />
      <Compile Include="Assets\GameScripts\ObjectLogic\time\TimeUnit.cs" />
-     <Compile Include="Assets\GameScripts\PlayerLogic\AudioManager.cs" />
-     <Compile Include="Assets\GameScripts\PlayerLogic\BGManager.cs" />
      <Compile Include="Assets\GameScripts\PlayerLogic\Collect.cs" />
      <Compile Include="Assets\GameScripts\PlayerLogic\GameDefine.cs" />
      <Compile Include="Assets\GameScripts\PlayerLogic\GameInput.cs" />
@@ -212,6 +208,11 @@
      <Compile Include="Assets\GameScripts\PlayerLogic\State\PlayerState.cs" />
      <Compile Include="Assets\GameScripts\PlayerLogic\State\RunState.cs" />
      <Compile Include="Assets\GameScripts\PlayerLogic\State\StandState.cs" />
+     <Compile Include="Assets\GameScripts\Utilities\AudioManager.cs" />
+     <Compile Include="Assets\GameScripts\Utilities\BGManager.cs" />
+     <Compile Include="Assets\GameScripts\Utilities\Logo.cs" />
+     <Compile Include="Assets\GameScripts\Utilities\Notification\Fade.cs" />
+     <Compile Include="Assets\GameScripts\Utilities\Notification\OnScreen.cs" />
      <Compile Include="Assets\Resources\Spine\Examples\Getting Started\Scripts\BasicPlatformerController.cs" />
      <Compile Include="Assets\Resources\Spine\Examples\Getting Started\Scripts\ConstrainedCamera.cs" />
      <Compile Include="Assets\Resources\Spine\Examples\Getting Started\Scripts\Raptor.cs" />
