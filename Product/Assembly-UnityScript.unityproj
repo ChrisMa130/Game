@@ -52,6 +52,7 @@
      <Compile Include="Assets\52SpecialEffectPack\Animation&amp;Script\ShowAllEffect.js" />
      <None Include="Assets\Resources\Spine\spine-unity\Editor\Resources\SpineAssetDatabaseMarker.txt" />
      <None Include="Assets\2DxFX\Resources\_2dxFX_GrayScale.shader" />
+     <None Include="Assets\Animations\Enemy_source_files\Source_Animation\guai.atlas.txt" />
      <None Include="Assets\Resources\Spine\Examples\Spine\Eyes\eyes.atlas.txt" />
      <None Include="Assets\Resources\Spine\spine-unity\Shaders\HiddenPass.shader" />
      <None Include="Assets\2DxFX\Resources\_2dxFX_Smoke.shader" />

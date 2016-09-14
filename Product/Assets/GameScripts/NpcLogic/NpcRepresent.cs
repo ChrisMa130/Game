@@ -17,7 +17,7 @@ namespace MG
 
         public void Run(float moveParam)
         {
-            //Anim.SetFloat("Speed", Mathf.Abs(moveParam));
+            Anim.SetFloat("Speed", Mathf.Abs(moveParam));
         }
 
         public void Stand()
@@ -34,7 +34,7 @@ namespace MG
 
         public void Dead()
         {
-            //Anim.SetBool("Dead", true);
+            Anim.SetBool("Dead", true);
             Rigidbody.isKinematic = true;
         }
 
@@ -48,9 +48,9 @@ namespace MG
             Vector3 theScale = Owner.transform.localScale;
 
             if (dir == Dir.Left)
-                theScale.x = -Mathf.Abs(theScale.x);
-            else
                 theScale.x = Mathf.Abs(theScale.x);
+            else
+                theScale.x = -Mathf.Abs(theScale.x);
 
             Owner.transform.localScale = theScale;
         }

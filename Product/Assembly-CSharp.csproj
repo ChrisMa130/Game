@@ -176,8 +176,10 @@
      <Compile Include="Assets\GameScripts\NpcLogic\State\NpcStandState.cs" />
      <Compile Include="Assets\GameScripts\NpcLogic\State\NpcState.cs" />
      <Compile Include="Assets\GameScripts\NpcLogic\State\NpcWalkState.cs" />
+     <Compile Include="Assets\GameScripts\ObjectLogic\Key\KeyHold.cs" />
      <Compile Include="Assets\GameScripts\ObjectLogic\Key\OpenDoor.cs" />
      <Compile Include="Assets\GameScripts\ObjectLogic\Key\OpenKey.cs" />
+     <Compile Include="Assets\GameScripts\ObjectLogic\Key\ReviveKey.cs" />
      <Compile Include="Assets\GameScripts\ObjectLogic\NpcPortal.cs" />
      <Compile Include="Assets\GameScripts\ObjectLogic\RevivePoint.cs" />
      <Compile Include="Assets\GameScripts\ObjectLogic\SingletonMonoBehaviour.cs" />
@@ -312,6 +314,7 @@
      <Compile Include="Assets\Resources\Spine\spine-unity\SpineAttributes.cs" />
      <None Include="Assets\Resources\Spine\spine-unity\Editor\Resources\SpineAssetDatabaseMarker.txt" />
      <None Include="Assets\2DxFX\Resources\_2dxFX_GrayScale.shader" />
+     <None Include="Assets\Animations\Enemy_source_files\Source_Animation\guai.atlas.txt" />
      <None Include="Assets\Resources\Spine\Examples\Spine\Eyes\eyes.atlas.txt" />
      <None Include="Assets\Resources\Spine\spine-unity\Shaders\HiddenPass.shader" />
      <None Include="Assets\2DxFX\Resources\_2dxFX_Smoke.shader" />
