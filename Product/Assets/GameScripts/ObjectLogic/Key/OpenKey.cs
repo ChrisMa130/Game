@@ -36,24 +36,23 @@ namespace MG
                 //transform.position = Vector3.zero;
             }
 
-            // TODO 碰到门了
-            var door = obj.gameObject.GetComponent<OpenDoor>();
+            var door = obj.gameObject.GetComponent<KeyHold>();
             if (door != null)
             {
                 TeachDoor(door);
             }
         }
 
-        void TeachDoor(OpenDoor door)
+        void TeachDoor(KeyHold door)
         {
-            // blblblblb
+            door.OpenDoor();
             Dead();
         }
 
         // 拿起后的逻辑
         void OnTriggerStay2D(Collider2D other)
         {
-            var door = other.gameObject.GetComponent<OpenDoor>();
+            var door = other.gameObject.GetComponent<KeyHold>();
             if (door != null)
             {
                 TeachDoor(door);

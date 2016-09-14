@@ -64,6 +64,13 @@ namespace MG
         // 时间控制相关
         public static readonly float RecordInterval = 0.02f;
 
+        // 门的移动范围
+        public static readonly float OpenDoorMoveHigh = 1f; // 从初始化的位置沿着Y轴向上移动的距离
+        public static readonly float OpenDoorMoveLow = 1f;  // 从初始化的位置沿着Y轴向下移动的距离
+
+        // 钥匙重生时间
+        public static readonly float OpenKeyReviveTime = 2f;
+
         public static T AddMissingComponent<T>(this GameObject go) where T : Component
         {
             T comp = go.GetComponent<T>();
