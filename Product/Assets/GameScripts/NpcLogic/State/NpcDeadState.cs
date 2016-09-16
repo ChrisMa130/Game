@@ -11,7 +11,9 @@ namespace MG
         public override void Enter()
         {
             base.Enter();
-            GameObject.Destroy(Owner.gameObject);  // TODO 这个死亡要调回NPC
+			Rigidbody.velocity = Vector2.zero;
+			Animator.Dead ();
+            //GameObject.Destroy(Owner.gameObject);  // TODO 这个死亡要调回NPC
         }
 
         public override void Activate(float deltaTime)

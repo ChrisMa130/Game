@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: 95839cf42dc2def40ba425b2bfe93d61
-timeCreated: 1473875365
+timeCreated: 1473964805
 licenseType: Pro
 TextureImporter:
   fileIDToRecycleName:
@@ -710,6 +710,145 @@ TextureImporter:
         - {x: 29, y: 14}
         - {x: -29, y: 14}
         - {x: -30, y: -13}
+    - name: "\u683C\u5B50_39"
+      rect:
+        serializedVersion: 2
+        x: 640
+        y: 1770
+        width: 60
+        height: 60
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -28, y: 30}
+        - {x: -28, y: -30}
+        - {x: 28, y: -30}
+        - {x: 28, y: 30}
+    - name: "\u683C\u5B50_40"
+      rect:
+        serializedVersion: 2
+        x: 710
+        y: 1770
+        width: 60
+        height: 60
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 30, y: -11}
+        - {x: 28, y: 30}
+        - {x: -28, y: 30}
+        - {x: -30, y: -11}
+        - {x: -30, y: -30}
+        - {x: -12, y: -30}
+        - {x: -11, y: -24}
+        - {x: 10, y: -30}
+        - {x: 30, y: -30}
+    - name: "\u683C\u5B50_41"
+      rect:
+        serializedVersion: 2
+        x: 780
+        y: 1770
+        width: 60
+        height: 60
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -28, y: 3}
+        - {x: -28, y: -30}
+        - {x: 28, y: -30}
+        - {x: 28, y: 3}
+      - - {x: -27, y: 18}
+        - {x: -27, y: 21}
+        - {x: -30, y: 22}
+        - {x: -30, y: 17}
+    - name: "\u683C\u5B50_42"
+      rect:
+        serializedVersion: 2
+        x: 850
+        y: 1770
+        width: 60
+        height: 60
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -7, y: 1}
+        - {x: -11, y: 0}
+        - {x: -24, y: -5}
+        - {x: -28, y: -19}
+        - {x: -28, y: -30}
+        - {x: 28, y: -30}
+        - {x: 28, y: -19}
+        - {x: 6, y: 1}
+    - name: "\u683C\u5B50_43"
+      rect:
+        serializedVersion: 2
+        x: 920
+        y: 1770
+        width: 60
+        height: 60
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -6, y: 30}
+        - {x: -6, y: -13}
+        - {x: -4, y: -14}
+        - {x: 3, y: -14}
+        - {x: 5, y: -7}
+        - {x: 5, y: 30}
+    - name: "\u683C\u5B50_44"
+      rect:
+        serializedVersion: 2
+        x: 990
+        y: 1770
+        width: 60
+        height: 60
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -26, y: 10}
+        - {x: -26, y: -6}
+        - {x: -5, y: -9}
+        - {x: 30, y: -9}
+        - {x: 30, y: 12}
+        - {x: -24, y: 12}
+    - name: "\u683C\u5B50_45"
+      rect:
+        serializedVersion: 2
+        x: 1060
+        y: 1770
+        width: 60
+        height: 60
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -30, y: -9}
+        - {x: 30, y: -9}
+        - {x: 30, y: 12}
+        - {x: -30, y: 12}
+    - name: "\u683C\u5B50_46"
+      rect:
+        serializedVersion: 2
+        x: 1130
+        y: 1770
+        width: 60
+        height: 60
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -17, y: 24}
+        - {x: -17, y: -30}
+        - {x: 15, y: -30}
+        - {x: 22, y: -6}
+        - {x: 22, y: 18}
+        - {x: 14, y: 24}
     outline: []
   spritePackingTag: 
   userData: 

@@ -16,7 +16,7 @@ namespace MG
 
             NpcObject = gameObject.GetComponent<Npc>();
 
-            var c2d = NpcObject.GetComponent<BoxCollider2D>();
+            var c2d = NpcObject.GetComponent<PolygonCollider2D>();
             NpcC2DSize = c2d.bounds.size;
         }
 
@@ -27,7 +27,7 @@ namespace MG
 
             NpcObject.Activate(Time.deltaTime);
 
-            if (NpcObject.CurrentStateType != NpcStateType.Walk)
+			if (NpcObject.CurrentStateType != NpcStateType.Dead)
                 NpcObject.Walk();
 
             if (CheckWall())
@@ -51,7 +51,7 @@ namespace MG
             var player = obj.gameObject.GetComponent<Player>();
             if (player != null)
             {
-                // player.Dead();
+                player.Dead();
                 Debug.Log("玩家狗带了");
                 if (!NpcObject.Grounded)
                     NpcObject.Jump();

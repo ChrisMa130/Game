@@ -17,6 +17,7 @@ namespace MG
 
         public void Run(float moveParam)
         {
+			Reset ();
             Anim.SetFloat("Speed", Mathf.Abs(moveParam));
         }
 
@@ -34,6 +35,7 @@ namespace MG
 
         public void Dead()
         {
+			Reset ();
             Anim.SetBool("Dead", true);
             Rigidbody.isKinematic = true;
         }
@@ -59,6 +61,16 @@ namespace MG
         {
             Rigidbody.isKinematic = isKinematic;
         }
+
+		public void Reset()
+		{
+			var spineRenderer = Anim.gameObject.GetComponent<Spine.Unity.SkeletonRenderer>();
+
+			if (spineRenderer == null)
+				return;
+
+			spineRenderer.skeleton.SetBonesToSetupPose();
+		}
     }
 }
 

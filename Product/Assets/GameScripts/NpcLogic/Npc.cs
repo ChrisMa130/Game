@@ -56,6 +56,7 @@ namespace MG
             IsDead = d.IsDead;
 
             State.SetUserData(d.StateData);
+			Represent.Reset ();
         }
 
         void Awake()
