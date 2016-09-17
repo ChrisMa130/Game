@@ -16,7 +16,7 @@ namespace MG
 
         public Dir CurrentDir;
 
-        private GameObject HandObject;
+        private Transform HandObject;
 
         public Vector3 Position
         {
@@ -76,7 +76,7 @@ namespace MG
             GroundCheck = transform.Find("GroundCheck");
             // CurrentDir = Dir.Right;
             TurnRound(CurrentDir);
-            HandObject = transform.Find("FrontHand").gameObject;
+            HandObject = transform.Find("FrontHand");
             Init(true);
         }
 
@@ -134,7 +134,7 @@ namespace MG
             Represent.IsKinematic(isKinematic);
         }
 
-        public GameObject GetHandObject()
+        public Transform GetHandObject()
         {
             return HandObject;
         }

@@ -54,7 +54,7 @@ namespace MG
         }
 
         // 拿起后的逻辑
-        void OnTriggerStay2D(Collider2D other)
+        void OnTriggerEnter2D(Collider2D other)
         {
             var door = other.gameObject.GetComponent<KeyHold>();
             if (door != null)
@@ -68,7 +68,7 @@ namespace MG
             DestoryMe();
         }
 
-        public void SetParent(GameObject obj)
+        public void SetParent(Transform obj)
         {
             if (obj == null)
             {
@@ -76,7 +76,8 @@ namespace MG
                 //transform.position = transform.parent.position;
             }
 
-            transform.parent = obj.transform.parent;
+            transform.parent = obj;
+            transform.localPosition = Vector3.zero;
         }
 
         protected override TimeUnitUserData GetUserData()
