@@ -28,7 +28,11 @@ namespace MG
                 var npc = obj.gameObject.GetComponent<Npc>();
                 if (player != null || npc != null)
                 {
-                    SetParent(obj.gameObject);
+                    var point = player ? player.GetHandObject() : null;
+                    if (point == null)
+                        point = npc ? npc.GetHandObject() : null;
+
+                    SetParent(point);
                 }
 
                 // 一旦被拾取。那么就进入tragger模式。
