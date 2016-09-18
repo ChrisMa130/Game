@@ -46,6 +46,7 @@ namespace MG
             if (KeepTime < 0 && CurrentDir == Dir.Up && transform.position.y < MoveHighPos)
             {
                 transform.Translate(Vector3.up * MoveSpeed);
+                return;
             }
 
             if (CurrentDir == Dir.Down && transform.position.y > MoveLowPos)
@@ -73,6 +74,7 @@ namespace MG
 
         void OnCollisionEnter2D(Collision2D obj)
         {
+            Debug.Log("adsfasdfasf");
             CanMove = false;
         }
 
