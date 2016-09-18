@@ -28,7 +28,8 @@ namespace MG
         {
             MoveHighPos = transform.position.y + GameDefine.OpenDoorMoveHigh;
             MoveLowPos = transform.position.y - GameDefine.OpenDoorMoveHigh;
-
+            CanMove = true;
+                 
             Init(false);
         }
 
