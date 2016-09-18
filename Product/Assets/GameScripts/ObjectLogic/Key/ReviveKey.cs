@@ -6,7 +6,7 @@ namespace MG
     public class ReviveKey : TimeUnit
     {
         private float ReviveTime;
-        private GameObject TheKey;
+        public GameObject TheKey;
         private Vector3 KeyPos;
         private Quaternion KeyRot;
 
@@ -17,7 +17,7 @@ namespace MG
 
         void Start()
         {
-            ReviveTime = -1f;
+            ReviveTime = GameDefine.OpenKeyReviveTime;
             KeyPos = TheKey.transform.position;
             KeyRot = TheKey.transform.rotation;
 
@@ -29,21 +29,18 @@ namespace MG
             if (TimeController.Instance.IsOpTime())
                 return;
 
-            if ((TheKey == null || TheKey.activeSelf == false) && ReviveTime < 0f)
-            {
-                ReviveTime = GameDefine.OpenKeyReviveTime;
-            }
+            if (TheKey != null || TheKey.activeSelf)
+                return;
 
-            if (ReviveTime > 0)
+            if (ReviveTime < 0f)
             {
-                ReviveTime -= Time.deltaTime;
-            }
-
-            if (ReviveTime < 0)
-            {
-                var o = Resources.Load("Resources/prefabs/Key") as GameObject;
+                var o = Resources.Load("prefabs/Key") as GameObject;
                 TheKey = Instantiate(o, KeyPos, KeyRot) as GameObject;
+                ReviveTime = GameDefine.OpenKeyReviveTime;
+                return;
             }
+
+            ReviveTime -= Time.deltaTime;
         }
 
         protected override TimeUnitUserData GetUserData()

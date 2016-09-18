@@ -74,7 +74,6 @@ namespace MG
 
         void OnCollisionEnter2D(Collision2D obj)
         {
-            Debug.Log("adsfasdfasf");
             CanMove = false;
         }
 
