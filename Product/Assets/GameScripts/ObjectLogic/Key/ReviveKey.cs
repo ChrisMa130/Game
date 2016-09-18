@@ -29,7 +29,7 @@ namespace MG
             if (TimeController.Instance.IsOpTime())
                 return;
 
-            if (TheKey != null || TheKey.activeSelf)
+            if (TheKey != null && TheKey.activeSelf)
                 return;
 
             if (ReviveTime < 0f)

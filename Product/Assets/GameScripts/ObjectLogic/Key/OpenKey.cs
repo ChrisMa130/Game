@@ -33,10 +33,8 @@ namespace MG
                         point = npc ? npc.GetHandObject() : null;
 
                     SetParent(point);
+                    c2d.isTrigger = true;
                 }
-
-                // 一旦被拾取。那么就进入tragger模式。
-                c2d.isTrigger = true;
                 //transform.position = Vector3.zero;
             }
 
