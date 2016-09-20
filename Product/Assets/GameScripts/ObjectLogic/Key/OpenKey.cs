@@ -6,12 +6,13 @@ namespace MG
     public class OpenKey : TimeUnit
     {
         private BoxCollider2D c2d;
+        public bool InitPos = true;
 
         void Start()
         {
             c2d = GetComponent<BoxCollider2D>();
 
-            Init(true);
+            Init(InitPos);
         }
 
         void Update()
@@ -71,16 +72,16 @@ namespace MG
             if (obj == null)
             {
                 c2d.isTrigger = false;
-                //transform.position = transform.parent.position;
             }
 
             transform.parent = obj;
-            transform.localPosition = Vector3.zero;
+            if (obj != null)
+                transform.localPosition = Vector3.zero;
         }
 
         protected override TimeUnitUserData GetUserData()
         {
-            return base.GetUserData();
+            return new TimeUnitUserData();
         }
 
         protected override void SetUserData(TimeUnitUserData data)
