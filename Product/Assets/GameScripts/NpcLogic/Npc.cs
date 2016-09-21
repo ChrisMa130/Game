@@ -16,8 +16,6 @@ namespace MG
 
         public Dir CurrentDir;
 
-        private Transform HandObject;
-
         public Vector3 Position
         {
             get { return transform.position; }
@@ -72,12 +70,12 @@ namespace MG
 
         void Start()
         {
+            Init(true);
+
             Stand();
             GroundCheck = transform.Find("GroundCheck");
             // CurrentDir = Dir.Right;
             TurnRound(CurrentDir);
-            HandObject = transform.Find("FrontHand");
-            Init(true);
         }
 
         public void Activate(float deltaTime)
@@ -132,11 +130,6 @@ namespace MG
         public void IsKinematic(bool isKinematic)
         {
             Represent.IsKinematic(isKinematic);
-        }
-
-        public Transform GetHandObject()
-        {
-            return HandObject;
         }
     }
 }

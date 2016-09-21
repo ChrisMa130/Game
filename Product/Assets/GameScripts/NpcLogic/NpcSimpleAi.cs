@@ -16,7 +16,7 @@ namespace MG
 
             NpcObject = gameObject.GetComponent<Npc>();
 
-            var c2d = NpcObject.GetComponent<PolygonCollider2D>();
+            var c2d = NpcObject.GetComponent<BoxCollider2D>();
             NpcC2DSize = c2d.bounds.size;
         }
 
@@ -105,7 +105,7 @@ namespace MG
         bool CheckWall()
         {
             var pos = new Vector3(NpcObject.GroundCheckPosition.x, NpcObject.GroundCheckPosition.y + 0.03f, NpcObject.Position.z);
-            float rayLen = NpcC2DSize.x / 2 + 0.01f;
+			float rayLen = NpcC2DSize.x / 2 + 0.01f;
             RaycastHit2D[] hit;
             if (NpcObject.CurrentDir == Dir.Left)
             {
@@ -118,8 +118,9 @@ namespace MG
                 Debug.DrawRay(pos, Vector3.right, Color.blue);
             }
 
-            if (hit == null || hit.Length == 0)
-                return false;
+			if (hit == null || hit.Length == 0) {
+				return false;
+			}
 
             for (int i = 0; i < hit.Length; i++)
             {

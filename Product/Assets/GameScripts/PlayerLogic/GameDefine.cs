@@ -45,7 +45,7 @@ namespace MG
 
         public static readonly float LineMaxLimit = 2.5f;
         public static readonly float LineMinLimit = 0.5f;
-        public static readonly float LineSize = 0.25f;
+        public static readonly float LineSize = 0.27f;
         public static readonly float DisableLineLiveTime = 0.001f;
         public static readonly float ForbiddenLineAddLen = 0.6f;
         public static readonly float ForbiddenLineAddWidth = 0.4f;
