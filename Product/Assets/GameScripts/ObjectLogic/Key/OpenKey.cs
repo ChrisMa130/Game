@@ -6,12 +6,13 @@ namespace MG
     public class OpenKey : TimeUnit
     {
         private BoxCollider2D c2d;
+        public bool InitPos = true;
 
         void Start()
         {
             c2d = GetComponent<BoxCollider2D>();
 
-            Init(true);
+            Init(InitPos);
         }
 
         void Update()
@@ -28,11 +29,13 @@ namespace MG
                 var npc = obj.gameObject.GetComponent<Npc>();
                 if (player != null || npc != null)
                 {
-                    SetParent(obj.gameObject);
-                }
+                    var point = player ? player.GetHandObject() : null;
+                    if (point == null)
+                        point = npc ? npc.GetHandObject() : null;
 
-                // 一旦被拾取。那么就进入tragger模式。
-                c2d.isTrigger = true;
+                    SetParent(point);
+                    c2d.isTrigger = true;
+                }
                 //transform.position = Vector3.zero;
             }
 
@@ -50,7 +53,7 @@ namespace MG
         }
 
         // 拿起后的逻辑
-        void OnTriggerStay2D(Collider2D other)
+        void OnTriggerEnter2D(Collider2D other)
         {
             var door = other.gameObject.GetComponent<KeyHold>();
             if (door != null)
@@ -64,20 +67,21 @@ namespace MG
             DestoryMe();
         }
 
-        public void SetParent(GameObject obj)
+        public void SetParent(Transform obj)
         {
             if (obj == null)
             {
                 c2d.isTrigger = false;
-                //transform.position = transform.parent.position;
             }
 
-            transform.parent = obj.transform.parent;
+            transform.parent = obj;
+            if (obj != null)
+                transform.localPosition = Vector3.zero;
         }
 
         protected override TimeUnitUserData GetUserData()
         {
-            return base.GetUserData();
+            return new TimeUnitUserData();
         }
 
         protected override void SetUserData(TimeUnitUserData data)

@@ -28,7 +28,8 @@ namespace MG
         {
             MoveHighPos = transform.position.y + GameDefine.OpenDoorMoveHigh;
             MoveLowPos = transform.position.y - GameDefine.OpenDoorMoveHigh;
-
+			CanMove = true;
+                 
             Init(false);
         }
 
@@ -45,6 +46,7 @@ namespace MG
             if (KeepTime < 0 && CurrentDir == Dir.Up && transform.position.y < MoveHighPos)
             {
                 transform.Translate(Vector3.up * MoveSpeed);
+                return;
             }
 
             if (CurrentDir == Dir.Down && transform.position.y > MoveLowPos)

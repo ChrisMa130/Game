@@ -12,6 +12,8 @@ namespace MG
 
         public PlayerState MyState;
         private Transform GroundCheck;
+        private Transform HandObject;
+
         public bool Grounded { get; private set; }
         public bool OnTheLine { get; set; }
         public bool OnTheClimbAera { get; set; }
@@ -62,6 +64,7 @@ namespace MG
         {
             Stand();
             GroundCheck = transform.Find("GroundCheck");
+            HandObject = transform.Find("FrontHand");
 
             SetRevivePoint(transform.position);
 
@@ -187,6 +190,11 @@ namespace MG
             IsDead = false;
             transform.position = RevivePoint;
             Stand();
+        }
+
+        public Transform GetHandObject()
+        {
+            return HandObject;
         }
     }
 }
