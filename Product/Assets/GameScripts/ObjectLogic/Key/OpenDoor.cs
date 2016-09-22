@@ -17,6 +17,9 @@ namespace MG
 
         private float KeepTime = -1f;
 
+        private bool HasLine;
+        private GameObject Line;
+
         class UserData : TimeUnitUserData
         {
             public Dir CurrentDir;
@@ -27,19 +30,28 @@ namespace MG
         void Start()
         {
             MoveHighPos = transform.position.y + GameDefine.OpenDoorMoveHigh;
-            MoveLowPos = transform.position.y - GameDefine.OpenDoorMoveHigh;
+            MoveLowPos = transform.position.y;
 			CanMove = true;
-                 
+            HasLine = false;
+
             Init(false);
         }
 
         void Update()
         {
+            if (!CanMove)
+            {
+                if (HasLine && Line == null)
+                {
+                    CanMove = true;
+                    HasLine = false;
+                }
+                else
+                    return;
+            }
+
             // 上下移动。并到达位置后，开始计时。计时结束后往反方向移动。
             if (TimeController.Instance.IsOpTime())
-                return;
-
-            if (!CanMove)
                 return;
 
             // 移动部分
@@ -74,12 +86,28 @@ namespace MG
 
         void OnCollisionEnter2D(Collision2D obj)
         {
-            CanMove = false;
+            if (obj.gameObject.tag == "Building")
+            {
+                CanMove = false;
+            }
+            else if (obj.gameObject.tag == "ForbiddenZone" && obj.gameObject.layer == LayerMask.NameToLayer("Ground"))
+            {
+                Line = obj.gameObject;
+                HasLine = true;
+                CanMove = false;
+            }
         }
 
         void OnCollisionExit2D(Collision2D obj)
         {
-            CanMove = true;
+            if (obj.gameObject.tag == "Building")
+            {
+                CanMove = true;
+            }
+            else if (obj.gameObject.tag == "ForbiddenZone" && obj.gameObject.layer == LayerMask.NameToLayer("Ground"))
+            {
+                CanMove = true;
+            }
         }
 
         protected override TimeUnitUserData GetUserData()
