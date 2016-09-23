@@ -184,6 +184,7 @@
      <Compile Include="Assets\GameScripts\ObjectLogic\RevivePoint.cs" />
      <Compile Include="Assets\GameScripts\ObjectLogic\SingletonMonoBehaviour.cs" />
      <Compile Include="Assets\GameScripts\ObjectLogic\Spike.cs" />
+     <Compile Include="Assets\GameScripts\ObjectLogic\Trolley.cs" />
      <Compile Include="Assets\GameScripts\ObjectLogic\autodestory.cs" />
      <Compile Include="Assets\GameScripts\ObjectLogic\cannon.cs" />
      <Compile Include="Assets\GameScripts\ObjectLogic\cannonbullet.cs" />
