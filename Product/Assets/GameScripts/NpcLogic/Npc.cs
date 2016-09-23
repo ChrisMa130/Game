@@ -54,6 +54,9 @@ namespace MG
             if (d == null)
                 return;
 
+            if (!d.IsDead && IsDead)
+                Represent.Revive();
+
             TurnRound(d.dir);
             IsDead = d.IsDead;
 

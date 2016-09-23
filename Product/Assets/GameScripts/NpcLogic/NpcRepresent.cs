@@ -40,6 +40,12 @@ namespace MG
             Rigidbody.isKinematic = true;
         }
 
+        public void Revive()
+        {
+            Anim.SetBool("Dead", false);
+            Rigidbody.isKinematic = false;
+        }
+
         public void Jump()
         {
             //Anim.SetBool("Ground", false);
