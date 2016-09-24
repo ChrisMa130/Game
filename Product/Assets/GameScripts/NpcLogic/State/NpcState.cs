@@ -129,7 +129,6 @@ namespace MG
 
             CurrentState = data.CurrentState;
             NextState = data.NextState;
-            NextState = data.NextState;
         }
     }
 }

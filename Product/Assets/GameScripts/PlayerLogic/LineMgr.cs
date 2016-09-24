@@ -101,7 +101,12 @@ namespace MG
 
         void SetEndPos()
         {
-			if (!ValidLine || !CanDraw || !Changed)
+			if (!Changed) {
+				GameObject.DestroyImmediate(CurrentOpLine);
+				Changed = false;
+				return;
+			}
+			if (!ValidLine || !CanDraw)
             {
 //                if (ForbiddenLine != null)
 //                {
@@ -110,10 +115,10 @@ namespace MG
 //                }
                     
                 GameObject.DestroyImmediate(CurrentOpLine);
+				Changed = false;
 				DisplayNotifi ();
                 return;
             }
-
             SetCollider(CurrentOpLine, StartPos, EndPos);
 
 //            if (Line != null)

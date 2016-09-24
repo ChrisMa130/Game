@@ -44,6 +44,7 @@ namespace MG
         {
             Anim.SetBool("Dead", false);
             Rigidbody.isKinematic = false;
+			Rigidbody.gravityScale = 1;
         }
 
         public void Jump()
