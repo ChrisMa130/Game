@@ -63,13 +63,20 @@ namespace Spine.Unity.Editor {
 			// Find Renderer
 			if (skeletonRenderer.objectReferenceValue == null) {
 				SkeletonRenderer parentRenderer = BoneFollowerInspector.GetInParent<SkeletonRenderer>(targetBoneFollower.transform);
-				if (parentRenderer != null) {
-					Debug.Log("Inspector automatically assigned BoneFollower.SkeletonRenderer");
+				if (parentRenderer != null && parentRenderer.gameObject != targetBoneFollower.gameObject) {
 					skeletonRenderer.objectReferenceValue = parentRenderer;
+					Debug.Log("Inspector automatically assigned BoneFollower.SkeletonRenderer");
 				}
 			}
 
 			EditorGUILayout.PropertyField(skeletonRenderer);
+			var skeletonRendererReference = skeletonRenderer.objectReferenceValue as SkeletonRenderer;
+			if (skeletonRendererReference != null) {
+				if (skeletonRendererReference.gameObject == targetBoneFollower.gameObject) {
+					skeletonRenderer.objectReferenceValue = null;
+					EditorUtility.DisplayDialog("Invalid assignment.", "BoneFollower can only follow a skeleton on a separate GameObject.\n\nCreate a new GameObject for your BoneFollower, or choose a SkeletonRenderer from a different GameObject.", "Ok");
+				}
+			}
 
 			if (targetBoneFollower.valid) {
 				EditorGUI.BeginChangeCheck();

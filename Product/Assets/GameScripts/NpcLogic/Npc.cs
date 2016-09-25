@@ -149,6 +149,10 @@ namespace MG
             return HandObject;
         }
 
+		public Dir GetDir() {
+			return CurrentDir;
+		}
+
         public void EnableCollider(bool enable)
         {
             var c2d = gameObject.GetComponent<BoxCollider2D>();

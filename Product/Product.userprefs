@@ -1,18 +1,15 @@
 ﻿<Properties StartupItem="Assembly-CSharp.csproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="Unity.Instance.Unity Editor" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\GameScripts\Utilities\BackGroundFollowY.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\GameScripts\NpcLogic\NpcRepresent.cs">
     <Files>
-      <File FileName="Assets\GameScripts\Utilities\BackGroundFollowY.cs" Line="16" Column="31" />
-      <File FileName="Assets\GameScripts\PlayerLogic\State\ClimbState.cs" Line="1" Column="1" />
-      <File FileName="Assets\GameScripts\NpcLogic\NpcSimpleAi.cs" Line="1" Column="1" />
-      <File FileName="Assets\GameScripts\NpcLogic\Npc.cs" Line="1" Column="1" />
-      <File FileName="Assets\GameScripts\PlayerLogic\Player.cs" Line="1" Column="1" />
+      <File FileName="Assets\GameScripts\NpcLogic\Npc.cs" Line="161" Column="38" />
+      <File FileName="Assets\GameScripts\NpcLogic\NpcRepresent.cs" Line="85" Column="38" />
+      <File FileName="Assets\GameScripts\Utilities\BackGroundFollowY.cs" Line="1" Column="1" />
+      <File FileName="Assets\GameScripts\ObjectLogic\Key\OpenDoor.cs" Line="1" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
-    <BreakpointStore>
-      <Breakpoint file="D:\Github\Game\Product\Assets\GameScripts\NpcLogic\NpcSimpleAi.cs" line="107" column="1" />
-    </BreakpointStore>
+    <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
 </Properties>

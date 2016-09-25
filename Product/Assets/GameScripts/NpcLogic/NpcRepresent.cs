@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using Spine;
 
 namespace MG
 {
@@ -42,6 +43,8 @@ namespace MG
 
         public void Revive()
         {
+			Reset ();
+			ChangeAttachment ();
             Anim.SetBool("Dead", false);
             Rigidbody.isKinematic = false;
 			Rigidbody.gravityScale = 1;
@@ -72,11 +75,18 @@ namespace MG
 		public void Reset()
 		{
 			var spineRenderer = Anim.gameObject.GetComponent<Spine.Unity.SkeletonRenderer>();
-
 			if (spineRenderer == null)
 				return;
-
 			spineRenderer.skeleton.SetBonesToSetupPose();
+		}
+
+		private void ChangeAttachment() {
+			Skeleton skeleton = Anim.gameObject.GetComponent<Spine.Unity.SkeletonRenderer>().skeleton;
+			skeleton.SetAttachment ("yan3", null);
+			skeleton.SetAttachment ("yan2", null);
+			skeleton.SetAttachment ("yan", "yan");
+			skeleton.SetAttachment ("yan1", "yan1");
+
 		}
     }
 }

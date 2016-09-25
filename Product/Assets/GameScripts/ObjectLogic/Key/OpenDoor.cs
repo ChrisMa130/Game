@@ -13,7 +13,6 @@ namespace MG
         class UserData : TimeUnitUserData
         {
             public Dir CurrentDir;
-            public bool CanMove;
             public float KeepTime = -1f;
         }
 

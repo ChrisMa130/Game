@@ -1,0 +1,15 @@
+{"bones":[{"name":"root"}],"slots":[
+{"name":"shou2","bone":"root","attachment":"shou2"},
+{"name":"shen","bone":"root","attachment":"shen"},
+{"name":"shou1","bone":"root","attachment":"shou1"},
+{"name":"yan1","bone":"root","attachment":"yan1"},
+{"name":"dian","bone":"root","attachment":"dian"},
+{"name":"yan","bone":"root","attachment":"yan"},
+],"skins":{"default":{
+"shou2":{"shou2":{"x":713.5,"y":178.5,"width":57,"height":41}},
+"shen":{"shen":{"x":798.5,"y":199,"width":295,"height":162}},
+"shou1":{"shou1":{"x":731.5,"y":182.5,"width":57,"height":41}},
+"yan1":{"yan1":{"x":664.5,"y":233.5,"width":43,"height":69}},
+"dian":{"dian":{"x":786,"y":191,"width":148,"height":134}},
+"yan":{"yan":{"x":658,"y":233.5,"width":20,"height":13}},
+}}, "animations": { "animation": {} }}

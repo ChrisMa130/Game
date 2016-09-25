@@ -60,8 +60,13 @@ namespace MG
                 if (player != null || npc != null)
                 {
                     var point = player ? player.GetHandObject() : null;
-                    if (point == null)
-                        point = npc ? npc.GetHandObject() : null;
+					if (point != null && (player.GetDir() == Dir.Left))
+						transform.localScale = new Vector3 (-transform.localScale.x, transform.localScale.y, transform.localScale.z);
+					if (point == null) {
+						point = npc ? npc.GetHandObject () : null;
+						if (npc.GetDir() == Dir.Left)
+							transform.localScale = new Vector3 (-transform.localScale.x, transform.localScale.y, transform.localScale.z);
+					}
                     SetParent(point);
                 }
                 //transform.position = Vector3.zero;

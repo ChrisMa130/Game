@@ -36,11 +36,13 @@ using System.Text;
 namespace Spine {
 	public class AnimationState {
 		private AnimationStateData data;
-		private readonly ExposedList<TrackEntry> tracks = new ExposedList<TrackEntry>();
+		private ExposedList<TrackEntry> tracks = new ExposedList<TrackEntry>();
 		private ExposedList<Event> events = new ExposedList<Event>();
 		private float timeScale = 1;
 
 		public AnimationStateData Data { get { return data; } }
+		/// <summary>A list of tracks that have animations, which may contain nulls.</summary>
+		public ExposedList<TrackEntry> Tracks { get { return tracks; } }
 		public float TimeScale { get { return timeScale; } set { timeScale = value; } }
 
 		public delegate void StartEndDelegate (AnimationState state, int trackIndex);
@@ -57,26 +59,6 @@ namespace Spine {
 			if (data == null) throw new ArgumentNullException("data", "data cannot be null.");
 			this.data = data;
 		}
-
-		#region Extra Settings
-		/// <summary>
-		/// Determines when events from a previous animation continue to be captured. </summary>
-		/// <remarks>The default 0.5f means events will stop being captured and raised halfway through crossfade duration. 0 means ignore all. 1 means capture all.</remarks>
-		public float mixEventThreshold = 0.5f;
-
-		/// <summary>
-		/// If true, animations will not inherit the side-effects of previous animations.</summary>
-		/// <remarks>Default is true, because it's the whole point of this version of Spine.AnimationState</remarks>
-		public bool removePreviousAnimation = true;
-		#endregion
-
-		#region Resetters
-		// A list to hold animations that were removed from the track via interrupting an ongoing mix.
-		readonly Queue<Animation> animationsToRemove = new Queue<Animation>();
-
-		// For non-mixing reset.
-		bool resetOnNextApply = false;
-		#endregion
 
 		public void Update (float delta) {
 			delta *= timeScale;
@@ -114,14 +96,6 @@ namespace Spine {
 
 		public void Apply (Skeleton skeleton) {
 			ExposedList<Event> events = this.events;
-			if (resetOnNextApply) {
-				skeleton.SetToSetupPose();
-				resetOnNextApply = false;
-			}
-
-			// Reset stuff
-			while (animationsToRemove.Count > 0)
-				animationsToRemove.Dequeue().SetKeyedItemsToSetupPose(skeleton);
 
 			for (int i = 0; i < tracks.Count; i++) {
 				TrackEntry current = tracks.Items[i];
@@ -140,32 +114,17 @@ namespace Spine {
 					else
 						current.animation.Mix(skeleton, current.lastTime, time, loop, events, current.mix);
 				} else {
-					float alpha = current.mixTime / current.mixDuration * current.mix;
+					float previousTime = previous.time;
+					if (!previous.loop && previousTime > previous.endTime) previousTime = previous.endTime;
+					previous.animation.Apply(skeleton, previous.lastTime, previousTime, previous.loop, null);
+					// Remove the line above, and uncomment the line below, to allow previous animations to fire events during mixing.
+					//previous.animation.Apply(skeleton, previous.lastTime, previousTime, previous.loop, events);
+					previous.lastTime = previousTime;
 
+					float alpha = current.mixTime / current.mixDuration * current.mix;
 					if (alpha >= 1) {
 						alpha = 1;
 						current.previous = null;
-						if (removePreviousAnimation) previous.animation.SetKeyedItemsToSetupPose(skeleton);	// Ensure it's removed.
-					} else {
-						float previousTime = previous.time;
-						if (!previous.loop && previousTime > previous.endTime) previousTime = previous.endTime;
-						var previousAnimation = previous.animation;
-						var eventCaptureList = alpha < mixEventThreshold ? events : null;
-
-						if (removePreviousAnimation) {
-
-							// Reset stuff.
-							// Allow the previous animation to fade out. This prevents unkeyed parts from snapping back to setup pose.
-							float previousAlpha = alpha < 0.5f ? 1f : (1f - alpha) * 2f; 	// Tune to your liking; just plain (1f - alpha) didn't look good.
-							previousAnimation.SetKeyedItemsToSetupPose(skeleton);			// form the basis of the Mix-With-Setup-Pose formula.
-							previousAnimation.Mix(skeleton, previous.lastTime, previousTime, previous.loop, eventCaptureList, previousAlpha);
-						} else {
-
-							// Original hands-off behavior.
-							previousAnimation.Apply(skeleton, previous.lastTime, previousTime, previous.loop, eventCaptureList);
-						}
-
-						previous.lastTime = previousTime;
 					}
 					current.animation.Mix(skeleton, current.lastTime, time, loop, events, alpha);
 				}
@@ -216,25 +175,11 @@ namespace Spine {
 				entry.mixDuration = data.GetMix(current.animation, entry.animation);
 				if (entry.mixDuration > 0) {
 					entry.mixTime = 0;
-
 					// If a mix is in progress, mix from the closest animation.
-					const float ALPHA_THRESHOLD = 0.5f;
-					if (previous != null) {
-						// Reset stuff
-						if (removePreviousAnimation) animationsToRemove.Enqueue(previous.animation);
-
-						if (current.mixTime / current.mixDuration < ALPHA_THRESHOLD) {
-							entry.previous = previous;
-						} else {
-							entry.previous = current;
-						}
-					} else {
+					if (previous != null && current.mixTime / current.mixDuration < 0.5f)
+						entry.previous = previous;
+					else
 						entry.previous = current;
-					}
-
-				} else {
-					// No mixing
-					resetOnNextApply |= removePreviousAnimation;
 				}
 			}
 
@@ -306,14 +251,15 @@ namespace Spine {
 		}
 
 		override public String ToString () {
-			var buffer = new StringBuilder();
+			StringBuilder buffer = new StringBuilder();
 			for (int i = 0, n = tracks.Count; i < n; i++) {
 				TrackEntry entry = tracks.Items[i];
 				if (entry == null) continue;
 				if (buffer.Length > 0) buffer.Append(", ");
 				buffer.Append(entry.ToString());
 			}
-			return buffer.Length == 0 ? "<none>" : buffer.ToString();
+			if (buffer.Length == 0) return "<none>";
+			return buffer.ToString();
 		}
 	}
 
@@ -358,5 +304,4 @@ namespace Spine {
 			return animation == null ? "<none>" : animation.name;
 		}
 	}
-
-} // namespace Spine
+}

@@ -46,12 +46,13 @@ namespace Spine.Unity {
 	/// <summary>Renders a skeleton.</summary>
 	[ExecuteInEditMode, RequireComponent(typeof(MeshFilter), typeof(MeshRenderer)), DisallowMultipleComponent]
 	[HelpURL("http://esotericsoftware.com/spine-unity-documentation#Rendering")]
-	public class SkeletonRenderer : MonoBehaviour {
+	public class SkeletonRenderer : MonoBehaviour, ISkeletonComponent {
 
 		public delegate void SkeletonRendererDelegate (SkeletonRenderer skeletonRenderer);
 		public SkeletonRendererDelegate OnRebuild;
 
 		public SkeletonDataAsset skeletonDataAsset;
+		public SkeletonDataAsset SkeletonDataAsset { get { return skeletonDataAsset; } }
 		public String initialSkinName;
 
 		#region Advanced
@@ -119,6 +120,12 @@ namespace Spine.Unity {
 
 		[System.NonSerialized] public bool valid;
 		[System.NonSerialized] public Skeleton skeleton;
+		public Skeleton Skeleton {
+			get {
+				Initialize(false);
+				return skeleton;
+			}
+		}
 
 		Spine.Unity.DoubleBuffered<SkeletonRenderer.SmartMesh> doubleBufferedMesh;
 		readonly SmartMesh.Instruction currentInstructions = new SmartMesh.Instruction();
@@ -442,10 +449,12 @@ namespace Spine.Unity {
 
 				int oldSubmeshCount = submeshes.Count;
 
-				submeshes.Capacity = submeshCount;
+				if (submeshes.Capacity < submeshCount)
+					submeshes.Capacity = submeshCount;
 				for (int i = oldSubmeshCount; i < submeshCount; i++)
 					submeshes.Items[i] = new ArraysMeshGenerator.SubmeshTriangleBuffer(workingSubmeshInstructions.Items[i].triangleCount);
-
+				submeshes.Count = submeshCount;
+					
 				var mutableTriangles = !workingInstruction.immutableTriangles;
 				for (int i = 0, last = submeshCount - 1; i < submeshCount; i++) {
 					var submeshInstruction = workingSubmeshInstructions.Items[i];

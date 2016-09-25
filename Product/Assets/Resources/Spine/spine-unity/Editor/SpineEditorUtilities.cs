@@ -148,19 +148,37 @@ namespace Spine.Unity.Editor {
 		public static string editorGUIPath = "";
 		public static bool initialized;
 
+		/// This list keeps the asset reference temporarily during importing.
+		/// 
+		/// In cases of very large projects/sufficient RAM pressure, when AssetDatabase.SaveAssets is called,
+		/// Unity can mistakenly unload assets whose references are only on the stack.
+		/// This leads to MissingReferenceException and other errors.
+		static readonly List<ScriptableObject> protectFromStackGarbageCollection = new List<ScriptableObject>();
+
 		static HashSet<string> assetsImportedInWrongState;
 		static Dictionary<int, GameObject> skeletonRendererTable;
 		static Dictionary<int, SkeletonUtilityBone> skeletonUtilityBoneTable;
 		static Dictionary<int, BoundingBoxFollower> boundingBoxFollowerTable;
 
-		const string DEFAULT_MIX_KEY = "SPINE_DEFAULT_MIX";
 		#if SPINE_TK2D
-		public static float defaultScale = 1f;
+		const float DEFAULT_DEFAULT_SCALE = 1f;
 		#else
-		public static float defaultScale = 0.01f;
+		const float DEFAULT_DEFAULT_SCALE = 0.01f;
 		#endif
-		public static float defaultMix = 0.2f;
-		public static string defaultShader = "Spine/Skeleton";
+		const string DEFAULT_SCALE_KEY = "SPINE_DEFAULT_SCALE";
+		public static float defaultScale = DEFAULT_DEFAULT_SCALE;
+
+		const float DEFAULT_DEFAULT_MIX = 0.2f;
+		const string DEFAULT_MIX_KEY = "SPINE_DEFAULT_MIX";
+		public static float defaultMix = DEFAULT_DEFAULT_MIX;
+
+		const string DEFAULT_DEFAULT_SHADER = "Spine/Skeleton";
+		const string DEFAULT_SHADER_KEY = "SPINE_DEFAULT_SHADER";
+		public static string defaultShader = DEFAULT_DEFAULT_SHADER;
+
+		const bool DEFAULT_SHOW_HIERARCHY_ICONS = true;
+		const string SHOW_HIERARCHY_ICONS_KEY = "SPINE_SHOW_HIERARCHY_ICONS";
+		public static bool showHierarchyIcons = DEFAULT_SHOW_HIERARCHY_ICONS;
 
 		#region Initialization
 		static SpineEditorUtilities () {
@@ -168,7 +186,15 @@ namespace Spine.Unity.Editor {
 		}
 
 		static void Initialize () {
-			defaultMix = EditorPrefs.GetFloat(DEFAULT_MIX_KEY, 0.2f);
+			{
+				defaultMix = EditorPrefs.GetFloat(DEFAULT_MIX_KEY, DEFAULT_DEFAULT_MIX);
+				defaultScale = EditorPrefs.GetFloat(DEFAULT_SCALE_KEY, DEFAULT_DEFAULT_SCALE);
+				defaultShader = EditorPrefs.GetString(DEFAULT_SHADER_KEY, DEFAULT_DEFAULT_SHADER);	
+				showHierarchyIcons = EditorPrefs.GetBool(SHOW_HIERARCHY_ICONS_KEY, DEFAULT_SHOW_HIERARCHY_ICONS);
+			}
+
+			SceneView.onSceneGUIDelegate -= OnSceneGUI;
+			SceneView.onSceneGUIDelegate += OnSceneGUI;
 
 			DirectoryInfo rootDir = new DirectoryInfo(Application.dataPath);
 			FileInfo[] files = rootDir.GetFiles("SpineEditorUtilities.cs", SearchOption.AllDirectories);
@@ -182,7 +208,9 @@ namespace Spine.Unity.Editor {
 			skeletonUtilityBoneTable = new Dictionary<int, SkeletonUtilityBone>();
 			boundingBoxFollowerTable = new Dictionary<int, BoundingBoxFollower>();
 
+			EditorApplication.hierarchyWindowChanged -= HierarchyWindowChanged;
 			EditorApplication.hierarchyWindowChanged += HierarchyWindowChanged;
+			EditorApplication.hierarchyWindowItemOnGUI -= HierarchyWindowItemOnGUI;
 			EditorApplication.hierarchyWindowItemOnGUI += HierarchyWindowItemOnGUI;
 
 			HierarchyWindowChanged();
@@ -202,16 +230,44 @@ namespace Spine.Unity.Editor {
 		static void PreferencesGUI () {
 			if (!preferencesLoaded) {
 				preferencesLoaded = true;
-				defaultMix = EditorPrefs.GetFloat(DEFAULT_MIX_KEY, 0.2f);
+				defaultMix = EditorPrefs.GetFloat(DEFAULT_MIX_KEY, DEFAULT_DEFAULT_MIX);
+				defaultScale = EditorPrefs.GetFloat(DEFAULT_SCALE_KEY, DEFAULT_DEFAULT_SCALE);
+				defaultShader = EditorPrefs.GetString(DEFAULT_SHADER_KEY, DEFAULT_DEFAULT_SHADER);
+				showHierarchyIcons = EditorPrefs.GetBool(SHOW_HIERARCHY_ICONS_KEY, DEFAULT_SHOW_HIERARCHY_ICONS);
 			}
 
 
+			EditorGUI.BeginChangeCheck();
+			showHierarchyIcons = EditorGUILayout.Toggle(new GUIContent("Show Hierarchy Icons", "Show relevant icons on GameObjects with Spine Components on them. Disable this if you have large, complex scenes."), showHierarchyIcons);
+			if (EditorGUI.EndChangeCheck()) {
+				EditorPrefs.SetBool(SHOW_HIERARCHY_ICONS_KEY, showHierarchyIcons);
+				HierarchyWindowChanged();				
+			} 
+				
+
+			EditorGUILayout.Separator();
+
 			EditorGUILayout.LabelField("Auto-Import Settings", EditorStyles.boldLabel);
+
 			EditorGUI.BeginChangeCheck();
 			defaultMix = EditorGUILayout.FloatField("Default Mix", defaultMix);
-			if (EditorGUI.EndChangeCheck())
+			if (EditorGUI.EndChangeCheck()) 
 				EditorPrefs.SetFloat(DEFAULT_MIX_KEY, defaultMix);
 
+			EditorGUI.BeginChangeCheck();
+			defaultScale = EditorGUILayout.FloatField("Default SkeletonData Scale", defaultScale);
+			if (EditorGUI.EndChangeCheck())
+				EditorPrefs.SetFloat(DEFAULT_SCALE_KEY, defaultScale);
+
+			EditorGUI.BeginChangeCheck();
+			#if UNITY_5_3_OR_NEWER
+			defaultShader = EditorGUILayout.DelayedTextField(new GUIContent("Default shader", "Default shader for materials auto-generated on import."), defaultShader); 
+			#else
+			defaultShader = EditorGUILayout.TextField(new GUIContent("Default shader", "Default shader for materials auto-generated on import."), defaultShader); 
+			#endif
+			if (EditorGUI.EndChangeCheck())
+				EditorPrefs.SetString(DEFAULT_SHADER_KEY, defaultShader);
+			
 			GUILayout.Space(20);
 			EditorGUILayout.LabelField("3rd Party Settings", EditorStyles.boldLabel);
 			GUILayout.BeginHorizontal();
@@ -225,56 +281,202 @@ namespace Spine.Unity.Editor {
 		}
 		#endregion
 
+		#region Drag and Drop to Scene View
+
+		public delegate Component InstantiateDelegate (SkeletonDataAsset skeletonDataAsset);
+
+		struct SpawnMenuData {
+			public Vector3 spawnPoint;
+			public SkeletonDataAsset skeletonDataAsset;
+			public InstantiateDelegate instantiateDelegate;
+			public bool isUI;
+		}
+
+		public class SkeletonComponentSpawnType {
+			public string menuLabel;
+			public InstantiateDelegate instantiateDelegate;
+			public bool isUI;
+		}
+
+		public static readonly List<SkeletonComponentSpawnType> additionalSpawnTypes = new List<SkeletonComponentSpawnType>();
+
+		static void OnSceneGUI (SceneView sceneview) {
+			var current = UnityEngine.Event.current;
+			var references = DragAndDrop.objectReferences;
+
+			// Allow drag and drop of one SkeletonDataAsset.
+			if (references.Length == 1) {
+				var skeletonDataAsset = references[0] as SkeletonDataAsset;
+				if (skeletonDataAsset != null) {
+					var mousePos = current.mousePosition;
+
+					bool invalidSkeletonData = skeletonDataAsset.GetSkeletonData(true) == null;
+					if (invalidSkeletonData) {
+						DragAndDrop.visualMode = DragAndDropVisualMode.Rejected;
+						Handles.BeginGUI();
+						GUI.Label(new Rect(mousePos + new Vector2(20f, 20f), new Vector2(400f, 40f)), new GUIContent(string.Format("{0} is invalid.\nCannot create new Spine GameObject.", skeletonDataAsset.name), SpineEditorUtilities.Icons.warning));
+						Handles.EndGUI();
+						return;
+					} else {
+						DragAndDrop.visualMode = DragAndDropVisualMode.Copy;
+						Handles.BeginGUI();
+						GUI.Label(new Rect(mousePos + new Vector2(20f, 20f), new Vector2(400f, 20f)), new GUIContent(string.Format("Create Spine GameObject ({0})", skeletonDataAsset.skeletonJSON.name), SpineEditorUtilities.Icons.spine));
+						Handles.EndGUI();
+
+						if (current.type == EventType.DragPerform) {
+							RectTransform rectTransform = (Selection.activeGameObject == null) ? null : Selection.activeGameObject.GetComponent<RectTransform>();
+							Plane plane = (rectTransform == null) ? new Plane(Vector3.back, Vector3.zero) : new Plane(-rectTransform.forward, rectTransform.position);
+							Vector3 spawnPoint = MousePointToWorldPoint2D(mousePos, sceneview.camera, plane);
+
+							var menu = new GenericMenu();
+							// SkeletonAnimation
+							menu.AddItem(new GUIContent("SkeletonAnimation"), false, HandleSkeletonComponentDrop, new SpawnMenuData {
+								skeletonDataAsset = skeletonDataAsset,
+								spawnPoint = spawnPoint,
+								instantiateDelegate = (data) => InstantiateSkeletonAnimation(data),
+								isUI = false
+							});
+
+							// SkeletonGraphic
+							var skeletonGraphicInspectorType = System.Type.GetType("Spine.Unity.Editor.SkeletonGraphicInspector");
+							if (skeletonGraphicInspectorType != null) {
+								var graphicInstantiateDelegate = skeletonGraphicInspectorType.GetMethod("SpawnSkeletonGraphicFromDrop", BindingFlags.Static | BindingFlags.Public);
+								if (graphicInstantiateDelegate != null)
+									menu.AddItem(new GUIContent("SkeletonGraphic (UI)"), false, HandleSkeletonComponentDrop, new SpawnMenuData {
+										skeletonDataAsset = skeletonDataAsset,
+										spawnPoint = spawnPoint,
+										instantiateDelegate = System.Delegate.CreateDelegate(typeof(InstantiateDelegate), graphicInstantiateDelegate) as InstantiateDelegate,
+										isUI = true
+									});
+							}
+
+
+							#if SPINE_SKELETONANIMATOR
+							menu.AddSeparator("");
+							// SkeletonAnimator
+							menu.AddItem(new GUIContent("SkeletonAnimator"), false, HandleSkeletonComponentDrop, new SpawnMenuData {
+								skeletonDataAsset = skeletonDataAsset,
+								spawnPoint = spawnPoint,
+								instantiateDelegate = (data) => InstantiateSkeletonAnimator(data)
+							});
+							#endif
+
+							menu.ShowAsContext();
+						}
+					}
+
+				}
+			}
+
+		}
+
+		public static void HandleSkeletonComponentDrop (object menuData) {
+			var data = (SpawnMenuData)menuData;
+
+			if (data.skeletonDataAsset.GetSkeletonData(true) == null) {
+				EditorUtility.DisplayDialog("Invalid SkeletonDataAsset", "Unable to create Spine GameObject.\n\nPlease check your SkeletonDataAsset.", "Ok");
+				return;
+			}
+
+			bool isUI = data.isUI;
+
+			GameObject newGameObject = null;
+			Component newSkeletonComponent = data.instantiateDelegate.Invoke(data.skeletonDataAsset);
+			newGameObject = newSkeletonComponent.gameObject;
+			var transform = newGameObject.transform;
+
+			var activeGameObject = Selection.activeGameObject;
+			if (activeGameObject != null)
+				transform.SetParent(activeGameObject.transform, false);
+
+			newGameObject.transform.position = isUI ? data.spawnPoint : RoundVector(data.spawnPoint, 2);
+
+			if (isUI && (activeGameObject == null || activeGameObject.GetComponent<RectTransform>() == null))
+				Debug.Log("Created a UI Skeleton GameObject not under a RectTransform. It may not be visible until you parent it to a canvas.");
+
+			if (!isUI && activeGameObject != null && activeGameObject.transform.localScale != Vector3.one)
+				Debug.Log("New Spine GameObject was parented to a scaled Transform. It may not be the intended size.");
+
+			Selection.activeGameObject = newGameObject;
+			Undo.RegisterCreatedObjectUndo(newGameObject, "Create Spine GameObject");
+		}
+
+		/// <summary>
+		/// Rounds off vector components to a number of decimal digits.
+		/// </summary>
+		public static Vector3 RoundVector (Vector3 vector, int digits) {
+			vector.x = (float)System.Math.Round(vector.x, digits);
+			vector.y = (float)System.Math.Round(vector.y, digits);
+			vector.z = (float)System.Math.Round(vector.z, digits);
+			return vector;
+		}
+
+		/// <summary>
+		/// Converts a mouse point to a world point on a plane.
+		/// </summary>
+		static Vector3 MousePointToWorldPoint2D (Vector2 mousePosition, Camera camera, Plane plane) {
+			var screenPos = new Vector3(mousePosition.x, camera.pixelHeight - mousePosition.y, 0f);
+			var ray = camera.ScreenPointToRay(screenPos);
+			float distance;
+			bool hit = plane.Raycast(ray, out distance);
+			return ray.GetPoint(distance);
+		}
+		#endregion
+
 		#region Hierarchy Icons
 		static void HierarchyWindowChanged () {
-			skeletonRendererTable.Clear();
-			skeletonUtilityBoneTable.Clear();
-			boundingBoxFollowerTable.Clear();
+			if (showHierarchyIcons) {
+				skeletonRendererTable.Clear();
+				skeletonUtilityBoneTable.Clear();
+				boundingBoxFollowerTable.Clear();
 
-			SkeletonRenderer[] arr = Object.FindObjectsOfType<SkeletonRenderer>();
-			foreach (SkeletonRenderer r in arr)
-				skeletonRendererTable.Add(r.gameObject.GetInstanceID(), r.gameObject);
+				SkeletonRenderer[] arr = Object.FindObjectsOfType<SkeletonRenderer>();
+				foreach (SkeletonRenderer r in arr)
+					skeletonRendererTable.Add(r.gameObject.GetInstanceID(), r.gameObject);
 
-			SkeletonUtilityBone[] boneArr = Object.FindObjectsOfType<SkeletonUtilityBone>();
-			foreach (SkeletonUtilityBone b in boneArr)
-				skeletonUtilityBoneTable.Add(b.gameObject.GetInstanceID(), b);
+				SkeletonUtilityBone[] boneArr = Object.FindObjectsOfType<SkeletonUtilityBone>();
+				foreach (SkeletonUtilityBone b in boneArr)
+					skeletonUtilityBoneTable.Add(b.gameObject.GetInstanceID(), b);
 
-			BoundingBoxFollower[] bbfArr = Object.FindObjectsOfType<BoundingBoxFollower>();
-			foreach (BoundingBoxFollower bbf in bbfArr)
-				boundingBoxFollowerTable.Add(bbf.gameObject.GetInstanceID(), bbf);
+				BoundingBoxFollower[] bbfArr = Object.FindObjectsOfType<BoundingBoxFollower>();
+				foreach (BoundingBoxFollower bbf in bbfArr)
+					boundingBoxFollowerTable.Add(bbf.gameObject.GetInstanceID(), bbf);
+			}
 		}
 
 		static void HierarchyWindowItemOnGUI (int instanceId, Rect selectionRect) {
-			if (skeletonRendererTable.ContainsKey(instanceId)) {
+			if (showHierarchyIcons) {
+				
 				Rect r = new Rect(selectionRect);
-				r.x = r.width - 15;
-				r.width = 15;
-				GUI.Label(r, Icons.spine);
-			} else if (skeletonUtilityBoneTable.ContainsKey(instanceId)) {
-				Rect r = new Rect(selectionRect);
-				r.x -= 26;
-				if (skeletonUtilityBoneTable[instanceId] != null) {
-					if (skeletonUtilityBoneTable[instanceId].transform.childCount == 0)
-						r.x += 13;
-					r.y += 2;
-					r.width = 13;
-					r.height = 13;
-					if (skeletonUtilityBoneTable[instanceId].mode == SkeletonUtilityBone.Mode.Follow)
-						GUI.DrawTexture(r, Icons.bone);
-					else
-						GUI.DrawTexture(r, Icons.poseBones);
+				if (skeletonRendererTable.ContainsKey(instanceId)) {
+					r.x = r.width - 15;
+					r.width = 15;
+					GUI.Label(r, Icons.spine);
+				} else if (skeletonUtilityBoneTable.ContainsKey(instanceId)) {
+					r.x -= 26;
+					if (skeletonUtilityBoneTable[instanceId] != null) {
+						if (skeletonUtilityBoneTable[instanceId].transform.childCount == 0)
+							r.x += 13;
+						r.y += 2;
+						r.width = 13;
+						r.height = 13;
+						if (skeletonUtilityBoneTable[instanceId].mode == SkeletonUtilityBone.Mode.Follow)
+							GUI.DrawTexture(r, Icons.bone);
+						else
+							GUI.DrawTexture(r, Icons.poseBones);
+					}
+				} else if (boundingBoxFollowerTable.ContainsKey(instanceId)) {
+					r.x -= 26;
+					if (boundingBoxFollowerTable[instanceId] != null) {
+						if (boundingBoxFollowerTable[instanceId].transform.childCount == 0)
+							r.x += 13;
+						r.y += 2;
+						r.width = 13;
+						r.height = 13;
+						GUI.DrawTexture(r, Icons.boundingBox);
+					}
 				}
-			} else if (boundingBoxFollowerTable.ContainsKey(instanceId)) {
-				Rect r = new Rect(selectionRect);
-				r.x -= 26;
-				if (boundingBoxFollowerTable[instanceId] != null) {
-					if (boundingBoxFollowerTable[instanceId].transform.childCount == 0)
-						r.x += 13;
-					r.y += 2;
-					r.width = 13;
-					r.height = 13;
-					GUI.DrawTexture(r, Icons.boundingBox);
-				}
+
 			}
 		}
 		#endregion
@@ -310,9 +512,9 @@ namespace Spine.Unity.Editor {
 		}
 
 		public static void ImportSpineContent (string[] imported, bool reimport = false) {
-			List<string> atlasPaths = new List<string>();
-			List<string> imagePaths = new List<string>();
-			List<string> skeletonPaths = new List<string>();
+			var atlasPaths = new List<string>();
+			var imagePaths = new List<string>();
+			var skeletonPaths = new List<string>();
 
 			foreach (string str in imported) {
 				string extension = Path.GetExtension(str).ToLower();
@@ -714,6 +916,7 @@ namespace Spine.Unity.Editor {
 					vestigialMaterials.Add(m);
 			}
 
+			protectFromStackGarbageCollection.Add(atlasAsset);
 			atlasAsset.atlasFile = atlasText;
 
 			//strip CR
@@ -738,7 +941,9 @@ namespace Spine.Unity.Editor {
 				texImporter.textureFormat = TextureImporterFormat.AutomaticTruecolor;
 				texImporter.mipmapEnabled = false;
 				texImporter.alphaIsTransparency = false;
+				texImporter.spriteImportMode = SpriteImportMode.None;
 				texImporter.maxTextureSize = 2048;
+
 
 				EditorUtility.SetDirty(texImporter);
 				AssetDatabase.ImportAsset(texturePath);
@@ -802,6 +1007,7 @@ namespace Spine.Unity.Editor {
 				AssetDatabase.Refresh();
 			}
 
+			protectFromStackGarbageCollection.Remove(atlasAsset);
 			return (AtlasAsset)AssetDatabase.LoadAssetAtPath(atlasPath, typeof(AtlasAsset));
 		}
 		#endregion
@@ -1124,6 +1330,7 @@ namespace Spine.Unity.Editor {
 
 			if (skeletonDataAsset.controller == null) {
 				SkeletonBaker.GenerateMecanimAnimationClips(skeletonDataAsset);
+				Debug.Log(string.Format("Mecanim controller was automatically generated and assigned for {0}", skeletonDataAsset.name));
 			}
 
 			go.GetComponent<Animator>().runtimeAnimatorController = skeletonDataAsset.controller;
