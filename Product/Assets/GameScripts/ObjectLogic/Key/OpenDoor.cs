@@ -57,7 +57,7 @@ namespace MG
             // 移动部分
             if (KeepTime < 0 && CurrentDir == Dir.Up && transform.position.y < MoveHighPos)
             {
-                transform.Translate(Vector3.up * MoveSpeed);
+				transform.Translate(Vector3.up * MoveSpeed);
                 return;
             }
 

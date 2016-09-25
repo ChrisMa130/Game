@@ -219,6 +219,7 @@
      <Compile Include="Assets\GameScripts\PlayerLogic\State\StandState.cs" />
      <Compile Include="Assets\GameScripts\Utilities\AudioManager.cs" />
      <Compile Include="Assets\GameScripts\Utilities\BGManager.cs" />
+     <Compile Include="Assets\GameScripts\Utilities\BackGroundFollowY.cs" />
      <Compile Include="Assets\GameScripts\Utilities\Logo.cs" />
      <Compile Include="Assets\GameScripts\Utilities\Notification\Fade.cs" />
      <Compile Include="Assets\GameScripts\Utilities\Notification\OnScreen.cs" />

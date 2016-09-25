@@ -74,20 +74,20 @@ namespace MG
                 CreateLine();
             }
 
-			if (Line != null)
-			{
-				// 当前线段消失
-				// 给领域加一个自动消失的脚本
-				if (ForbiddenLine != null)
-				{
-					var s = ForbiddenLine.AddComponent<autodestory>();
-					s.DestoryTime = GameDefine.DisableLineLiveTime;
-					ForbiddenLine = null;
-				}
-
-				GameObject.DestroyImmediate(Line);
-				Line = null;
-			}
+//			if (Line != null)
+//			{
+//				// 当前线段消失
+//				// 给领域加一个自动消失的脚本
+//				if (ForbiddenLine != null)
+//				{
+//					var s = ForbiddenLine.AddComponent<autodestory>();
+//					s.DestoryTime = GameDefine.DisableLineLiveTime;
+//					ForbiddenLine = null;
+//				}
+//
+//				GameObject.DestroyImmediate(Line);
+//				Line = null;
+//			}
 
             var mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             mousePos.z = 0;
@@ -121,20 +121,20 @@ namespace MG
             }
             SetCollider(CurrentOpLine, StartPos, EndPos);
 
-//            if (Line != null)
-//            {
-//                // 当前线段消失
-//                // 给领域加一个自动消失的脚本
-//                if (ForbiddenLine != null)
-//                {
-//                    var s = ForbiddenLine.AddComponent<autodestory>();
-//                    s.DestoryTime = GameDefine.DisableLineLiveTime;
-//                    ForbiddenLine = null;
-//                }
-//
-//                GameObject.DestroyImmediate(Line);
-//                Line = null;
-//            }
+            if (Line != null)
+            {
+                // 当前线段消失
+                // 给领域加一个自动消失的脚本
+                if (ForbiddenLine != null)
+                {
+                    var s = ForbiddenLine.AddComponent<autodestory>();
+                    s.DestoryTime = GameDefine.DisableLineLiveTime;
+                    ForbiddenLine = null;
+                }
+
+                GameObject.DestroyImmediate(Line);
+                Line = null;
+            }
 
             Line = CurrentOpLine;
 
