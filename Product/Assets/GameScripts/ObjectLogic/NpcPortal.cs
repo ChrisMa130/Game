@@ -11,6 +11,7 @@ namespace MG
         public bool FallDown;
 
         private float NextReviveTime = 0;
+        public bool BeginRevive;
 
         class UserData : TimeUnitUserData
         {
@@ -22,6 +23,7 @@ namespace MG
         {
             NpcObjects = new GameObject[ReviveCount];
             NextReviveTime = ReviveTime;
+            BeginRevive = true;
 
             Init(false);
         }
@@ -31,13 +33,20 @@ namespace MG
             if (TimeController.Instance.IsOpTime())
                 return;
 
+            if (!BeginRevive)
+            {
+                if (!CheckRevive())
+                    return;
+
+                BeginRevive = true;
+                NextReviveTime = ReviveTime;
+            }
+
             float deltaTime = Time.deltaTime;
             NextReviveTime -= deltaTime;
 
             if (NextReviveTime > 0)
                 return;
-
-            NextReviveTime = ReviveTime;
 
             for (int i = 0; i < ReviveCount; i++)
             {
@@ -47,6 +56,23 @@ namespace MG
                     break;
                 }
             }
+
+            BeginRevive = false;
+        }
+
+        bool CheckRevive()
+        {
+            for (int i = 0; i < ReviveCount; i++)
+            {
+                var npc = NpcObjects[i].GetComponent<Npc>();
+                if (npc != null && npc.IsDead)
+                {
+                    NpcObjects[i] = null;
+                    return true;
+                }
+            }
+
+            return false;
         }
 
         GameObject ReviveNpc()
