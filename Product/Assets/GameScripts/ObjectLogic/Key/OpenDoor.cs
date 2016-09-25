@@ -1,6 +1,4 @@
 ﻿using UnityEngine;
-using System.Collections;
-using System.Security.Permissions;
 
 namespace MG
 {
@@ -33,7 +31,7 @@ namespace MG
             MoveLowPos = transform.position.y;
 			CanMove = true;
             HasLine = false;
-
+            
             Init(false);
         }
 
@@ -119,6 +117,7 @@ namespace MG
                 KeepTime = KeepTime
             };
 
+            Rigid.constraints = RigidbodyConstraints2D.FreezeAll;
             return data;
         }
 
@@ -131,6 +130,8 @@ namespace MG
             CurrentDir = d.CurrentDir;
             CanMove = d.CanMove;
             KeepTime = d.KeepTime;
+
+            Rigid.constraints = RigidbodyConstraints2D.FreezeRotation;
         }
     }
 }

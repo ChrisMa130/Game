@@ -11,7 +11,7 @@ namespace MG
         private Stack<TimeData> FrameTimeData;
         private Stack<TimeData> ForwardTimeData;
         private TimeData CreateData;
-        private Rigidbody2D Rigid;
+        protected Rigidbody2D Rigid;
         private Animator Anim;
 
         private Dictionary<int, TimeUnitUserData> UserDataTable;
