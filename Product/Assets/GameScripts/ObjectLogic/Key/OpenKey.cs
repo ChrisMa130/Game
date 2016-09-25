@@ -62,7 +62,6 @@ namespace MG
                     var point = player ? player.GetHandObject() : null;
                     if (point == null)
                         point = npc ? npc.GetHandObject() : null;
-
                     SetParent(point);
                 }
                 //transform.position = Vector3.zero;
