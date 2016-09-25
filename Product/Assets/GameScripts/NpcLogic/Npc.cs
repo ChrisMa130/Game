@@ -56,8 +56,10 @@ namespace MG
             if (d == null)
                 return;
 
-			if (!d.IsDead && IsDead) {
-				Represent.Revive ();
+			if (!d.IsDead && IsDead) 
+            {
+                EnableCollider(true);
+				Represent.Revive();
 			}
 
             TurnRound(d.dir);
@@ -114,6 +116,7 @@ namespace MG
         {
             IsDead = true;
             State.Dead();
+            EnableCollider(false);
         }
 
         public void Jump()
@@ -144,6 +147,14 @@ namespace MG
         public Transform GetHandObject()
         {
             return HandObject;
+        }
+
+        public void EnableCollider(bool enable)
+        {
+            var c2d = gameObject.GetComponent<BoxCollider2D>();
+
+            if (c2d != null)
+                c2d.enabled = enable;
         }
     }
 }
