@@ -13,7 +13,7 @@ namespace MG
     {
         public Npc Owner { get; private set; }
         private NpcBaseState[] States;
-        public NpcStateType CurrentState { get; private set; }
+        public NpcStateType CurrentState { get; set; }
         public NpcStateType NextState { get; private set; }
 
         public void Init(Npc npc)

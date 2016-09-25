@@ -9,6 +9,7 @@ namespace MG
         public NpcStateType CurrentStateType
         {
             get { return State.CurrentState; }
+            private set { State.CurrentState = value; }
         }
         private NpcRepresent Represent;
         private Transform GroundCheck;
@@ -33,6 +34,7 @@ namespace MG
             // 基本数据
             public Dir dir;
             public bool IsDead;
+            public NpcStateType CurrentStateType;
 
             // 状态数据
             public NpcStateUserData StateData;
@@ -44,6 +46,7 @@ namespace MG
             data.dir = CurrentDir;
             data.IsDead = IsDead;
             data.StateData = State.GetUserData();
+            data.CurrentStateType = CurrentStateType;
 
             return data;
         }
@@ -60,6 +63,7 @@ namespace MG
 
             TurnRound(d.dir);
             IsDead = d.IsDead;
+            CurrentStateType = d.CurrentStateType;
 
             State.SetUserData(d.StateData);
 			Represent.Reset ();
