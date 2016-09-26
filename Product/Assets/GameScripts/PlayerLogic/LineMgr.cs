@@ -69,8 +69,8 @@ namespace MG
 
         void SetStartPos()
         {
-            if (!CanDraw)
-                return;
+			if (!CanDraw)
+				return;
 
             if (CurrentOpLine == null)
             {
@@ -106,6 +106,7 @@ namespace MG
         {
 			if (!Changed) {
 				GameObject.DestroyImmediate(CurrentOpLine);
+				DestoryLine ();
 				Changed = false;
 				return;
 			}
