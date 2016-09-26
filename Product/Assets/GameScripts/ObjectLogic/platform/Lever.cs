@@ -10,7 +10,7 @@ namespace MG {
 
 		class UserData : TimeUnitUserData
 		{
-			public bool Left;
+			public bool hasPlayer;
 		}
 
 		void Start () {
@@ -54,6 +54,25 @@ namespace MG {
 			}
 			this.obj = null;
 			hasPlayer = false;
+		}
+
+		protected override TimeUnitUserData GetUserData()
+		{
+			var data = new UserData
+			{
+				hasPlayer = this.hasPlayer
+			};
+
+			return data;
+		}
+
+		protected override void SetUserData(TimeUnitUserData data)
+		{
+			UserData d = data as UserData;
+			if (d == null)
+				return;
+
+			this.hasPlayer = d.hasPlayer;
 		}
 
 //		private void PlayAnimation() {
