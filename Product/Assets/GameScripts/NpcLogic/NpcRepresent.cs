@@ -86,7 +86,6 @@ namespace MG
 			skeleton.SetAttachment ("yan2", null);
 			skeleton.SetAttachment ("yan", "yan");
 			skeleton.SetAttachment ("yan1", "yan1");
-
 		}
     }
 }
