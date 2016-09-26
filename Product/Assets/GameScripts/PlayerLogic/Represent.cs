@@ -44,6 +44,11 @@ namespace MG
             Anim.SetBool("Dead", true);
         }
 
+        public void Revive()
+        {
+            Anim.SetBool("Dead", false);
+        }
+
         public void Jump()
         {
 			Reset ();

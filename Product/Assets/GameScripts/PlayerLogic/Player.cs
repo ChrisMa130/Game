@@ -114,6 +114,7 @@ namespace MG
             IsDead = true;
             MyState.Dead();
             EnableCollider(false);
+            Rigid.isKinematic = true;
         }
 
         public void Jump()
@@ -165,7 +166,11 @@ namespace MG
             }
 
             if (!d.IsDead && IsDead)
+            {
+                Rigid.isKinematic = false;
                 EnableCollider(true);
+                MyRepresent.Revive();
+            }
 
             Grounded = d.Grounded;
             IsDead = d.IsDead;
