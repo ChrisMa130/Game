@@ -18,6 +18,7 @@ public class OnScreen : MonoBehaviour {
 	void Start () {
 		transform.parent = GameObject.FindWithTag ("MainCamera").transform;
 		transform.localPosition = new Vector3 (0f, 2.05f, 10f);
+		GetComponent<MeshRenderer>().sortingLayerName = "Foreground";
 		currentTime = TransitionTime;
 //		FadeSpeed = (1.0f / FadeTime);
 	}

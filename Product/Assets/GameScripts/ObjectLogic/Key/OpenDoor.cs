@@ -6,7 +6,7 @@ namespace MG
     {
         public float MoveSpeed = 0.1f;
         public float KeepOpenTime = 2f;
-
+		public bool Up = true;
         private float KeepTime = -1f;
 
 
@@ -28,11 +28,19 @@ namespace MG
 			if (TimeController.Instance.IsOpTime ())
 				return;
 
-			// 移动部分
-			if (KeepTime < 0f) {
-				Rigid.AddForce (new Vector2 (0f, 1000f * MoveSpeed));
-			} else {
-				KeepTime -= Time.deltaTime;
+			if (Up) {
+				if (KeepTime > 0f) {
+					Rigid.AddForce (new Vector2 (0f, 1000f * MoveSpeed));
+					KeepTime -= Time.deltaTime;
+				}
+			}
+			else {
+				// 移动部分
+				if (KeepTime < 0f) {
+					Rigid.AddForce (new Vector2 (0f, 1000f * MoveSpeed));
+				} else {
+					KeepTime -= Time.deltaTime;
+				}
 			}
 
 		}

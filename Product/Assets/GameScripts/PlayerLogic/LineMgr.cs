@@ -38,7 +38,10 @@ namespace MG
         {
             if (!CanDraw)
                 return;
-
+			if (Input.GetMouseButtonDown (1)) 
+			{
+				DestoryLine ();
+			}
             // 如果是鼠标按下
             if (input.Mouse1Down)
             {
@@ -121,20 +124,7 @@ namespace MG
             }
             SetCollider(CurrentOpLine, StartPos, EndPos);
 
-            if (Line != null)
-            {
-                // 当前线段消失
-                // 给领域加一个自动消失的脚本
-                if (ForbiddenLine != null)
-                {
-                    var s = ForbiddenLine.AddComponent<autodestory>();
-                    s.DestoryTime = GameDefine.DisableLineLiveTime;
-                    ForbiddenLine = null;
-                }
-
-                GameObject.DestroyImmediate(Line);
-                Line = null;
-            }
+			DestoryLine ();
 
             Line = CurrentOpLine;
 
@@ -155,6 +145,23 @@ namespace MG
 					Destroy (child.gameObject);
 			}
 			Instantiate (notifi);
+		}
+
+		private void DestoryLine () {
+			if (Line != null)
+			{
+				// 当前线段消失
+				// 给领域加一个自动消失的脚本
+				if (ForbiddenLine != null)
+				{
+					var s = ForbiddenLine.AddComponent<autodestory>();
+					s.DestoryTime = GameDefine.DisableLineLiveTime;
+					ForbiddenLine = null;
+				}
+
+				GameObject.DestroyImmediate(Line);
+				Line = null;
+			}
 		}
 
         void CreateForbiddenZone()
@@ -215,7 +222,7 @@ namespace MG
             var hit = Physics2D.Raycast(StartPos, dir, dist);
             if (hit.collider != null)
             {
-                if (hit.transform.tag.Equals("ForbiddenZone") || hit.transform.tag.Equals("Player"))
+				if (hit.transform.tag.Equals("ForbiddenZone") || hit.transform.tag.Equals("Player") || hit.transform.tag.Equals("Building"))
                 {
                     ValidLine = false;
                 }
