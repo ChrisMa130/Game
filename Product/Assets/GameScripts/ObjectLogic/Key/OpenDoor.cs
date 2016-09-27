@@ -56,7 +56,7 @@ namespace MG
             {
 				KeepTime = KeepTime
             };
-				
+					
             return data;
         }
 
@@ -67,7 +67,6 @@ namespace MG
                 return;
             KeepTime = d.KeepTime;
 
-            Rigid.constraints = RigidbodyConstraints2D.FreezeRotation;
         }
     }
 }

@@ -4,6 +4,8 @@ using System.Linq;
 namespace MG {
 	public class Lever : TimeUnit {
 		public PlatformBase[] Platforms;
+
+		public bool left = true;
 		private Animator anim;
 		private bool hasPlayer;
 		private Collider2D obj;
@@ -15,6 +17,7 @@ namespace MG {
 
 		void Start () {
 			anim = transform.FindChild("lever").GetComponent<Animator> ();
+			anim.SetBool ("Left", left);
 			hasPlayer = false;
 			Init(false);
 		}

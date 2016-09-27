@@ -174,6 +174,7 @@ namespace MG
                 Speed = Speed
             };
 
+			Rigid.constraints = RigidbodyConstraints2D.FreezeAll;
             return data;
         }
 
@@ -185,6 +186,8 @@ namespace MG
 
             BeMove = d.BeMove;
             Speed = d.Speed;
+
+			Rigid.constraints = RigidbodyConstraints2D.FreezeRotation;
         }
 
         //        void OnTriggerStay2D(Collider2D obj)
