@@ -13,6 +13,8 @@ namespace MG
         public bool IsPause { get; private set; }
         private bool RecordingTime;
 
+        public GameSwitch WorldSwith;
+
         void Start()
         {
             RecordingTime = true;
@@ -20,6 +22,20 @@ namespace MG
             InputMgr = gameObject.AddComponent<GameInput>();
             PlayerLogic = PlayerObject.AddMissingComponent<Player>();
             LineMgr = gameObject.AddMissingComponent<LineMgr>();
+
+            // 查找开关
+            var s = GameObject.Find("GameSwitch");
+            if (s != null)
+            {
+                WorldSwith = s.GetComponent<GameSwitch>();
+            }
+
+            if (WorldSwith == null)
+            {
+                WorldSwith = new GameSwitch();
+                WorldSwith.ForbidDrawLine = false;
+                WorldSwith.ForbidTimeOperation = false;
+            }
         }
 
         void Update()
@@ -31,7 +47,7 @@ namespace MG
 
             UpdateInput();
 
-            if (TimeController.Instance != null)
+            if (!WorldSwith.ForbidTimeOperation && TimeController.Instance != null)
             {
                 ProcessTime();
 
@@ -46,7 +62,7 @@ namespace MG
 
         void UpdateInput()
         {
-            if (InputMgr.PauseTime)
+            if (!WorldSwith.ForbidTimeOperation && InputMgr.PauseTime)
             {
                 IsPause = !IsPause;
                 PauseGame(IsPause, true);
@@ -57,7 +73,8 @@ namespace MG
                 PlayerLogic.ApplyInput(InputMgr);
             }
 
-            LineMgr.ApplyInput(InputMgr);
+            if (!WorldSwith.ForbidDrawLine)
+                LineMgr.ApplyInput(InputMgr);
         }
 
         void ProcessTime()
@@ -121,7 +138,6 @@ namespace MG
 
         public void PauseGame(bool pause, bool DoRecord)
         {
-            // Debug.Log("PauseGame " + pause);
             Time.timeScale = pause ? 0 : 1;
             IsPause = pause;
 

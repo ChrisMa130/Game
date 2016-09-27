@@ -10,7 +10,7 @@ namespace MG
 
         private Vector3 StartPos;
         private Vector3 EndPos;
-		private bool Changed;
+        private bool Changed;
 
         private bool ValidLine;
 
@@ -25,23 +25,19 @@ namespace MG
         void Start()
         {
             CanDraw = true;
-			Changed = false;
+            Changed = false;
             LineCount = 1;
             LineAngle = 0;
-        }
-
-        public void Activate(float deltaTime)
-        {
         }
 
         public void ApplyInput(GameInput input)
         {
             if (!CanDraw)
                 return;
-			if (Input.GetMouseButtonDown (1)) 
-			{
-				DestoryLine ();
-			}
+            if (Input.GetMouseButtonDown(1))
+            {
+                DestoryLine();
+            }
             // 如果是鼠标按下
             if (input.Mouse1Down)
             {
@@ -64,33 +60,18 @@ namespace MG
             CurrentOpLine.name = "Line" + LineCount++;
             CurrentLineRenderer = CurrentOpLine.GetComponent<LineRenderer>();
             CurrentLineRenderer.SetVertexCount(2);
-			CurrentLineRenderer.SetWidth(GameDefine.LineSize, GameDefine.LineSize);
+            CurrentLineRenderer.SetWidth(GameDefine.LineSize, GameDefine.LineSize);
         }
 
         void SetStartPos()
         {
-			if (!CanDraw)
-				return;
+            if (!CanDraw)
+                return;
 
             if (CurrentOpLine == null)
             {
                 CreateLine();
             }
-
-//			if (Line != null)
-//			{
-//				// 当前线段消失
-//				// 给领域加一个自动消失的脚本
-//				if (ForbiddenLine != null)
-//				{
-//					var s = ForbiddenLine.AddComponent<autodestory>();
-//					s.DestoryTime = GameDefine.DisableLineLiveTime;
-//					ForbiddenLine = null;
-//				}
-//
-//				GameObject.DestroyImmediate(Line);
-//				Line = null;
-//			}
 
             var mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             mousePos.z = 0;
@@ -104,28 +85,23 @@ namespace MG
 
         void SetEndPos()
         {
-			if (!Changed) {
-				GameObject.DestroyImmediate(CurrentOpLine);
-				DestoryLine ();
-				Changed = false;
-				return;
-			}
-			if (!ValidLine || !CanDraw)
+            if (!Changed)
             {
-//                if (ForbiddenLine != null)
-//                {
-//                    GameObject.DestroyImmediate(ForbiddenLine);
-//                    ForbiddenLine = null;
-//                }
-                    
                 GameObject.DestroyImmediate(CurrentOpLine);
-				Changed = false;
-				DisplayNotifi ();
+                DestoryLine();
+                Changed = false;
+                return;
+            }
+            if (!ValidLine || !CanDraw)
+            {
+                GameObject.DestroyImmediate(CurrentOpLine);
+                Changed = false;
+                DisplayNotifi();
                 return;
             }
             SetCollider(CurrentOpLine, StartPos, EndPos);
 
-			DestoryLine ();
+            DestoryLine();
 
             Line = CurrentOpLine;
 
@@ -136,34 +112,38 @@ namespace MG
 
             CurrentOpLine = null;
             CurrentLineRenderer = null;
-			Changed = false;
+            Changed = false;
         }
 
-		private void DisplayNotifi() {
-			var notifi = Resources.Load("prefabs/Utilities/Invalid") as GameObject;
-			foreach (Transform child in Camera.main.transform){
-				if (child.tag.Equals ("Hint"))
-					Destroy (child.gameObject);
-			}
-			Instantiate (notifi);
-		}
+        private void DisplayNotifi()
+        {
+            if (GameMgr.Instance.WorldSwith.ForbidDrawLine)
+                return;
 
-		private void DestoryLine () {
-			if (Line != null)
-			{
-				// 当前线段消失
-				// 给领域加一个自动消失的脚本
-				if (ForbiddenLine != null)
-				{
-					var s = ForbiddenLine.AddComponent<autodestory>();
-					s.DestoryTime = GameDefine.DisableLineLiveTime;
-					ForbiddenLine = null;
-				}
+            var notifi = Resources.Load("prefabs/Utilities/Invalid") as GameObject;
+            foreach (Transform child in Camera.main.transform)
+            {
+                if (child.tag.Equals("Hint"))
+                    Destroy(child.gameObject);
+            }
+            Instantiate(notifi);
+        }
 
-				GameObject.DestroyImmediate(Line);
-				Line = null;
-			}
-		}
+        private void DestoryLine()
+        {
+            if (Line != null)
+            {
+                if (ForbiddenLine != null)
+                {
+                    var s = ForbiddenLine.AddComponent<autodestory>();
+                    s.DestoryTime = GameDefine.DisableLineLiveTime;
+                    ForbiddenLine = null;
+                }
+
+                GameObject.DestroyImmediate(Line);
+                Line = null;
+            }
+        }
 
         void CreateForbiddenZone()
         {
@@ -201,8 +181,8 @@ namespace MG
 
             float angle = GetAngle(StartPos, mousePos);
             var len = mousePos.x - StartPos.x;
-//            float theTa = Mathf.Round(angle/45.0f)*(45.0f);
-			float theTa = Mathf.Round(angle/90.0f)*(90.0f);
+            //            float theTa = Mathf.Round(angle/45.0f)*(45.0f);
+            float theTa = Mathf.Round(angle / 90.0f) * (90.0f);
             LineAngle = (int)Mathf.Abs(theTa);
             if (LineAngle == 90)
             {
@@ -215,7 +195,7 @@ namespace MG
             CurrentLineRenderer.SetPosition(1, mousePos);
 
             EndPos = mousePos;
-			Changed = true;
+            Changed = true;
 
             Vector3 dir = EndPos - StartPos;
             float dist = Vector3.Distance(StartPos, EndPos);
@@ -223,7 +203,7 @@ namespace MG
             var hit = Physics2D.Raycast(StartPos, dir, dist);
             if (hit.collider != null)
             {
-				if (hit.transform.tag.Equals("ForbiddenZone") || hit.transform.tag.Equals("Player") || hit.transform.tag.Equals("Building"))
+                if (hit.transform.tag.Equals("ForbiddenZone") || hit.transform.tag.Equals("Player") || hit.transform.tag.Equals("Building"))
                 {
                     ValidLine = false;
                 }
@@ -263,13 +243,13 @@ namespace MG
 
             BoxCollider2D col = obj.GetComponent<BoxCollider2D>();
             float lineLength = Vector3.Distance(start, end); // length of line
-			col.size = new Vector2(lineLength, GameDefine.LineSize);
+            col.size = new Vector2(lineLength, GameDefine.LineSize);
             Vector3 midPoint = (start + end) / 2;
             col.transform.localPosition = midPoint;
-            
+
             float angle = GetAngle(start, end);
             float theTa = Mathf.Round(angle / 45.0f) * (45.0f);
-            int nTa = (int) Mathf.Abs(theTa);
+            int nTa = (int)Mathf.Abs(theTa);
             if (nTa == 90)
                 theTa = 90;
             else if (nTa == 45)
@@ -281,7 +261,7 @@ namespace MG
 
         private Vector3 CalcLinePos(Vector3 A, Vector3 B, float len)
         {
-            var lenAB = Mathf.Sqrt((B.y - A.y)*((B.y - A.y)) + (B.x - A.x)*(B.x - A.x));// 计算2点的长度
+            var lenAB = Mathf.Sqrt((B.y - A.y) * ((B.y - A.y)) + (B.x - A.x) * (B.x - A.x));// 计算2点的长度
 
             float dy = B.y - A.y;
             float dx = B.x - A.x;
@@ -291,10 +271,10 @@ namespace MG
 
             if (!GameDefine.FloatIsZero(dy) && !GameDefine.FloatIsZero(dx))
             {
-                sinT = dy/lenAB;
-                cosT = dx/lenAB;
-                y = B.y + len*sinT;
-                x = B.x + len*cosT;
+                sinT = dy / lenAB;
+                cosT = dx / lenAB;
+                y = B.y + len * sinT;
+                x = B.x + len * cosT;
             }
             else if (GameDefine.FloatIsZero(dy) && dx > 0.0f)
             {
