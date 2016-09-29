@@ -113,8 +113,9 @@ namespace MG
         {
             IsDead = true;
             MyState.Dead();
-            EnableCollider(false);
-            Rigid.isKinematic = true;
+			gameObject.layer = 19;
+            //EnableCollider(false);
+            //Rigid.isKinematic = true;
         }
 
         public void Jump()
@@ -167,8 +168,9 @@ namespace MG
 
             if (!d.IsDead && IsDead)
             {
-                Rigid.isKinematic = false;
-                EnableCollider(true);
+                //Rigid.isKinematic = false;
+                //EnableCollider(true);
+				gameObject.layer = 8;
                 MyRepresent.Revive();
             }
 

@@ -112,7 +112,6 @@
      <None Include="Assets\2DxFX\Resources\_2dxFX_Shiny_Reflect.shader" />
      <None Include="Assets\Resources\Spine\Examples\Spine\Gauge\Gauge.atlas.txt" />
      <None Include="Assets\2DxFX\Resources\_2dxFX_Mystic_Distortion_Additive.shader" />
-     <None Include="Assets\Animations\Enemy_source_files_Original\Source_Animation\guai.atlas.txt" />
      <None Include="Assets\2DxFX\Resources\_2dxFX_Pixel8bitsGB.shader" />
      <None Include="Assets\Resources\Spine\Examples\Spine\FootSoldier\FS_White.atlas.txt" />
      <None Include="Assets\2DxFX\Resources\_2dxFX_Heat.shader" />
@@ -171,6 +170,7 @@
      <None Include="Assets\Resources\Spine\Examples\Spine\Dragon\dragon.atlas.txt" />
      <None Include="Assets\2DxFX\Resources\_2dxFX_Offset.shader" />
      <None Include="Assets\2DxFX\Resources\_2dxFX_Ice.shader" />
+     <None Include="Assets\Animations\Protagonist\nvzhujue.atlas.txt" />
      <None Include="Assets\2DxFX\Resources\_2dxFX_Wave.shader" />
      <None Include="Assets\2DxFX\Resources\_2dxFX_Color.shader" />
      <None Include="Assets\GameScripts\Camera\Code\Helpers\TransitionFX\Resources\PC2D_Shutters.shader" />

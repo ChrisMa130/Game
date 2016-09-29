@@ -25,6 +25,11 @@ namespace MG {
 	//	}
 	//
 
+		void Start () {
+			if (player == null)
+				player = transform.Find ("Faylisa").gameObject;
+		}
+
 
 		void Update() {
 			if (player.transform.position.x > startX) {
