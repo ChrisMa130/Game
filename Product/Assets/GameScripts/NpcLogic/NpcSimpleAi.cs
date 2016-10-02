@@ -51,8 +51,8 @@ namespace MG
             var player = obj.gameObject.GetComponent<Player>();
             if (player != null)
             {
-                player.Dead();
-                Debug.Log("玩家狗带了");
+                //player.Dead();
+                //Debug.Log("玩家狗带了");
                 if (!NpcObject.Grounded)
                     NpcObject.Jump();
                 return;
