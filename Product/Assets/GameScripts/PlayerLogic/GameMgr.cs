@@ -10,7 +10,10 @@ namespace MG
         public Player PlayerLogic;
         public GameInput InputMgr;
         public LineMgr LineMgr;
+        public UIManager UiManager;
+
         public bool IsPause { get; private set; }
+        public int ExitCount = 0;
         private bool RecordingTime;
 
         public GameSwitch WorldSwith;
@@ -22,6 +25,8 @@ namespace MG
             InputMgr = gameObject.AddComponent<GameInput>();
             PlayerLogic = PlayerObject.AddMissingComponent<Player>();
             LineMgr = gameObject.AddMissingComponent<LineMgr>();
+            UiManager = gameObject.AddMissingComponent<UIManager>();
+            UiManager.OpenUI(0);
 
             // 查找开关
             var s = GameObject.Find("GameSwitch");

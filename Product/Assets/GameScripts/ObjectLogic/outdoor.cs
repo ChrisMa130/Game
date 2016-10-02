@@ -12,6 +12,14 @@ namespace MG
 
         void Start()
         {
+            if (NeedCollects.Length == 0)
+            {
+                GameMgr.Instance.ExitCount = 0;
+            }
+            else
+            {
+                GameMgr.Instance.ExitCount = NeedCollects[0];
+            }
         }
 
         void OnTriggerStay2D(Collider2D other)
