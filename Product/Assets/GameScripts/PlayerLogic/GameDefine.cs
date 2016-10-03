@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
-using System.IO;
+using System.Collections.Generic;
 
 // 一些游戏定义丢这里
 
@@ -88,6 +88,57 @@ namespace MG
                 return true;
 
             return false;
+        }
+
+        public static T GetChildByName<T>(this GameObject go, string name) where T : Component
+        {
+            var child = GetChildByName(go, name);
+            if (child == null)
+                return default(T);
+
+            return child.gameObject.GetComponent<T>();
+        }
+        public static GameObject GetChildByName(this GameObject go, string name)
+        {
+            return GetChildByName(go, name, true);
+        }
+
+        public static GameObject GetChildByName(GameObject Parent, string ChildName, bool IsDepth)
+        {
+            Transform Child = null;
+            GameObject CurChild = null;
+            Transform TempChild = null;
+
+            Child = Parent.transform.FindChild(ChildName);
+            if (Child != null)
+            {
+                CurChild = Child.gameObject;
+                return CurChild;
+            }
+            if (IsDepth == true)
+            {
+                int ChildNum = Parent.transform.childCount;
+                for (int i = 0; i < ChildNum; i++)
+                {
+                    Child = Parent.transform.GetChild(i);
+                    TempChild = Child.FindChild(ChildName);
+                    if (TempChild != null)
+                    {
+                        CurChild = TempChild.gameObject;
+                        break;
+                    }
+                    else
+                    {
+                        CurChild = GetChildByName(Child.gameObject, ChildName);
+                        if (CurChild != null)
+                        {
+                            break;
+                        }
+                    }
+                }
+            }
+
+            return CurChild;
         }
     }
 }
