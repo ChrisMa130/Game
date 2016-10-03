@@ -130,7 +130,7 @@ namespace MG
             {
                 BeMove = false;
             }
-            else if (obj.gameObject.tag == "ForbiddenZone" && obj.gameObject.layer == LayerMask.NameToLayer("Ground"))
+			else if (obj.gameObject.tag == "ForbiddenZone" && (obj.gameObject.layer == LayerMask.NameToLayer("Ground") || obj.gameObject.layer == LayerMask.NameToLayer("Default")))
             {
                 Line = obj.gameObject;
                 HasLine = true;
@@ -139,7 +139,7 @@ namespace MG
 
             //if (obj.gameObject.tag == "Player")
             //    PlayerStay = true;
-			if (obj.gameObject.tag == "Player" && Parent)
+			if (obj.gameObject.tag == "ForbiddenZone" && obj.gameObject.layer == LayerMask.NameToLayer("Player") && Parent)
 				obj.gameObject.transform.parent = transform;
 //			if (obj.gameObject.tag == "NPC") {
 //				obj.gameObject.transform.parent = transform;
@@ -160,10 +160,10 @@ namespace MG
 
             //if (obj.gameObject.tag == "Player")
             //    PlayerStay = false;
-            if (obj.gameObject.tag == "NPC")
+			if (obj.gameObject.tag == "ForbiddenZone" && obj.gameObject.layer == LayerMask.NameToLayer("Default"))
 				obj.gameObject.transform.GetComponent<Rigidbody2D> ().velocity += new Vector2 (10, 0);
-			if (obj.gameObject.tag == "Player" || obj.gameObject.tag == "NPC")
-				transform.DetachChildren ();
+			if (obj.gameObject.tag == "ForbiddenZone")
+				obj.transform.parent = null;
         }
 
         protected override TimeUnitUserData GetUserData()
