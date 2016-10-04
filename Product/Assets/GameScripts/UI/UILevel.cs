@@ -57,7 +57,8 @@ public class UILevel : MonoBehaviour
     {
         if (GameMgr.Instance.WorldSwith.ForbidTimeOperation)
         {
-            RewindTxt.color = Color.gray;
+            RewindTxt.enabled = false;
+            // RewindTxt.color = Color.gray;
             return;
         }
 
@@ -69,6 +70,12 @@ public class UILevel : MonoBehaviour
 
     void UpdatePause()
     {
+        if (GameMgr.Instance.WorldSwith.ForbidTimeOperation)
+        {
+            PauseTxt.enabled = false;
+            return;
+        }
+
         if (GameMgr.Instance.IsPause)
         {
             PauseTxt.text = "F：Resume";
@@ -83,7 +90,7 @@ public class UILevel : MonoBehaviour
     {
         if (GameMgr.Instance.WorldSwith.ForbidTimeOperation)
         {
-            ForwardTxt.color = Color.gray;
+            ForwardTxt.enabled = false;
             return;
         }
 
