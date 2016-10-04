@@ -30,6 +30,11 @@ public class UILevel : MonoBehaviour
         LastCount = -1;
     }
 
+	private void AdjustSize(Text text) {
+		int defaultSize = text.fontSize;
+		text.fontSize = Mathf.RoundToInt (defaultSize * Screen.width / (325 * 1.0f));
+	}
+
     void UpdateCount()
     {
         if (LastCount == GameMgr.Instance.PlayerLogic.GetCollectCount(0))
