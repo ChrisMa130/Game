@@ -1,7 +1,5 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
-using System.Collections;
-using System.Reflection;
 using MG;
 
 // 游戏中的基本UI
@@ -28,6 +26,8 @@ public class UILevel : MonoBehaviour
 
         obj = gameObject.GetChildByName("ForwardTxt");
         ForwardTxt = obj.GetComponent<Text>();
+
+        LastCount = -1;
     }
 
     void UpdateCount()
@@ -55,16 +55,16 @@ public class UILevel : MonoBehaviour
 
     void UpdateRewind()
     {
-        if (GameMgr.Instance.WorldSwith.ForbidTimeOperation || !TimeController.Instance.IsOpTime())
+        if (GameMgr.Instance.WorldSwith.ForbidTimeOperation)
         {
             RewindTxt.color = Color.gray;
             return;
         }
 
-        if (TimeController.Instance.CurrentState == TimeControllState.Rewinding)
-            RewindTxt.color = Color.white;
-        else
+        if (TimeController.Instance.CurrentState == TimeControllState.Rewinding || TimeController.Instance.CurrentState == TimeControllState.Rewinding)
             RewindTxt.color = Color.gray;
+        else
+            RewindTxt.color = Color.white;
     }
 
     void UpdatePause()
@@ -81,15 +81,16 @@ public class UILevel : MonoBehaviour
 
     void UpdateForward()
     {
-        if (GameMgr.Instance.WorldSwith.ForbidTimeOperation || !TimeController.Instance.IsOpTime())
+        if (GameMgr.Instance.WorldSwith.ForbidTimeOperation)
         {
             ForwardTxt.color = Color.gray;
             return;
         }
 
-        if (TimeController.Instance.CurrentState == TimeControllState.Forward)
-            ForwardTxt.color = Color.white;
-        else
+        if (TimeController.Instance.CurrentState == TimeControllState.Recording || !TimeController.Instance.IsOpTime())
             ForwardTxt.color = Color.gray;
+        else
+            ForwardTxt.color = Color.white;
+
     }
 }
