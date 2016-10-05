@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace MG
 {
-    public class LineMgr : MonoBehaviour
+    public class LineMgr_Copy : MonoBehaviour
     {
         private GameObject Line;
         private GameObject ForbiddenLine;
@@ -192,32 +192,11 @@ namespace MG
             {
                 mousePos.y = StartPos.y + len * Mathf.Sin(theTa);
             }
-
-			float currentLength = Vector3.Distance(StartPos, mousePos);
-
-			// cap max length
-			if (currentLength > GameDefine.LineMaxLimit) {
-				if (mousePos.y == StartPos.y) {
-					if (mousePos.x > StartPos.x) {
-						mousePos.x = StartPos.x + GameDefine.LineMaxLimit;
-					} else {
-						mousePos.x = StartPos.x - GameDefine.LineMaxLimit;
-					}
-				} 
-				else if (mousePos.x == StartPos.x) {
-					if (mousePos.y > StartPos.y) {
-						mousePos.y = StartPos.y + GameDefine.LineMaxLimit;
-					} else {
-						mousePos.y = StartPos.y - GameDefine.LineMaxLimit;
-					}
-				}
-			}
             CurrentLineRenderer.SetPosition(1, mousePos);
 
             EndPos = mousePos;
             Changed = true;
 
-			// detect collision
             Vector3 dir = EndPos - StartPos;
             float dist = Vector3.Distance(StartPos, EndPos);
             dir.Normalize();

@@ -206,6 +206,7 @@
      <Compile Include="Assets\GameScripts\PlayerLogic\GameInput.cs" />
      <Compile Include="Assets\GameScripts\PlayerLogic\GameMgr.cs" />
      <Compile Include="Assets\GameScripts\PlayerLogic\GameSaveData.cs" />
+     <Compile Include="Assets\GameScripts\PlayerLogic\LineMgr - Copy.cs" />
      <Compile Include="Assets\GameScripts\PlayerLogic\LineMgr.cs" />
      <Compile Include="Assets\GameScripts\PlayerLogic\ObjectMove.cs" />
      <Compile Include="Assets\GameScripts\PlayerLogic\Player.cs" />
@@ -223,8 +224,9 @@
      <Compile Include="Assets\GameScripts\Utilities\AudioManager.cs" />
      <Compile Include="Assets\GameScripts\Utilities\BGManager.cs" />
      <Compile Include="Assets\GameScripts\Utilities\BackGroundFollowY.cs" />
-     <Compile Include="Assets\GameScripts\Utilities\Logo.cs" />
      <Compile Include="Assets\GameScripts\Utilities\Notification\Fade.cs" />
+     <Compile Include="Assets\GameScripts\Utilities\Notification\Hint.cs" />
+     <Compile Include="Assets\GameScripts\Utilities\Notification\Logo.cs" />
      <Compile Include="Assets\GameScripts\Utilities\Notification\OnScreen.cs" />
      <Compile Include="Assets\Resources\Spine\Examples\Getting Started\Scripts\BasicPlatformerController.cs" />
      <Compile Include="Assets\Resources\Spine\Examples\Getting Started\Scripts\ConstrainedCamera.cs" />
