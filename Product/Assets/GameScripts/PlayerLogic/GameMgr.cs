@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using Com.LuisPedroFonseca.ProCamera2D;
 
 // 游戏主体逻辑
 
@@ -20,6 +21,11 @@ namespace MG
 
         void Start()
         {
+			if (PlayerObject == null) {
+				PlayerObject = GameObject.Find ("Faylisa");
+				if (PlayerObject == null)
+					PlayerObject = GameObject.Find ("BlueHat");
+			}
             RecordingTime = true;
             IsPause = false;
             InputMgr = gameObject.AddComponent<GameInput>();
@@ -41,6 +47,8 @@ namespace MG
                 WorldSwith.ForbidDrawLine = false;
                 WorldSwith.ForbidTimeOperation = false;
             }
+
+			Camera.main.GetComponent<ProCamera2DTransitionsFX> ().TransitionEnter ();
         }
 
         void Update()

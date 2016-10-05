@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.SceneManagement;
+using Com.LuisPedroFonseca.ProCamera2D;
 
 namespace MG
 {
@@ -9,6 +10,13 @@ namespace MG
         public int[] NeedCollects = new int[GameDefine.CollectCount];
 
         public string NextLevelName;
+
+
+		private ProCamera2DTransitionsFX _transitionFX;
+
+		void Awake() {
+			_transitionFX = Camera.main.GetComponent<ProCamera2DTransitionsFX> ();
+		}
 
         void Start()
         {
@@ -20,6 +28,8 @@ namespace MG
             {
                 GameMgr.Instance.ExitCount = NeedCollects[0];
             }
+
+			_transitionFX.OnTransitionExitEnded += OnTransitionExitEnded;
         }
 
         void OnTriggerStay2D(Collider2D other)
@@ -58,9 +68,15 @@ namespace MG
 //                return;
 //            }
 			if (GameMgr.Instance.InputMgr.UpUp) {
-				SceneManager.LoadSceneAsync (NextLevelName);
+				_transitionFX.TransitionExit ();
+				//SceneManager.LoadSceneAsync (NextLevelName);
 			}
         }
+			
+		void OnTransitionExitEnded() {
+			_transitionFX.OnTransitionExitEnded -= OnTransitionExitEnded;
+			SceneManager.LoadSceneAsync (NextLevelName);
+		}
     }
 }
 
