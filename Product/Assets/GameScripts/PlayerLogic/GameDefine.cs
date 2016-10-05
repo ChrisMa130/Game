@@ -48,7 +48,7 @@ namespace MG
         public static readonly float LineSize = 0.27f;
         public static readonly float DisableLineLiveTime = 0.001f;
         public static readonly float ForbiddenLineAddLen = 0.6f;
-        public static readonly float ForbiddenLineAddWidth = 0.4f;
+        public static readonly float ForbiddenLineAddWidth = 0.6f;
 		public static readonly float StairsSlopeHeight = 0.1f;
 
         public static readonly float NpcMoveSpeed = 1.3f;
