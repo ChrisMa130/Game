@@ -111,8 +111,8 @@ namespace MG
 
         public void Dead()
         {
-            IsDead = true;
             MyState.Dead();
+            IsDead = true;
 			gameObject.layer = 19;
             //EnableCollider(false);
             //Rigid.isKinematic = true;
