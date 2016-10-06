@@ -86,10 +86,12 @@ namespace MG
                 if (UiManager.IsUIOpening(1))
                 {
                     UiManager.OpenUI(0);
+                    PauseGame(false, false);
                 }
                 else
                 {
                     UiManager.OpenUI(1);
+                    PauseGame(true, false);
                 }
             }
 
