@@ -24,8 +24,9 @@ namespace MG
         public bool MouseInput      { get; private set; }
         public bool TimebackDown    { get; private set; }
         public bool TimebackUp      { get; private set; }
-        public bool TimeForwardDown  { get; private set; }
-        public bool TimeForwardup    { get; private set; }
+        public bool TimeForwardDown { get; private set; }
+        public bool TimeForwardup   { get; private set; }
+        public bool EscButton       { get; private set; }
 
         public delegate bool InputChecker();
         private InputChecker[] CheckerList;
@@ -47,7 +48,8 @@ namespace MG
                 CheckTimebackDown,
                 CheckTimebackUp,
                 CheckTimeRewindDown,
-                CheckTimeRewindUp
+                CheckTimeRewindUp,
+                CheckEscButton
             };
         }
 
@@ -206,6 +208,16 @@ namespace MG
             return true;
         }
 
+        private bool CheckEscButton()
+        {
+            if (!Input.GetKeyUp(KeyCode.Escape))
+                return false;
+
+            EscButton = true;
+            HasInput = true;
+            return true;
+        }
+
         private void Reset()
         {
             Right           = false;
@@ -224,6 +236,7 @@ namespace MG
             TimebackUp      = false;
             TimeForwardDown  = false;
             TimeForwardup    = false;
+            EscButton       = false;
         }
     }
 }

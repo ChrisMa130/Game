@@ -16,7 +16,7 @@ public class UIManager : MonoBehaviour
     private UISystem[] UIName =
     {
         new UISystem() {Id = 0, Name = "LevelUI", LastUI = true}, 
-        new UISystem() {Id = 1, Name = "System", LastUI = false}, 
+        new UISystem() {Id = 1, Name = "Options", LastUI = false}, 
         new UISystem() {Id = 2, Name = "Loading", LastUI = false}, 
     };
 
@@ -58,6 +58,7 @@ public class UIManager : MonoBehaviour
         {
             // Pop掉前面所有的UI
             // 显示当前这个ui
+            CloseCurrentUI();
             CurrentUI = PopAndDestorUntilName(ui.Id);
             CurrentUI.UIObj.SetActive(true);
 
@@ -127,5 +128,13 @@ public class UIManager : MonoBehaviour
         }
 
         return ui;
+    }
+
+    public bool IsUIOpening(int id)
+    {
+        if (CurrentUI.Id == id)
+            return true;
+
+        return false;
     }
 }

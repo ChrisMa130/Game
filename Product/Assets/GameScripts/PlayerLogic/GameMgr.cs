@@ -81,6 +81,18 @@ namespace MG
                 PauseGame(IsPause, true);
             }
 
+            if (InputMgr.EscButton)
+            {
+                if (UiManager.IsUIOpening(1))
+                {
+                    UiManager.OpenUI(0);
+                }
+                else
+                {
+                    UiManager.OpenUI(1);
+                }
+            }
+
             if (!IsPause)
             {
                 PlayerLogic.ApplyInput(InputMgr);
