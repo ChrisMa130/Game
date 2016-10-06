@@ -15,17 +15,10 @@ public class UILevel : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-        var obj = gameObject.GetChildByName("Text");
-        TopText = obj.GetComponent<Text>();
-
-        obj = gameObject.GetChildByName("RewindTxt");
-        RewindTxt = obj.GetComponent<Text>();
-
-        obj = gameObject.GetChildByName("PauseTxt");
-        PauseTxt = obj.GetComponent<Text>();
-
-        obj = gameObject.GetChildByName("ForwardTxt");
-        ForwardTxt = obj.GetComponent<Text>();
+        TopText = gameObject.GetChildByName<Text>("Text");
+        RewindTxt = gameObject.GetChildByName<Text>("RewindTxt");
+        PauseTxt = gameObject.GetChildByName<Text>("PauseTxt");
+        ForwardTxt = gameObject.GetChildByName<Text>("ForwardTxt");
 
         LastCount = -1;
     }
