@@ -1,0 +1,6 @@
+package MAGame.proto;
+
+message Black
+{
+	optional int32 Id = 1 [default = 0];
+}
