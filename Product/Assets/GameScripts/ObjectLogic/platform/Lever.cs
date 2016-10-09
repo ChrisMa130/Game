@@ -99,7 +99,12 @@ namespace MG
         }
 
 		void DisplayHint (Collider2D obj) {
-			if (obj.transform.childCount == 2) {
+			int count = 0;
+			foreach(Transform child in transform) {
+				if (child.gameObject.tag.Equals ("Hint"))
+					count++;
+			}
+			if (count == 0) {
 				GameObject hint = Instantiate (HintObject);
 				hint.transform.parent = obj.transform;
 				hint.transform.localPosition = new Vector3 (0, 4.8f, 0);
@@ -109,7 +114,10 @@ namespace MG
 		}
 
 		void DestroyHint(Collider2D obj) {
-			Destroy (obj.transform.GetChild(2).gameObject);
+			foreach(Transform child in obj.transform) {
+				if (child.gameObject.tag.Equals ("Hint"))
+					Destroy (child.gameObject);
+			}
 		}
         //		private void PlayAnimation() {
         //			anim.Play("TurnLeft", -1, 0f);

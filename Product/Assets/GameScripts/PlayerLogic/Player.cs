@@ -178,6 +178,13 @@ namespace MG
             IsDead = d.IsDead;
             OnTheLine = d.OnTheLine;
             OnTheClimbAera = d.OnTheClimbAera;
+			if (OnTheClimbAera == false) {
+				transform.FindChild ("Climb").gameObject.SetActive (false);
+				GetComponent<MeshRenderer> ().enabled = true;
+			} else {
+				transform.FindChild ("Climb").gameObject.SetActive (true);
+				GetComponent<MeshRenderer> ().enabled = false;
+			}
             TurnRound(d.dir);
 
             if (d.StateUD != null)
