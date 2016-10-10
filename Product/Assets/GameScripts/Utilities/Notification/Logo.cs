@@ -27,7 +27,7 @@ namespace MG {
 
 		void Start () {
 			if (player == null)
-				player = transform.Find ("Faylisa").gameObject;
+				player = GameObject.Find ("Faylisa");
 		}
 
 

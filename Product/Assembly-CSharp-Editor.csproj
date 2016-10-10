@@ -170,6 +170,7 @@
      <None Include="Assets\Resources\Spine\Examples\Spine\Dragon\dragon.atlas.txt" />
      <None Include="Assets\2DxFX\Resources\_2dxFX_Offset.shader" />
      <None Include="Assets\2DxFX\Resources\_2dxFX_Ice.shader" />
+     <None Include="Assets\plugins\protobuf-net\Web\TODO.txt" />
      <None Include="Assets\Animations\Protagonist\nvzhujue.atlas.txt" />
      <None Include="Assets\2DxFX\Resources\_2dxFX_Wave.shader" />
      <None Include="Assets\2DxFX\Resources\_2dxFX_Color.shader" />
@@ -239,6 +240,8 @@
  </Reference>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="Assembly-CSharp-firstpass.csproj">
+      <Project>{C4895E38-EA54-450F-486B-1CCA4EDF8F39}</Project>      <Name>Assembly-CSharp-firstpass</Name>    </ProjectReference>
     <ProjectReference Include="Assembly-CSharp.csproj">
       <Project>{16EF6617-E411-6B44-7490-02585CED31BD}</Project>      <Name>Assembly-CSharp</Name>    </ProjectReference>
     <ProjectReference Include="Assembly-UnityScript.unityproj">

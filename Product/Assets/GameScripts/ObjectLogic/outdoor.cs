@@ -11,11 +11,13 @@ namespace MG
 
         public string NextLevelName;
 
+		private bool inTransition;
 
 		private ProCamera2DTransitionsFX _transitionFX;
 
 		void Awake() {
 			_transitionFX = Camera.main.GetComponent<ProCamera2DTransitionsFX> ();
+			inTransition = false;
 		}
 
         void Start()
@@ -67,8 +69,9 @@ namespace MG
 //                Debug.Log("呵呵哒了，没下一关了。GGWP");
 //                return;
 //            }
-			if (GameMgr.Instance.InputMgr.UpUp) {
+			if (GameMgr.Instance.InputMgr.UpUp && !inTransition) {
 				_transitionFX.TransitionExit ();
+				inTransition = true;
 				//SceneManager.LoadSceneAsync (NextLevelName);
 			}
         }

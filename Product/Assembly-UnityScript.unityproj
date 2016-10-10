@@ -124,6 +124,7 @@
      <None Include="Assets\Resources\Spine\Examples\Spine\Dragon\dragon.atlas.txt" />
      <None Include="Assets\2DxFX\Resources\_2dxFX_Offset.shader" />
      <None Include="Assets\2DxFX\Resources\_2dxFX_Ice.shader" />
+     <None Include="Assets\plugins\protobuf-net\Web\TODO.txt" />
      <None Include="Assets\Animations\Protagonist\nvzhujue.atlas.txt" />
      <None Include="Assets\2DxFX\Resources\_2dxFX_Wave.shader" />
      <None Include="Assets\2DxFX\Resources\_2dxFX_Color.shader" />
@@ -164,6 +165,10 @@
  <Reference Include="UnityEngine.Networking">
  <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/Networking/UnityEngine.Networking.dll</HintPath>
  </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="Assembly-CSharp-firstpass.csproj">
+      <Project>{C4895E38-EA54-450F-486B-1CCA4EDF8F39}</Project>      <Name>Assembly-CSharp-firstpass</Name>    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

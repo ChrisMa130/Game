@@ -201,11 +201,11 @@
      <Compile Include="Assets\GameScripts\ObjectLogic\time\TimeController.cs" />
      <Compile Include="Assets\GameScripts\ObjectLogic\time\TimeData.cs" />
      <Compile Include="Assets\GameScripts\ObjectLogic\time\TimeUnit.cs" />
+     <Compile Include="Assets\GameScripts\PlayerLogic\Climb.cs" />
      <Compile Include="Assets\GameScripts\PlayerLogic\Collect.cs" />
      <Compile Include="Assets\GameScripts\PlayerLogic\GameDefine.cs" />
      <Compile Include="Assets\GameScripts\PlayerLogic\GameInput.cs" />
      <Compile Include="Assets\GameScripts\PlayerLogic\GameMgr.cs" />
-     <Compile Include="Assets\GameScripts\PlayerLogic\GameSaveData.cs" />
      <Compile Include="Assets\GameScripts\PlayerLogic\LineMgr - Copy.cs" />
      <Compile Include="Assets\GameScripts\PlayerLogic\LineMgr.cs" />
      <Compile Include="Assets\GameScripts\PlayerLogic\ObjectMove.cs" />
@@ -219,6 +219,7 @@
      <Compile Include="Assets\GameScripts\PlayerLogic\State\PlayerState.cs" />
      <Compile Include="Assets\GameScripts\PlayerLogic\State\RunState.cs" />
      <Compile Include="Assets\GameScripts\PlayerLogic\State\StandState.cs" />
+     <Compile Include="Assets\GameScripts\System\SaveData.cs" />
      <Compile Include="Assets\GameScripts\UI\UILevel.cs" />
      <Compile Include="Assets\GameScripts\UI\UIManager.cs" />
      <Compile Include="Assets\GameScripts\UI\UIOptions.cs" />
@@ -394,6 +395,7 @@
      <None Include="Assets\Resources\Spine\Examples\Spine\Dragon\dragon.atlas.txt" />
      <None Include="Assets\2DxFX\Resources\_2dxFX_Offset.shader" />
      <None Include="Assets\2DxFX\Resources\_2dxFX_Ice.shader" />
+     <None Include="Assets\plugins\protobuf-net\Web\TODO.txt" />
      <None Include="Assets\Animations\Protagonist\nvzhujue.atlas.txt" />
      <None Include="Assets\2DxFX\Resources\_2dxFX_Wave.shader" />
      <None Include="Assets\2DxFX\Resources\_2dxFX_Color.shader" />
@@ -434,6 +436,10 @@
  <Reference Include="UnityEngine.Networking">
  <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/Networking/UnityEngine.Networking.dll</HintPath>
  </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="Assembly-CSharp-firstpass.csproj">
+      <Project>{C4895E38-EA54-450F-486B-1CCA4EDF8F39}</Project>      <Name>Assembly-CSharp-firstpass</Name>    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
