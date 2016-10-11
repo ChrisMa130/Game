@@ -40,12 +40,11 @@ namespace MG
         {
 			Reset ();
 			DisableMesh (true);
-			Climb_Anim.SetFloat("Speed", Mathf.Abs(moveParam));
             Anim.SetFloat("Speed", Mathf.Abs(moveParam));
         }
 
 		private void DisableMesh (bool disable) {
-			Climb_Anim.gameObject.SetActive (disable);
+			Anim.gameObject.GetChildByName("Climb").SetActive (disable);
 			GetComponent<MeshRenderer> ().enabled = !disable;
 		}
 

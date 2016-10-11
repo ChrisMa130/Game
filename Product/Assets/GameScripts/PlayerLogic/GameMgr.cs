@@ -51,6 +51,11 @@ namespace MG
 			if (Camera.main.GetComponent<ProCamera2D> ().CameraTargets.Count == 0)
 				Camera.main.GetComponent<ProCamera2D> ().AddCameraTarget (PlayerObject.transform);
 			Camera.main.GetComponent<ProCamera2DTransitionsFX> ().TransitionEnter ();
+
+			GameObject bgm = GameObject.Find ("BGManager");
+			if (bgm == null) {
+				Instantiate (Resources.Load("prefabs/Utilities/BGManager"));
+			}
         }
 
         void Update()

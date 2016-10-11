@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: f42491d1a4dedb14dbef77b5866f73a4
-timeCreated: 1476116148
+timeCreated: 1476201977
 licenseType: Pro
 TextureImporter:
   fileIDToRecycleName:
@@ -42,6 +42,7 @@ TextureImporter:
     21300070: World_2_35
     21300072: World_2_36
     21300074: World_2_37
+    21300076: World_2_38
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
@@ -343,11 +344,12 @@ TextureImporter:
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline:
-      - - {x: -14, y: -28}
-        - {x: -14, y: -30}
+      - - {x: 12, y: -11}
+        - {x: -8, y: -27}
+        - {x: -8, y: -30}
         - {x: 30, y: -30}
         - {x: 30, y: -1}
-        - {x: 27, y: -1}
+        - {x: 27, y: -2}
     - name: World_2_17
       rect:
         serializedVersion: 2
@@ -359,11 +361,12 @@ TextureImporter:
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline:
-      - - {x: -1, y: -30}
-        - {x: -1, y: -27}
-        - {x: -24, y: 14}
-        - {x: -30, y: 14}
+      - - {x: -30, y: 8}
         - {x: -30, y: -30}
+        - {x: -1, y: -30}
+        - {x: -2, y: -27}
+        - {x: -11, y: -12}
+        - {x: -27, y: 8}
     - name: World_2_18
       rect:
         serializedVersion: 2
@@ -377,9 +380,9 @@ TextureImporter:
       outline:
       - - {x: -30, y: 30}
         - {x: -30, y: 1}
-        - {x: -27, y: 1}
-        - {x: 14, y: 28}
-        - {x: 14, y: 30}
+        - {x: -11, y: 11}
+        - {x: 8, y: 27}
+        - {x: 8, y: 30}
     - name: World_2_19
       rect:
         serializedVersion: 2
@@ -393,10 +396,8 @@ TextureImporter:
       outline:
       - - {x: 1, y: 30}
         - {x: 2, y: 27}
-        - {x: 13, y: 13}
-        - {x: 27, y: -12}
-        - {x: 29, y: -14}
-        - {x: 30, y: -14}
+        - {x: 27, y: -8}
+        - {x: 30, y: -8}
         - {x: 30, y: 30}
     - name: World_2_20
       rect:
@@ -410,8 +411,8 @@ TextureImporter:
       border: {x: 0, y: 0, z: 0, w: 0}
       outline:
       - - {x: 22, y: 17}
-        - {x: -11, y: -25}
-        - {x: -11, y: -30}
+        - {x: -2, y: -19}
+        - {x: -2, y: -30}
         - {x: 30, y: -30}
         - {x: 30, y: 17}
     - name: World_2_21
@@ -425,12 +426,12 @@ TextureImporter:
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline:
-      - - {x: -27, y: 11}
-        - {x: -30, y: 11}
+      - - {x: -28, y: 2}
+        - {x: -30, y: 2}
         - {x: -30, y: -30}
         - {x: 17, y: -30}
-        - {x: 17, y: -25}
-        - {x: -2, y: -13}
+        - {x: 17, y: -26}
+        - {x: 8, y: -17}
     - name: World_2_22
       rect:
         serializedVersion: 2
@@ -444,10 +445,10 @@ TextureImporter:
       outline:
       - - {x: -30, y: 30}
         - {x: -30, y: -17}
-        - {x: -26, y: -17}
-        - {x: -17, y: -7}
-        - {x: 11, y: 26}
-        - {x: 11, y: 30}
+        - {x: -27, y: -17}
+        - {x: -18, y: -7}
+        - {x: 2, y: 27}
+        - {x: 2, y: 30}
     - name: World_2_23
       rect:
         serializedVersion: 2
@@ -460,9 +461,10 @@ TextureImporter:
       border: {x: 0, y: 0, z: 0, w: 0}
       outline:
       - - {x: -17, y: 30}
-        - {x: -17, y: 21}
-        - {x: 21, y: -11}
-        - {x: 30, y: -11}
+        - {x: -17, y: 27}
+        - {x: -7, y: 18}
+        - {x: 27, y: -2}
+        - {x: 30, y: -2}
         - {x: 30, y: 30}
     - name: World_2_24
       rect:
@@ -677,6 +679,21 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 490
+        y: 0
+        width: 60
+        height: 60
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -30, y: 30}
+        - {x: -30, y: -30}
+        - {x: 30, y: -30}
+        - {x: 30, y: 30}
+    - name: World_2_38
+      rect:
+        serializedVersion: 2
+        x: 560
         y: 0
         width: 60
         height: 60

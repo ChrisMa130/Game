@@ -7,6 +7,7 @@ namespace MG
         private float moveParam;
         private float OldGravityScale;
         private Collider2D c2d;
+		private BoxCollider2D ownerB2d;
 
         class ClimbUserData : PlayerStateRunTime
         {
@@ -25,10 +26,22 @@ namespace MG
             Move(0);
 
             c2d = Owner.LadderObj.GetComponent<Collider2D>();
+			ownerB2d = Owner.GetComponent<BoxCollider2D> ();
             ladder ld = Owner.LadderObj.GetComponent<ladder>();
+			FixPosition (c2d);
+
 
             Owner.transform.position = new Vector3(ld.MidPosition.x, Owner.Position.y);
         }
+
+		private void FixPosition(Collider2D collider) {
+			float ladderY = Owner.LadderObj.transform.position.y;
+			bool outladder = Owner.Position.y > (ladderY + c2d.bounds.size.y);
+
+			if (outladder) {
+				Owner.Position = new Vector3 (Owner.Position.x, ladderY + c2d.bounds.size.y - ownerB2d.bounds.size.y / 2, Owner.Position.z);
+			}
+		}
 
         public override void Activate(float deltaTime)
         {
@@ -53,7 +66,9 @@ namespace MG
         public override void ApplyInput(GameInput input)
         {
             float ladderY = Owner.LadderObj.transform.position.y;
-            bool outladder = Owner.Position.y > (ladderY + c2d.bounds.size.y);
+			bool outladder = (Owner.Position.y + (ownerB2d.bounds.size.y / 2)) > (ladderY + c2d.bounds.size.y);
+
+
 
             if (input.Up && !outladder)
             {
