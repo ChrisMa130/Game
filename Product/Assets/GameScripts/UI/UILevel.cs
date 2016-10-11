@@ -32,9 +32,9 @@ public class UILevel : MonoBehaviour
     {
         if (LastCount == GameMgr.Instance.PlayerLogic.GetCollectCount(0))
             return;
-
         int count = GameMgr.Instance.PlayerLogic.GetCollectCount(0);
-        TopText.text = string.Format("{0}/{1}", count, GameMgr.Instance.ExitCount);
+		int total = GameObject.FindGameObjectsWithTag ("Scroll").Length;
+		TopText.text = string.Format("{0}/{1}", count, total);
 
         LastCount = count;
     }

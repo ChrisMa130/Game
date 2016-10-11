@@ -6,7 +6,7 @@ public class Climb : MonoBehaviour {
 	public Sprite climb1;
 	public Sprite climb2;
 
-	public float interval = .1f;
+	public float interval = .5f;
 	private float currentInter;
 	// Use this for initialization
 	void Awake () {
