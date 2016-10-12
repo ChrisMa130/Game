@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using System.Collections.Generic;
 using Com.LuisPedroFonseca.ProCamera2D;
 
 // 游戏主体逻辑
@@ -18,6 +19,8 @@ namespace MG
         private bool RecordingTime;
 
         public GameSwitch WorldSwith;
+        
+        private List<pickup> CollectObjects = new List<pickup>();
 
         void Start()
         {
@@ -179,6 +182,11 @@ namespace MG
             {
                 RecordingTime = true;
             }
+        }
+
+        public void AddCollectInstance(pickup obj)
+        {
+            CollectObjects.Add(obj);
         }
     }
 }
