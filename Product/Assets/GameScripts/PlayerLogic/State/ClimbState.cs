@@ -8,7 +8,9 @@ namespace MG
         private float OldGravityScale;
         private Collider2D c2d;
 		private BoxCollider2D ownerB2d;
+		private CircleCollider2D ownerC2d;
 
+		private float ownerHeight;
         class ClimbUserData : PlayerStateRunTime
         {
             public float moveParam;
@@ -27,6 +29,9 @@ namespace MG
 
             c2d = Owner.LadderObj.GetComponent<Collider2D>();
 			ownerB2d = Owner.GetComponent<BoxCollider2D> ();
+			ownerC2d = Owner.GetComponent<CircleCollider2D> ();
+
+			ownerHeight = ownerB2d.bounds.size.y / 2 + ownerC2d.bounds.size.y / 2 + ownerC2d.bounds.size.y / 8;
             ladder ld = Owner.LadderObj.GetComponent<ladder>();
 			FixPosition (c2d);
 
@@ -36,10 +41,10 @@ namespace MG
 
 		private void FixPosition(Collider2D collider) {
 			float ladderY = Owner.LadderObj.transform.position.y;
-			bool outladder = Owner.Position.y > (ladderY + c2d.bounds.size.y);
+			bool outladder = (Owner.Position.y + ownerHeight) > (ladderY + c2d.bounds.size.y);
 
 			if (outladder) {
-				Owner.Position = new Vector3 (Owner.Position.x, ladderY + c2d.bounds.size.y - ownerB2d.bounds.size.y / 2, Owner.Position.z);
+				Owner.Position = new Vector3 (Owner.Position.x, ladderY + c2d.bounds.size.y - ownerHeight, Owner.Position.z);
 			}
 		}
 
@@ -66,7 +71,7 @@ namespace MG
         public override void ApplyInput(GameInput input)
         {
             float ladderY = Owner.LadderObj.transform.position.y;
-			bool outladder = (Owner.Position.y + (ownerB2d.bounds.size.y / 2)) > (ladderY + c2d.bounds.size.y);
+			bool outladder = (Owner.Position.y + (ownerHeight)) > (ladderY + c2d.bounds.size.y);
 
 
 

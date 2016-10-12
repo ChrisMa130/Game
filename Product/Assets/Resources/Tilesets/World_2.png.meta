@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: f42491d1a4dedb14dbef77b5866f73a4
-timeCreated: 1476201977
+timeCreated: 1476243218
 licenseType: Pro
 TextureImporter:
   fileIDToRecycleName:
@@ -43,6 +43,12 @@ TextureImporter:
     21300072: World_2_36
     21300074: World_2_37
     21300076: World_2_38
+    21300078: World_2_39
+    21300080: World_2_40
+    21300082: World_2_41
+    21300084: World_2_42
+    21300086: World_2_43
+    21300088: World_2_44
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
@@ -92,8 +98,8 @@ TextureImporter:
     - name: World_2_0
       rect:
         serializedVersion: 2
-        x: 0
-        y: 560
+        x: 10
+        y: 2330
         width: 60
         height: 60
       alignment: 0
@@ -107,8 +113,8 @@ TextureImporter:
     - name: World_2_1
       rect:
         serializedVersion: 2
-        x: 0
-        y: 490
+        x: 10
+        y: 2260
         width: 60
         height: 60
       alignment: 0
@@ -122,8 +128,8 @@ TextureImporter:
     - name: World_2_2
       rect:
         serializedVersion: 2
-        x: 70
-        y: 490
+        x: 80
+        y: 2260
         width: 60
         height: 60
       alignment: 0
@@ -137,8 +143,8 @@ TextureImporter:
     - name: World_2_3
       rect:
         serializedVersion: 2
-        x: 140
-        y: 490
+        x: 150
+        y: 2260
         width: 60
         height: 60
       alignment: 0
@@ -152,8 +158,8 @@ TextureImporter:
     - name: World_2_4
       rect:
         serializedVersion: 2
-        x: 210
-        y: 490
+        x: 220
+        y: 2260
         width: 60
         height: 60
       alignment: 0
@@ -167,8 +173,8 @@ TextureImporter:
     - name: World_2_5
       rect:
         serializedVersion: 2
-        x: 280
-        y: 490
+        x: 290
+        y: 2260
         width: 60
         height: 60
       alignment: 0
@@ -184,8 +190,8 @@ TextureImporter:
     - name: World_2_6
       rect:
         serializedVersion: 2
-        x: 350
-        y: 490
+        x: 360
+        y: 2260
         width: 60
         height: 60
       alignment: 0
@@ -200,8 +206,8 @@ TextureImporter:
     - name: World_2_7
       rect:
         serializedVersion: 2
-        x: 420
-        y: 490
+        x: 430
+        y: 2260
         width: 60
         height: 60
       alignment: 0
@@ -216,8 +222,8 @@ TextureImporter:
     - name: World_2_8
       rect:
         serializedVersion: 2
-        x: 0
-        y: 420
+        x: 10
+        y: 2190
         width: 60
         height: 60
       alignment: 0
@@ -231,8 +237,8 @@ TextureImporter:
     - name: World_2_9
       rect:
         serializedVersion: 2
-        x: 70
-        y: 420
+        x: 80
+        y: 2190
         width: 60
         height: 60
       alignment: 0
@@ -246,8 +252,8 @@ TextureImporter:
     - name: World_2_10
       rect:
         serializedVersion: 2
-        x: 140
-        y: 420
+        x: 150
+        y: 2190
         width: 60
         height: 60
       alignment: 0
@@ -261,8 +267,8 @@ TextureImporter:
     - name: World_2_11
       rect:
         serializedVersion: 2
-        x: 210
-        y: 420
+        x: 220
+        y: 2190
         width: 60
         height: 60
       alignment: 0
@@ -276,8 +282,8 @@ TextureImporter:
     - name: World_2_12
       rect:
         serializedVersion: 2
-        x: 0
-        y: 350
+        x: 10
+        y: 2120
         width: 60
         height: 60
       alignment: 0
@@ -291,8 +297,8 @@ TextureImporter:
     - name: World_2_13
       rect:
         serializedVersion: 2
-        x: 70
-        y: 350
+        x: 80
+        y: 2120
         width: 60
         height: 60
       alignment: 0
@@ -306,8 +312,8 @@ TextureImporter:
     - name: World_2_14
       rect:
         serializedVersion: 2
-        x: 140
-        y: 350
+        x: 150
+        y: 2120
         width: 60
         height: 60
       alignment: 0
@@ -321,8 +327,8 @@ TextureImporter:
     - name: World_2_15
       rect:
         serializedVersion: 2
-        x: 210
-        y: 350
+        x: 220
+        y: 2120
         width: 60
         height: 60
       alignment: 0
@@ -336,8 +342,8 @@ TextureImporter:
     - name: World_2_16
       rect:
         serializedVersion: 2
-        x: 0
-        y: 280
+        x: 10
+        y: 2050
         width: 60
         height: 60
       alignment: 0
@@ -353,8 +359,8 @@ TextureImporter:
     - name: World_2_17
       rect:
         serializedVersion: 2
-        x: 70
-        y: 280
+        x: 80
+        y: 2050
         width: 60
         height: 60
       alignment: 0
@@ -370,8 +376,8 @@ TextureImporter:
     - name: World_2_18
       rect:
         serializedVersion: 2
-        x: 140
-        y: 280
+        x: 150
+        y: 2050
         width: 60
         height: 60
       alignment: 0
@@ -386,8 +392,8 @@ TextureImporter:
     - name: World_2_19
       rect:
         serializedVersion: 2
-        x: 210
-        y: 280
+        x: 220
+        y: 2050
         width: 60
         height: 60
       alignment: 0
@@ -402,8 +408,8 @@ TextureImporter:
     - name: World_2_20
       rect:
         serializedVersion: 2
-        x: 0
-        y: 210
+        x: 10
+        y: 1980
         width: 60
         height: 60
       alignment: 0
@@ -418,8 +424,8 @@ TextureImporter:
     - name: World_2_21
       rect:
         serializedVersion: 2
-        x: 70
-        y: 210
+        x: 80
+        y: 1980
         width: 60
         height: 60
       alignment: 0
@@ -435,8 +441,8 @@ TextureImporter:
     - name: World_2_22
       rect:
         serializedVersion: 2
-        x: 140
-        y: 210
+        x: 150
+        y: 1980
         width: 60
         height: 60
       alignment: 0
@@ -452,8 +458,8 @@ TextureImporter:
     - name: World_2_23
       rect:
         serializedVersion: 2
-        x: 210
-        y: 210
+        x: 220
+        y: 1980
         width: 60
         height: 60
       alignment: 0
@@ -469,8 +475,8 @@ TextureImporter:
     - name: World_2_24
       rect:
         serializedVersion: 2
-        x: 0
-        y: 140
+        x: 10
+        y: 1910
         width: 60
         height: 60
       alignment: 0
@@ -487,8 +493,8 @@ TextureImporter:
     - name: World_2_25
       rect:
         serializedVersion: 2
-        x: 70
-        y: 140
+        x: 80
+        y: 1910
         width: 60
         height: 60
       alignment: 0
@@ -505,8 +511,8 @@ TextureImporter:
     - name: World_2_26
       rect:
         serializedVersion: 2
-        x: 140
-        y: 140
+        x: 150
+        y: 1910
         width: 60
         height: 60
       alignment: 0
@@ -520,8 +526,8 @@ TextureImporter:
     - name: World_2_27
       rect:
         serializedVersion: 2
-        x: 210
-        y: 140
+        x: 220
+        y: 1910
         width: 60
         height: 60
       alignment: 0
@@ -537,8 +543,8 @@ TextureImporter:
     - name: World_2_28
       rect:
         serializedVersion: 2
-        x: 0
-        y: 70
+        x: 10
+        y: 1840
         width: 60
         height: 60
       alignment: 0
@@ -556,8 +562,8 @@ TextureImporter:
     - name: World_2_29
       rect:
         serializedVersion: 2
-        x: 70
-        y: 70
+        x: 80
+        y: 1840
         width: 60
         height: 60
       alignment: 0
@@ -573,8 +579,8 @@ TextureImporter:
     - name: World_2_30
       rect:
         serializedVersion: 2
-        x: 0
-        y: 0
+        x: 10
+        y: 1770
         width: 60
         height: 60
       alignment: 0
@@ -588,8 +594,8 @@ TextureImporter:
     - name: World_2_31
       rect:
         serializedVersion: 2
-        x: 70
-        y: 0
+        x: 80
+        y: 1770
         width: 60
         height: 60
       alignment: 0
@@ -603,8 +609,8 @@ TextureImporter:
     - name: World_2_32
       rect:
         serializedVersion: 2
-        x: 140
-        y: 0
+        x: 150
+        y: 1770
         width: 60
         height: 60
       alignment: 0
@@ -618,8 +624,8 @@ TextureImporter:
     - name: World_2_33
       rect:
         serializedVersion: 2
-        x: 210
-        y: 0
+        x: 220
+        y: 1770
         width: 60
         height: 60
       alignment: 0
@@ -633,8 +639,8 @@ TextureImporter:
     - name: World_2_34
       rect:
         serializedVersion: 2
-        x: 280
-        y: 0
+        x: 290
+        y: 1770
         width: 60
         height: 60
       alignment: 0
@@ -648,8 +654,8 @@ TextureImporter:
     - name: World_2_35
       rect:
         serializedVersion: 2
-        x: 350
-        y: 0
+        x: 360
+        y: 1770
         width: 60
         height: 60
       alignment: 0
@@ -663,8 +669,8 @@ TextureImporter:
     - name: World_2_36
       rect:
         serializedVersion: 2
-        x: 420
-        y: 0
+        x: 430
+        y: 1770
         width: 60
         height: 60
       alignment: 0
@@ -678,8 +684,8 @@ TextureImporter:
     - name: World_2_37
       rect:
         serializedVersion: 2
-        x: 490
-        y: 0
+        x: 500
+        y: 1770
         width: 60
         height: 60
       alignment: 0
@@ -693,8 +699,98 @@ TextureImporter:
     - name: World_2_38
       rect:
         serializedVersion: 2
-        x: 560
-        y: 0
+        x: 570
+        y: 1770
+        width: 60
+        height: 60
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -30, y: 30}
+        - {x: -30, y: -30}
+        - {x: 30, y: -30}
+        - {x: 30, y: 30}
+    - name: World_2_39
+      rect:
+        serializedVersion: 2
+        x: 10
+        y: 1700
+        width: 60
+        height: 60
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -30, y: 30}
+        - {x: -30, y: -30}
+        - {x: 30, y: -30}
+        - {x: 30, y: 30}
+    - name: World_2_40
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 1700
+        width: 60
+        height: 60
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -30, y: 30}
+        - {x: -30, y: -30}
+        - {x: 30, y: -30}
+        - {x: 30, y: 30}
+    - name: World_2_41
+      rect:
+        serializedVersion: 2
+        x: 150
+        y: 1700
+        width: 60
+        height: 60
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -30, y: 30}
+        - {x: -30, y: -30}
+        - {x: 30, y: -30}
+        - {x: 30, y: 30}
+    - name: World_2_42
+      rect:
+        serializedVersion: 2
+        x: 220
+        y: 1700
+        width: 60
+        height: 60
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -30, y: 30}
+        - {x: -30, y: -30}
+        - {x: 30, y: -30}
+        - {x: 30, y: 30}
+    - name: World_2_43
+      rect:
+        serializedVersion: 2
+        x: 10
+        y: 1630
+        width: 60
+        height: 60
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -30, y: 30}
+        - {x: -30, y: -30}
+        - {x: 30, y: -30}
+        - {x: 30, y: 30}
+    - name: World_2_44
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 1630
         width: 60
         height: 60
       alignment: 0

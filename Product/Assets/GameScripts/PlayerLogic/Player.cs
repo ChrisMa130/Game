@@ -20,6 +20,7 @@ namespace MG
         public GameObject LadderObj { get; set; }
 
         private Dir CurrentDir;
+		private GameObject climb;
 
         public Vector3 Position
         {
@@ -38,6 +39,7 @@ namespace MG
             public bool OnTheClimbAera;
             public bool IsDead;
 
+			public float time;
             public Dir dir;
 
             // 角色状态
@@ -65,6 +67,7 @@ namespace MG
             Stand();
             GroundCheck = transform.Find("GroundCheck");
             HandObject = transform.Find("FrontHand");
+			climb = transform.FindChild ("Climb").gameObject;
 
             SetRevivePoint(transform.position);
 
@@ -149,6 +152,8 @@ namespace MG
             data.OnTheLine = OnTheLine;
             data.OnTheClimbAera = OnTheClimbAera;
             data.dir = CurrentDir;
+			if (climb.activeSelf)
+				data.time = climb.GetComponent<Animator> ().GetFloat ("Time");
 
             data.StateUD = MyState.GetUserData();
 
@@ -178,12 +183,14 @@ namespace MG
             IsDead = d.IsDead;
             OnTheLine = d.OnTheLine;
             OnTheClimbAera = d.OnTheClimbAera;
+			climb.GetComponent<Animator> ().SetFloat ("Time", d.time);
 			if (OnTheClimbAera == false) {
 				transform.FindChild ("Climb").gameObject.SetActive (false);
 				GetComponent<MeshRenderer> ().enabled = true;
 			} else {
 				transform.FindChild ("Climb").gameObject.SetActive (true);
 				GetComponent<MeshRenderer> ().enabled = false;
+
 			}
             TurnRound(d.dir);
 

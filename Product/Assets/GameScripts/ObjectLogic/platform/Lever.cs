@@ -43,6 +43,14 @@ namespace MG
 
         void OnTriggerEnter2D(Collider2D obj)
         {
+			var player = obj.GetComponent<Player>();
+			if (player != null)
+			{
+				DisplayHint (obj);
+				this.obj = obj;
+				hasPlayer = true;
+			}
+
             var npc = obj.GetComponent<Npc>();
             if (npc != null)
             {
@@ -54,13 +62,6 @@ namespace MG
                         p.TurnOn(obj.gameObject);
                     }
                 }
-            }
-            var player = obj.GetComponent<Player>();
-            if (player != null)
-            {
-				DisplayHint (obj);
-                this.obj = obj;
-                hasPlayer = true;
             }
         }
 

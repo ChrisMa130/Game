@@ -9,6 +9,8 @@ namespace MG
         private Rigidbody2D Rigidbody;
         private Player Owner;
 
+		private float Climb_Interval;
+
         void Awake()
         {
             Anim = GetComponent<Animator>();
@@ -41,6 +43,11 @@ namespace MG
 			Reset ();
 			DisableMesh (true);
             Anim.SetFloat("Speed", Mathf.Abs(moveParam));
+			if (Climb_Anim.GetFloat ("Time") < 0f)
+				Climb_Anim.SetFloat ("Time", .3f);
+			if (Input.GetKey (KeyCode.W) || Input.GetKey(KeyCode.S)) {
+				Climb_Anim.SetFloat ("Time", Climb_Anim.GetFloat ("Time") - Time.deltaTime);
+			}
         }
 
 		private void DisableMesh (bool disable) {
