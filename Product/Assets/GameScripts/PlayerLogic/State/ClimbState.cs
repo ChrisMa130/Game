@@ -31,7 +31,7 @@ namespace MG
 			ownerB2d = Owner.GetComponent<BoxCollider2D> ();
 			ownerC2d = Owner.GetComponent<CircleCollider2D> ();
 
-			ownerHeight = ownerB2d.bounds.size.y / 2 + ownerC2d.bounds.size.y / 2 + ownerC2d.bounds.size.y / 8;
+			ownerHeight = ownerB2d.bounds.size.y / 2 + ownerC2d.bounds.size.y / 2 + ownerC2d.bounds.size.y / 5;
             ladder ld = Owner.LadderObj.GetComponent<ladder>();
 			FixPosition (c2d);
 
