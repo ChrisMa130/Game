@@ -4,29 +4,27 @@ using System.Collections.Generic;
 
 namespace MG
 {
-    public class GameData : MonoBehaviour
+    public class SaveBlack
     {
-        class SaveBlack
-        {
-            public string LevelName;
-            public string LevelASName;
-            public List<int> CollectIds;
-            public Vector3 BornPos;
-        }
+        public string LevelName;
+        public string LevelASName;
+        public List<int> CollectIds;
+        public Vector3 BornPos;
+    }
 
+    public class GameData : SingletonMonoBehaviour<GameData>
+    {
         private SaveBlack CurrentLevel;
         private List<SaveBlack> BlacksTable;
 
-        // 如果这个开关为真，那么gamemgr在启动时会读取保存的数据
-        public bool LoadSwitch { get; set; }
-
         void Start()
         {
+            // 已经设置了执行顺序 所以这个函数肯定是在所有脚本中Start函数第一个执行的
             BlacksTable = new List<SaveBlack>();
             GameObject.DontDestroyOnLoad(this);
         }
 
-        public void SaveColloctPickup(int id)
+        public void SaveCollectPickup(int id)
         {
             CurrentLevel.CollectIds.Add(id);
         }
@@ -36,8 +34,23 @@ namespace MG
             CurrentLevel.BornPos = pos;
         }
 
-        public void AddSaveNewLevel(string levelName, string asName, Vector3 pos)
+        public bool HasCollect(int id)
         {
+            foreach (var aId in CurrentLevel.CollectIds)
+            {
+                if (aId == id)
+                    return true;
+            }
+
+            return false;
+        }
+
+        public void AddNewLevel(string levelName, string asName, Vector3 pos)
+        {
+            var data = GetLevelData(levelName);
+            if (data != null)
+                return;
+
             if (CurrentLevel != null)
             {
                 BlacksTable.Add(CurrentLevel);
@@ -48,6 +61,33 @@ namespace MG
             CurrentLevel.LevelASName = asName;
             CurrentLevel.CollectIds = new List<int>();
             CurrentLevel.BornPos = pos;
+        }
+
+        public SaveBlack GetLevelData(string name)
+        {
+            SaveBlack ret = null;
+
+            foreach (var black in BlacksTable)
+            {
+                if (black.LevelName.Equals(name))
+                {
+                    ret = black;
+                    break;
+                }
+            }
+
+            return ret;
+        }
+
+        public bool ChangeCurrentLevel(string name)
+        {
+            var data = GetLevelData(name);
+            if (data == null)
+                return false;
+
+            CurrentLevel = data;
+
+            return false;
         }
     }
 }

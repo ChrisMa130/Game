@@ -10,8 +10,9 @@ namespace MG
 
         void Start()
         {
-            // 在gamemgr里添加自己的引用
-
+            // 从gamedata里获取自己是否存在
+            if (GameData.Instance.HasCollect(Id))
+                DestoryMe();
         }
 
         void OnTriggerEnter2D(Collider2D other)
@@ -23,7 +24,6 @@ namespace MG
                 {
                     player.AddCollectItem(Key, Value);
                     DestoryMe();
-                    // GameObject.DestroyObject(gameObject);
                 }
             }
         }
