@@ -215,20 +215,21 @@ namespace MG
 
         public void LastCheckPoint()
         {
-            // 查看gamedata里有没有当前level的信息。如果没有。那就不能load
-            // 然后切换关卡
+            if (GameData.Instance == null)
+                return;
+
+            var data = GameData.Instance.GetLevelData(LevelName);
+            if (data == null)
+            {
+                Debug.Log("未发现当前level的保存信息。bug");
+                return;
+            }
+
             var transitionFX = Camera.main.GetComponent<ProCamera2DTransitionsFX>();
 
             transitionFX.OnTransitionExitEnded = () =>
             {
                 transitionFX.OnTransitionExitEnded = null;
-                var data = GameData.Instance.GetLevelData(LevelName);
-                if (data == null)
-                {
-                    Debug.Log("未发现当前level的保存信息。bug");
-                    return;
-                }
-
                 SceneManager.LoadSceneAsync(LevelName);
             };
 
