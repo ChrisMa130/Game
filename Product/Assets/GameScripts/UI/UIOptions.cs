@@ -58,6 +58,8 @@ namespace MG
         private void OnBtnCheckPointClick()
         {
             Debug.Log("OnBtnCheckPointClick");
+
+            GameMgr.Instance.LastCheckPoint();
         }
 
         private void OnBtnCreditsClick()

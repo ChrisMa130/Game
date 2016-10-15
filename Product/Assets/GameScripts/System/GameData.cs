@@ -51,16 +51,13 @@ namespace MG
             if (data != null)
                 return;
 
-            if (CurrentLevel != null)
-            {
-                BlacksTable.Add(CurrentLevel);
-            }
-
             CurrentLevel = new SaveBlack();
             CurrentLevel.LevelName = levelName;
             CurrentLevel.LevelASName = asName;
             CurrentLevel.CollectIds = new List<int>();
             CurrentLevel.BornPos = pos;
+
+            BlacksTable.Add(CurrentLevel);
         }
 
         public SaveBlack GetLevelData(string name)

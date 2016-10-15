@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
 using Com.LuisPedroFonseca.ProCamera2D;
+using UnityEngine.SceneManagement;
 
 // 游戏主体逻辑
 
@@ -67,16 +68,22 @@ namespace MG
 
             // 首先从gamedata中得到当前level的保存信息
             // 如果没有保存内容，那么就创建一个
-			if (GameData.Instance != null) {
-				SaveBlack data = GameData.Instance.GetLevelData (LevelName);
-				if (data == null) {
-					GameData.Instance.AddNewLevel (LevelName, LevelName, PlayerLogic.Position);
-				} else {
-					// 重置玩家坐标
-					PlayerLogic.SetRevivePoint (data.BornPos);
-					PlayerLogic.Position = data.BornPos;
-				}
-			}
+            if (GameData.Instance != null)
+            {
+                SaveBlack data = GameData.Instance.GetLevelData(LevelName);
+                if (data == null)
+                {
+                    GameData.Instance.AddNewLevel(LevelName, LevelName, PlayerLogic.Position);
+                }
+                else
+                {
+                    GameData.Instance.ChangeCurrentLevel(LevelName);
+
+                    // 重置玩家坐标
+                    PlayerLogic.SetRevivePoint(data.BornPos);
+                    PlayerLogic.Position = data.BornPos;
+                }
+            }
         }
 
         void Update()
@@ -204,6 +211,30 @@ namespace MG
         public void AddCollectInstance(pickup obj)
         {
             CollectObjects.Add(obj);
+        }
+
+        public void LastCheckPoint()
+        {
+            // 查看gamedata里有没有当前level的信息。如果没有。那就不能load
+            // 然后切换关卡
+            var transitionFX = Camera.main.GetComponent<ProCamera2DTransitionsFX>();
+
+            transitionFX.OnTransitionExitEnded = () =>
+            {
+                transitionFX.OnTransitionExitEnded = null;
+                var data = GameData.Instance.GetLevelData(LevelName);
+                if (data == null)
+                {
+                    Debug.Log("未发现当前level的保存信息。bug");
+                    return;
+                }
+
+                SceneManager.LoadSceneAsync(LevelName);
+            };
+
+            transitionFX.TransitionExit();
+            UiManager.CloseCurrentUI();
+            PauseGame(false, false);
         }
     }
 }

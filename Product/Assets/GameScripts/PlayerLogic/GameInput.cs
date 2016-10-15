@@ -61,6 +61,9 @@ namespace MG
         private void RecvInput()
         {
             // Unity中的mono->forecah有内存泄漏，最好别用。尤其是在这种每帧都要执行的函数中。
+            if (CheckerList == null)
+                return;
+
             Reset();
             for (int i = 0; i < CheckerList.Length; i++)
             {
