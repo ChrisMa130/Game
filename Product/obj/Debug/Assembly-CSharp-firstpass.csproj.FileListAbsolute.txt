@@ -1,5 +1,5 @@
-D:\Github\Game\Product\Temp\bin\Debug\Assembly-CSharp.dll
-D:\Github\Game\Product\Temp\bin\Debug\Assembly-CSharp.pdb
+D:\Github\Game\Product\Temp\bin\Debug\Assembly-CSharp-firstpass.dll
+D:\Github\Game\Product\Temp\bin\Debug\Assembly-CSharp-firstpass.pdb
 D:\Github\Game\Product\Temp\bin\Debug\UnityEditor.dll
 D:\Github\Game\Product\Temp\bin\Debug\UnityEngine.dll
 D:\Github\Game\Product\Temp\bin\Debug\UnityEngine.Networking.dll
@@ -16,7 +16,6 @@ D:\Github\Game\Product\Temp\bin\Debug\UnityEngine.xml
 D:\Github\Game\Product\Temp\bin\Debug\UnityEditor.xml
 D:\Github\Game\Product\Temp\bin\Debug\UnityEngine.UI.xml
 D:\Github\Game\Product\Temp\bin\Debug\UnityEngine.Networking.xml
-D:\Github\Game\Product\obj\Debug\Assembly-CSharp.csprojResolveAssemblyReference.cache
-D:\Github\Game\Product\obj\Debug\Assembly-CSharp.dll
-D:\Github\Game\Product\obj\Debug\Assembly-CSharp.pdb
-D:\Github\Game\Product\Temp\bin\Debug\Assembly-CSharp-firstpass.pdb
+D:\Github\Game\Product\obj\Debug\Assembly-CSharp-firstpass.csprojResolveAssemblyReference.cache
+D:\Github\Game\Product\obj\Debug\Assembly-CSharp-firstpass.dll
+D:\Github\Game\Product\obj\Debug\Assembly-CSharp-firstpass.pdb

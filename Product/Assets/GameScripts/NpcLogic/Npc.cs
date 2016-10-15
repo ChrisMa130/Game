@@ -58,7 +58,9 @@ namespace MG
 
 			if (!d.IsDead && IsDead) 
             {
+				
                 EnableCollider(true);
+				gameObject.layer = 0;
 				Represent.Revive();
 			}
 
@@ -116,6 +118,7 @@ namespace MG
         {
             IsDead = true;
             State.Dead();
+			gameObject.layer = 19;
             EnableCollider(false);
         }
 
@@ -156,9 +159,15 @@ namespace MG
         public void EnableCollider(bool enable)
         {
             var c2d = gameObject.GetComponent<BoxCollider2D>();
+			var c2c = gameObject.GetComponent<CircleCollider2D>();
 
-            if (c2d != null)
-                c2d.enabled = enable;
+//			if (c2c != null)
+//				c2c.enabled = enable;
+
+
+			if (c2d != null) {
+				c2d.enabled = enable;
+			}
         }
     }
 }

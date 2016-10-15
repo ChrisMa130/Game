@@ -38,7 +38,7 @@ namespace MG
         {
 			Reset ();
             Anim.SetBool("Dead", true);
-            Rigidbody.isKinematic = true;
+            //Rigidbody.isKinematic = true;
         }
 
         public void Revive()
@@ -46,7 +46,7 @@ namespace MG
 			Reset ();
 			ChangeAttachment ();
             Anim.SetBool("Dead", false);
-            Rigidbody.isKinematic = false;
+            //Rigidbody.isKinematic = false;
 			Rigidbody.gravityScale = 1;
         }
 
