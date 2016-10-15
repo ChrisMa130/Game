@@ -67,17 +67,16 @@ namespace MG
 
             // 首先从gamedata中得到当前level的保存信息
             // 如果没有保存内容，那么就创建一个
-            SaveBlack data = GameData.Instance.GetLevelData(LevelName);
-            if (data == null)
-            {
-                GameData.Instance.AddNewLevel(LevelName, LevelName, PlayerLogic.Position);
-            }
-            else
-            {
-                // 重置玩家坐标
-                PlayerLogic.SetRevivePoint(data.BornPos);
-                PlayerLogic.Position = data.BornPos;
-            }
+			if (GameData.Instance != null) {
+				SaveBlack data = GameData.Instance.GetLevelData (LevelName);
+				if (data == null) {
+					GameData.Instance.AddNewLevel (LevelName, LevelName, PlayerLogic.Position);
+				} else {
+					// 重置玩家坐标
+					PlayerLogic.SetRevivePoint (data.BornPos);
+					PlayerLogic.Position = data.BornPos;
+				}
+			}
         }
 
         void Update()

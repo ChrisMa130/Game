@@ -195,6 +195,7 @@
      <Compile Include="Assets\GameScripts\ObjectLogic\pickup.cs" />
      <Compile Include="Assets\GameScripts\ObjectLogic\platform\Lever.cs" />
      <Compile Include="Assets\GameScripts\ObjectLogic\platform\MovePlatform.cs" />
+     <Compile Include="Assets\GameScripts\ObjectLogic\platform\MovePlatform_Exp.cs" />
      <Compile Include="Assets\GameScripts\ObjectLogic\platform\PlatformBase.cs" />
      <Compile Include="Assets\GameScripts\ObjectLogic\platform\PlatformSwitch.cs" />
      <Compile Include="Assets\GameScripts\ObjectLogic\platform\PlatformSwitch_Stay.cs" />

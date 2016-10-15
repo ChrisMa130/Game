@@ -217,12 +217,29 @@ namespace MG
             EndPos = mousePos;
             Changed = true;
 
+			//SetCollider(CurrentOpLine, StartPos, EndPos);
+
 			// detect collision
             Vector3 dir = EndPos - StartPos;
             float dist = Vector3.Distance(StartPos, EndPos);
             dir.Normalize();
-            var hit = Physics2D.Raycast(StartPos, dir, dist);
-            if (hit.collider != null)
+            //var hit = Physics2D.Raycast(StartPos, dir, dist);
+
+			// check for collision
+			Vector2 check1 = new Vector2(StartPos.x, StartPos.y);
+			Vector2 check2 = new Vector2 (EndPos.x, EndPos.y);
+			if (LineAngle == 90) {
+				check1 = new Vector2 (StartPos.x - GameDefine.LineSize / 2, StartPos.y);
+				check2 = new Vector2 (EndPos.x + GameDefine.LineSize / 2, EndPos.y);
+			} else {
+				check1 = new Vector2 (StartPos.x, StartPos.y + GameDefine.LineSize / 2);
+				check2 = new Vector2 (EndPos.x, EndPos.y - GameDefine.LineSize / 2);
+			}
+			var hit = Physics2D.OverlapArea (check1, check2);
+
+
+			//
+            if (hit != null)
             {
                 if (hit.transform.tag.Equals("ForbiddenZone") || hit.transform.tag.Equals("Player") || hit.transform.tag.Equals("Building"))
                 {
@@ -237,6 +254,7 @@ namespace MG
             {
                 ValidLine = true;
             }
+				
 
             if (!ValidLine)
             {

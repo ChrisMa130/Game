@@ -203,7 +203,8 @@ namespace MG
         public void SetRevivePoint(Vector3 pos)
         {
             RevivePoint = pos;
-            GameData.Instance.SavePos(pos);
+			if (GameData.Instance != null)
+            	GameData.Instance.SavePos(pos);
         }
 
         public void Revive()

@@ -11,8 +11,10 @@ namespace MG
         void Start()
         {
             // 从gamedata里获取自己是否存在
-            if (GameData.Instance.HasCollect(Id))
-                DestoryMe();
+			if (GameData.Instance != null) {
+				if (GameData.Instance.HasCollect (Id))
+					DestoryMe ();
+			}
         }
 
         void OnTriggerEnter2D(Collider2D other)
