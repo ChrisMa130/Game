@@ -193,68 +193,76 @@ namespace MG
                 mousePos.y = StartPos.y + len * Mathf.Sin(theTa);
             }
 
-			float currentLength = Vector3.Distance(StartPos, mousePos);
+            float currentLength = Vector3.Distance(StartPos, mousePos);
 
-			// cap max length
-			if (currentLength > GameDefine.LineMaxLimit) {
-				if (mousePos.y == StartPos.y) {
-					if (mousePos.x > StartPos.x) {
-						mousePos.x = StartPos.x + GameDefine.LineMaxLimit;
-					} else {
-						mousePos.x = StartPos.x - GameDefine.LineMaxLimit;
-					}
-				} 
-				else if (mousePos.x == StartPos.x) {
-					if (mousePos.y > StartPos.y) {
-						mousePos.y = StartPos.y + GameDefine.LineMaxLimit;
-					} else {
-						mousePos.y = StartPos.y - GameDefine.LineMaxLimit;
-					}
-				}
-			}
+            // cap max length
+            if (currentLength > GameDefine.LineMaxLimit)
+            {
+                if (mousePos.y == StartPos.y)
+                {
+                    if (mousePos.x > StartPos.x)
+                    {
+                        mousePos.x = StartPos.x + GameDefine.LineMaxLimit;
+                    }
+                    else
+                    {
+                        mousePos.x = StartPos.x - GameDefine.LineMaxLimit;
+                    }
+                }
+                else if (mousePos.x == StartPos.x)
+                {
+                    if (mousePos.y > StartPos.y)
+                    {
+                        mousePos.y = StartPos.y + GameDefine.LineMaxLimit;
+                    }
+                    else
+                    {
+                        mousePos.y = StartPos.y - GameDefine.LineMaxLimit;
+                    }
+                }
+            }
             CurrentLineRenderer.SetPosition(1, mousePos);
 
             EndPos = mousePos;
             Changed = true;
 
-			//SetCollider(CurrentOpLine, StartPos, EndPos);
+            //SetCollider(CurrentOpLine, StartPos, EndPos);
 
-			// detect collision
+            // detect collision
             Vector3 dir = EndPos - StartPos;
             float dist = Vector3.Distance(StartPos, EndPos);
             dir.Normalize();
             //var hit = Physics2D.Raycast(StartPos, dir, dist);
 
-			// check for collision
-			Vector2 check1 = new Vector2(StartPos.x, StartPos.y);
-			Vector2 check2 = new Vector2 (EndPos.x, EndPos.y);
-			if (LineAngle == 90) {
-				check1 = new Vector2 (StartPos.x - GameDefine.LineSize / 2, StartPos.y);
-				check2 = new Vector2 (EndPos.x + GameDefine.LineSize / 2, EndPos.y);
-			} else {
-				check1 = new Vector2 (StartPos.x, StartPos.y + GameDefine.LineSize / 2);
-				check2 = new Vector2 (EndPos.x, EndPos.y - GameDefine.LineSize / 2);
-			}
-			var hit = Physics2D.OverlapArea (check1, check2);
-
-
-			//
-            if (hit != null)
+            // check for collision
+            Vector2 check1 = new Vector2(StartPos.x, StartPos.y);
+            Vector2 check2 = new Vector2(EndPos.x, EndPos.y);
+            if (LineAngle == 90)
             {
-                if (hit.transform.tag.Equals("ForbiddenZone") || hit.transform.tag.Equals("Player") || hit.transform.tag.Equals("Building"))
-                {
-                    ValidLine = false;
-                }
-                else
-                {
-                    ValidLine = true;
-                }
+                check1 = new Vector2(StartPos.x - GameDefine.LineSize / 2, StartPos.y);
+                check2 = new Vector2(EndPos.x + GameDefine.LineSize / 2, EndPos.y);
             }
             else
             {
-                ValidLine = true;
+                check1 = new Vector2(StartPos.x, StartPos.y + GameDefine.LineSize / 2);
+                check2 = new Vector2(EndPos.x, EndPos.y - GameDefine.LineSize / 2);
             }
-				
+            var hits = Physics2D.OverlapAreaAll(check1, check2);
+
+            bool hasHit = false;
+            foreach (var hit in hits)
+            {
+                if (hit == null) continue;
+
+                if (hit.transform.tag.Equals("ForbiddenZone") || hit.transform.tag.Equals("Player") ||
+                    hit.transform.tag.Equals("Building"))
+                {
+                    hasHit = true;
+                    break;
+                }
+            }
+
+            ValidLine = !hasHit;
 
             if (!ValidLine)
             {
