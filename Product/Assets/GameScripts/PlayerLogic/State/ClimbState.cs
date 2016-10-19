@@ -70,36 +70,32 @@ namespace MG
 
         public override void ApplyInput(GameInput input)
         {
-			if (Owner.LadderObj != null) {
-				float ladderY = Owner.LadderObj.transform.position.y;
-				bool outladder = (Owner.Position.y + (ownerHeight)) > (ladderY + c2d.bounds.size.y);
-			
 
-
-
-				if (input.Up && !outladder) {
-					Move (moveParam);
-				} else if (input.Down) {
-					Move (moveParam);
-					if (Owner.Grounded)
-						Owner.Stand ();
-				} else {
-					Move (0);
-				}
-
-				if (input.Left)
-					Owner.TurnRound (Dir.Left);
-				else if (input.Right)
-					Owner.TurnRound (Dir.Right);
-
-				if (!Owner.OnTheClimbAera)
+			float ladderY = Owner.LadderObj.transform.position.y;
+			bool outladder = (Owner.Position.y + (ownerHeight)) > (ladderY + c2d.bounds.size.y);
+		
+			if (input.Up && !outladder) {
+				Move (moveParam);
+			} else if (input.Down) {
+				Move (moveParam);
+				if (Owner.Grounded)
 					Owner.Stand ();
-
-				if (!input.Jump)
-					return;
-
-				Owner.Stand ();
+			} else {
+				Move (0);
 			}
+
+			if (input.Left)
+				Owner.TurnRound (Dir.Left);
+			else if (input.Right)
+				Owner.TurnRound (Dir.Right);
+
+			if (!Owner.OnTheClimbAera)
+				Owner.Stand ();
+
+			if (!input.Jump)
+				return;
+
+			Owner.Stand ();
         }
 
         private void Move(float param)

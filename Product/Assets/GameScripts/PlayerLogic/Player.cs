@@ -188,7 +188,7 @@ namespace MG
 			if (OnTheClimbAera == false) {
 				transform.FindChild ("Climb").gameObject.SetActive (false);
 				GetComponent<MeshRenderer> ().enabled = true;
-			} else {
+			} else if (OnTheClimbAera == true && MyState.CurrentPlayerState == PlayerStateType.Climb) {
 				transform.FindChild ("Climb").gameObject.SetActive (true);
 				GetComponent<MeshRenderer> ().enabled = false;
 
