@@ -42,14 +42,16 @@ namespace MG
         public override void TurnOn(GameObject obj)
         {
             UpdateDir();
-
-            BeMove = true;
+            if (!HasLine && Line == null)
+                BeMove = true;
+            
         }
 
         public override void TurnOff(GameObject obj)
         {
             UpdateDir();
-            BeMove = true;
+            if (!HasLine && Line == null)
+                BeMove = true;
         }
 
         private void UpdateDir()
