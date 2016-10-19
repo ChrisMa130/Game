@@ -11,8 +11,6 @@ namespace MG
 
         public override void Enter()
         {
-
-
             Animator.Dead();
             Rigidbody.velocity = Vector2.zero;
         }
@@ -23,9 +21,6 @@ namespace MG
 
         public override bool CanChange(PlayerStateType nextPlayerState)
         {
-            if (nextPlayerState != PlayerStateType.Stand)
-                return false;
-
             return true;
         }
 
