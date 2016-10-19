@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using Com.LuisPedroFonseca.ProCamera2D;
 
 // 角色逻辑
 namespace MG
@@ -212,7 +213,11 @@ namespace MG
             GameMgr.Instance.LineMgr.CanDraw = true;
             IsDead = false;
             transform.position = RevivePoint;
+			gameObject.layer = 8;
             Stand();
+			var transitionFX = Camera.main.GetComponent<ProCamera2DTransitionsFX>();
+			GameMgr.Instance.GetComponent<UIManager>().OpenUI(1);
+			transitionFX.TransitionEnter();
         }
 
         public Transform GetHandObject()

@@ -16,7 +16,7 @@ namespace MG
 
             NpcObject = gameObject.GetComponent<Npc>();
 
-            var c2d = NpcObject.GetComponent<BoxCollider2D>();
+            var c2d = NpcObject.GetComponent<CircleCollider2D>();
             NpcC2DSize = c2d.bounds.size;
         }
 

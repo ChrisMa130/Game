@@ -237,15 +237,16 @@ namespace MG
             // check for collision
             Vector2 check1 = new Vector2(StartPos.x, StartPos.y);
             Vector2 check2 = new Vector2(EndPos.x, EndPos.y);
+			float offset = 0.06f;
             if (LineAngle == 90)
             {
-                check1 = new Vector2(StartPos.x - GameDefine.LineSize / 2, StartPos.y);
-                check2 = new Vector2(EndPos.x + GameDefine.LineSize / 2, EndPos.y);
+				check1 = new Vector2(StartPos.x - GameDefine.LineSize / 2 + offset, StartPos.y + offset);
+				check2 = new Vector2(EndPos.x + GameDefine.LineSize / 2 + offset, EndPos.y + offset);
             }
             else
             {
-                check1 = new Vector2(StartPos.x, StartPos.y + GameDefine.LineSize / 2);
-                check2 = new Vector2(EndPos.x, EndPos.y - GameDefine.LineSize / 2);
+				check1 = new Vector2(StartPos.x + offset, StartPos.y + GameDefine.LineSize / 2 + offset);
+				check2 = new Vector2(EndPos.x + offset, EndPos.y - GameDefine.LineSize / 2 + offset);
             }
             var hits = Physics2D.OverlapAreaAll(check1, check2);
 

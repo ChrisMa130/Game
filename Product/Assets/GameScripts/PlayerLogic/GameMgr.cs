@@ -230,7 +230,8 @@ namespace MG
             transitionFX.OnTransitionExitEnded = () =>
             {
                 transitionFX.OnTransitionExitEnded = null;
-                SceneManager.LoadSceneAsync(LevelName);
+				PlayerLogic.Revive();
+                //SceneManager.LoadSceneAsync(LevelName);
             };
 
             transitionFX.TransitionExit();

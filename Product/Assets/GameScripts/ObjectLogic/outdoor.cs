@@ -30,7 +30,8 @@ namespace MG
             {
                 GameMgr.Instance.ExitCount = NeedCollects[0];
             }
-
+			_transitionFX.OnTransitionExitEnded = () => {
+			};
 			_transitionFX.OnTransitionExitEnded += OnTransitionExitEnded;
         }
 
