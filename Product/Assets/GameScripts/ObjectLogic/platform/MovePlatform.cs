@@ -1,6 +1,4 @@
-﻿using System;
-using UnityEngine;
-using System.Collections;
+﻿using UnityEngine;
 using System.Collections.Generic;
 
 namespace MG
@@ -8,18 +6,17 @@ namespace MG
     public class MovePlatform : PlatformBase
     {
         public Dir MoveDir;
-		public bool Parent;
-        //private Rigidbody2D Rigidbody;
+        public bool Parent;
         private float Speed;
 
-        private bool BeMove;
         public List<GameObject> Partner;
         public bool PlayerStay;
 
-		public float MySpeed;
+        public float MySpeed;
 
-        private GameObject Line;
-        bool HasLine;
+        private Vector3 LeftCheckPoint;
+        private Vector3 RightCheckPoint;
+        BoxCollider2D b2c;
 
         class UserData : TimeUnitUserData
         {
@@ -29,12 +26,12 @@ namespace MG
 
         void Start()
         {
-            //Rigidbody = gameObject.GetComponent<Rigidbody2D>();
+            b2c = GetComponent<BoxCollider2D>();
+
             Speed = Mathf.Abs(GameDefine.MovePlatformSpeed);
-			if (MySpeed > 0.0f)
-				Speed = Mathf.Abs (MySpeed);
-            BeMove = true;
-            HasLine = false;
+            if (MySpeed > 0.0f)
+                Speed = Mathf.Abs(MySpeed);
+
             PlayerStay = false;
             Init(false);
         }
@@ -42,16 +39,11 @@ namespace MG
         public override void TurnOn(GameObject obj)
         {
             UpdateDir();
-            if (!HasLine && Line == null)
-                BeMove = true;
-            
         }
 
         public override void TurnOff(GameObject obj)
         {
             UpdateDir();
-            if (!HasLine && Line == null)
-                BeMove = true;
         }
 
         private void UpdateDir()
@@ -75,18 +67,10 @@ namespace MG
 
         void Update()
         {
-            if (!BeMove)
-            {
-                if (HasLine && Line == null)
-                {
-                    BeMove = true;
-                    HasLine = false;
-                }
-                else
-                    return;
-            }
-
             if (TimeController.Instance.IsOpTime())
+                return;
+
+            if (CanMove())
                 return;
 
             switch (MoveDir)
@@ -128,55 +112,26 @@ namespace MG
 
         void OnCollisionEnter2D(Collision2D obj)
         {
-            if (obj.gameObject.tag == "Building")
-            {
-                BeMove = false;
-            }
-			else if (obj.gameObject.tag == "ForbiddenZone" && (obj.gameObject.layer == LayerMask.NameToLayer("Ground") || obj.gameObject.layer == LayerMask.NameToLayer("Default")))
-            {
-                Line = obj.gameObject;
-                HasLine = true;
-				BeMove = false;
-            }
-
-            //if (obj.gameObject.tag == "Player")
-            //    PlayerStay = true;
-			if (obj.gameObject.tag == "ForbiddenZone" && obj.gameObject.layer == LayerMask.NameToLayer("Player") && Parent)
-				obj.gameObject.transform.parent = transform;
-//			if (obj.gameObject.tag == "NPC") {
-//				obj.gameObject.transform.parent = transform;
-//				obj.gameObject.transform.GetComponent<Rigidbody2D> ().velocity -= new Vector2 (10, 0);
-//			}
+            if (obj.gameObject.tag == "ForbiddenZone" && obj.gameObject.layer == LayerMask.NameToLayer("Player") && Parent)
+                obj.gameObject.transform.parent = transform;
         }
 
         void OnCollisionExit2D(Collision2D obj)
         {
-            if (obj.gameObject.tag == "Building")
-            {
-                BeMove = true;
-            }
-            else if (obj.gameObject.tag == "ForbiddenZone" && obj.gameObject.layer == LayerMask.NameToLayer("Ground"))
-            {
-                BeMove = true;
-            }
-
-            //if (obj.gameObject.tag == "Player")
-            //    PlayerStay = false;
-			if (obj.gameObject.tag == "ForbiddenZone" && obj.gameObject.layer == LayerMask.NameToLayer("Default"))
-				obj.gameObject.transform.GetComponent<Rigidbody2D> ().velocity += new Vector2 (10, 0);
-			if (obj.gameObject.tag == "ForbiddenZone")
-				obj.transform.parent = null;
+            if (obj.gameObject.tag == "ForbiddenZone" && obj.gameObject.layer == LayerMask.NameToLayer("Default"))
+                obj.gameObject.transform.GetComponent<Rigidbody2D>().velocity += new Vector2(10, 0);
+            if (obj.gameObject.tag == "ForbiddenZone")
+                obj.transform.parent = null;
         }
 
         protected override TimeUnitUserData GetUserData()
         {
             var data = new UserData
             {
-                BeMove = BeMove,
                 Speed = Speed
             };
 
-			Rigid.constraints = RigidbodyConstraints2D.FreezeAll;
+            Rigid.constraints = RigidbodyConstraints2D.FreezeAll;
             return data;
         }
 
@@ -186,23 +141,51 @@ namespace MG
             if (d == null)
                 return;
 
-            BeMove = d.BeMove;
             Speed = d.Speed;
 
-			Rigid.constraints = RigidbodyConstraints2D.FreezeRotation;
+            Rigid.constraints = RigidbodyConstraints2D.FreezeRotation;
         }
 
-        //        void OnTriggerStay2D(Collider2D obj)
-        //        {
-        //            var platform = obj.gameObject.GetComponent<npcswitcher>();
-        //            if (platform != null)
-        //            {
-        //                Switcher = obj.gameObject;
-        //                return;
-        //            }
-        //
-        //            Switcher = null;
-        //        }
+        bool CanMove()
+        {
+            RaycastHit2D[] hit;
+
+            LeftCheckPoint = transform.position;
+            RightCheckPoint = transform.position;
+
+            LeftCheckPoint.x = LeftCheckPoint.x - b2c.size.x / 2 - 0.05f;
+            RightCheckPoint.x = RightCheckPoint.x + b2c.size.x / 2 + 0.05f;
+
+            if (MoveDir == Dir.Left)
+            {
+                hit = Physics2D.RaycastAll(LeftCheckPoint, Vector2.left, 0.1f);
+                Debug.DrawRay(LeftCheckPoint, Vector3.left, Color.blue, 0.1f);
+            }
+            else
+            {
+                hit = Physics2D.RaycastAll(RightCheckPoint, Vector2.right, 0.1f);
+                Debug.DrawRay(RightCheckPoint, Vector3.right, Color.blue, 0.1f);
+            }
+
+            int len = hit.Length;
+            if (len == 0)
+                return false;
+
+            for (int i = 0; i < len; i++)
+            {
+                RaycastHit2D h = hit[i];
+                if (h.collider == null)
+                    break;
+                
+                GameObject o = h.collider.gameObject;
+
+                if (o.tag.Equals("Building") || o.tag.Equals("ForbiddenZone") && (o.layer == LayerMask.NameToLayer("Ground") || o.layer == LayerMask.NameToLayer("Default")))
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
     }
 }
 
