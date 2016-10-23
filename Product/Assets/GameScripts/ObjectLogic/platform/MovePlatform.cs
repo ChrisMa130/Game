@@ -153,18 +153,18 @@ namespace MG
             LeftCheckPoint = transform.position;
             RightCheckPoint = transform.position;
 
-            LeftCheckPoint.x = LeftCheckPoint.x - b2c.size.x / 2 - 0.05f;
-            RightCheckPoint.x = RightCheckPoint.x + b2c.size.x / 2 + 0.05f;
+            LeftCheckPoint.x = LeftCheckPoint.x - b2c.size.x / 2 - 0.02f;
+            RightCheckPoint.x = RightCheckPoint.x + b2c.size.x / 2 + 0.02f;
 
             if (MoveDir == Dir.Left)
             {
-                hit = Physics2D.RaycastAll(LeftCheckPoint, Vector2.left, 0.1f);
-                Debug.DrawRay(LeftCheckPoint, Vector3.left, Color.blue, 0.1f);
+                hit = Physics2D.RaycastAll(LeftCheckPoint, Vector2.left, 0.05f);
+                Debug.DrawRay(LeftCheckPoint, Vector3.left, Color.blue, 0.05f);
             }
             else
             {
-                hit = Physics2D.RaycastAll(RightCheckPoint, Vector2.right, 0.1f);
-                Debug.DrawRay(RightCheckPoint, Vector3.right, Color.blue, 0.1f);
+                hit = Physics2D.RaycastAll(RightCheckPoint, Vector2.right, 0.05f);
+                Debug.DrawRay(RightCheckPoint, Vector3.right, Color.blue, 0.05f);
             }
 
             int len = hit.Length;

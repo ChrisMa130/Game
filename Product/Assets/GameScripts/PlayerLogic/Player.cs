@@ -184,7 +184,8 @@ namespace MG
             IsDead = d.IsDead;
             OnTheLine = d.OnTheLine;
             OnTheClimbAera = d.OnTheClimbAera;
-			climb.GetComponent<Animator> ().SetFloat ("Time", d.time);
+			if (climb.activeSelf)
+				climb.GetComponent<Animator> ().SetFloat ("Time", d.time);
 			if (OnTheClimbAera == false) {
 				transform.FindChild ("Climb").gameObject.SetActive (false);
 				GetComponent<MeshRenderer> ().enabled = true;
@@ -216,7 +217,7 @@ namespace MG
 			gameObject.layer = 8;
             Stand();
 			var transitionFX = Camera.main.GetComponent<ProCamera2DTransitionsFX>();
-			GameMgr.Instance.GetComponent<UIManager>().OpenUI(1);
+			GameMgr.Instance.GetComponent<UIManager>().OpenUI(0);
 			transitionFX.TransitionEnter();
         }
 

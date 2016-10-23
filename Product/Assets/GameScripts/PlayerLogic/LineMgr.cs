@@ -57,6 +57,7 @@ namespace MG
         {
             var o = Resources.Load("prefabs/Utilities/line") as GameObject;
             CurrentOpLine = Instantiate(o);
+			CurrentOpLine.GetComponent<LineRenderer> ().sortingOrder = 2;
             CurrentOpLine.name = "Line" + LineCount++;
             CurrentLineRenderer = CurrentOpLine.GetComponent<LineRenderer>();
             CurrentLineRenderer.SetVertexCount(2);

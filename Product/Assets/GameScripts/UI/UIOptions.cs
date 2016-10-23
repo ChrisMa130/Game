@@ -43,6 +43,8 @@ namespace MG
         private void OnBtnResumeClick()
         {
             Debug.Log("OnBtnResumeClick");
+			GameMgr.Instance.UiManager.OpenUI(0);
+			GameMgr.Instance.PauseGame(false, false);
         }
 
         private void OnBtnLevelsClick()

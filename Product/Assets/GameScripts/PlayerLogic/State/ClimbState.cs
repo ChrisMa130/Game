@@ -73,8 +73,9 @@ namespace MG
 
 			float ladderY = Owner.LadderObj.transform.position.y;
 			bool outladder = (Owner.Position.y + (ownerHeight)) > (ladderY + c2d.bounds.size.y);
-		
-			if (input.Up && !outladder) {
+			bool outBottom = (Owner.Position.y - (ownerHeight)) < (ladderY - c2d.bounds.size.y);
+
+			if (input.Up && !outladder && !outBottom) {
 				Move (moveParam);
 			} else if (input.Down) {
 				Move (moveParam);
