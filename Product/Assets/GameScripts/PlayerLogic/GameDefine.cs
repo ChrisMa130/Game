@@ -140,6 +140,15 @@ namespace MG
 
             return CurChild;
         }
+
+        public static TValue GetValue<TKey, TValue>(this Dictionary<TKey, TValue> dict, TKey key, TValue defaultValue = default(TValue))
+        {
+            TValue v = defaultValue;
+            if (!dict.TryGetValue(key, out v))
+                return defaultValue;
+
+            return v;
+        }
     }
 }
 
