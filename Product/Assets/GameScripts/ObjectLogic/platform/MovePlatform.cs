@@ -16,6 +16,8 @@ namespace MG
 
         private Vector3 LeftCheckPoint;
         private Vector3 RightCheckPoint;
+		private Vector3 UpCheckPoint;
+		private Vector3 DownCheckPoint;
         BoxCollider2D b2c;
 
         class UserData : TimeUnitUserData
@@ -152,20 +154,33 @@ namespace MG
 
             LeftCheckPoint = transform.position;
             RightCheckPoint = transform.position;
+			UpCheckPoint = transform.position;
+			DownCheckPoint = transform.position;
 
             LeftCheckPoint.x = LeftCheckPoint.x - b2c.size.x / 2 - 0.02f;
             RightCheckPoint.x = RightCheckPoint.x + b2c.size.x / 2 + 0.02f;
+			UpCheckPoint.y = UpCheckPoint.y + b2c.size.y / 2 + 0.02f;
+			DownCheckPoint.y = UpCheckPoint.y - b2c.size.y / 2 - 0.02f;
 
-            if (MoveDir == Dir.Left)
-            {
-                hit = Physics2D.RaycastAll(LeftCheckPoint, Vector2.left, 0.05f);
-                Debug.DrawRay(LeftCheckPoint, Vector3.left, Color.blue, 0.05f);
-            }
-            else
-            {
-                hit = Physics2D.RaycastAll(RightCheckPoint, Vector2.right, 0.05f);
-                Debug.DrawRay(RightCheckPoint, Vector3.right, Color.blue, 0.05f);
-            }
+			float offset = 0.05f;
+
+			if (MoveDir == Dir.Left || MoveDir == Dir.Right) {
+				if (MoveDir == Dir.Left) {
+					hit = Physics2D.RaycastAll (LeftCheckPoint, Vector2.left, offset);
+					Debug.DrawRay (LeftCheckPoint, Vector3.left, Color.blue, offset);
+				} else {
+					hit = Physics2D.RaycastAll (RightCheckPoint, Vector2.right, offset);
+					Debug.DrawRay (RightCheckPoint, Vector3.right, Color.blue, offset);
+				}
+			} else {
+				if (MoveDir == Dir.Up) {
+					hit = Physics2D.RaycastAll (UpCheckPoint, Vector2.up, offset);
+					Debug.DrawRay (UpCheckPoint, Vector3.up, Color.blue, offset);
+				} else {
+					hit = Physics2D.RaycastAll (DownCheckPoint, Vector2.down, offset);
+					Debug.DrawRay (DownCheckPoint, Vector3.down, Color.blue, offset);
+				}
+			}
 
             int len = hit.Length;
             if (len == 0)
