@@ -162,7 +162,10 @@ namespace MG
         // TODO
         public void DestoryMe()
         {
-            gameObject.SetActive(false);
+            if (!GameMgr.Instance.WorldSwith.ForbidTimeOperation)
+                gameObject.SetActive(false);
+            else
+                GameObject.Destroy(gameObject);
         }
 
         public bool IsDead()

@@ -120,6 +120,13 @@ namespace MG
             State.Dead();
 			gameObject.layer = 19;
             EnableCollider(false);
+
+            Invoke("LateDestory", 3.0f);
+        }
+
+        void LateDestory()
+        {
+            DestoryMe();
         }
 
         public void Jump()
