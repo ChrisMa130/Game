@@ -162,23 +162,24 @@ namespace MG
 			UpCheckPoint.y = UpCheckPoint.y + b2c.size.y / 2 + 0.02f;
 			DownCheckPoint.y = UpCheckPoint.y - b2c.size.y / 2 - 0.02f;
 
-			float offset = 0.05f;
+			Vector2 offsetH = new Vector3 (0.03f, b2c.size.y - 0.01f);
+			Vector2 offsetV = new Vector3 (b2c.size.x - 0.01f, 0.03f);
 
 			if (MoveDir == Dir.Left || MoveDir == Dir.Right) {
 				if (MoveDir == Dir.Left) {
-					hit = Physics2D.RaycastAll (LeftCheckPoint, Vector2.left, offset);
-					Debug.DrawRay (LeftCheckPoint, Vector3.left, Color.blue, offset);
+					hit = Physics2D.BoxCastAll (LeftCheckPoint, offsetH, 0f, Vector2.left);
+					Debug.DrawRay (LeftCheckPoint, Vector3.left, Color.blue, offsetH.x);
 				} else {
-					hit = Physics2D.RaycastAll (RightCheckPoint, Vector2.right, offset);
-					Debug.DrawRay (RightCheckPoint, Vector3.right, Color.blue, offset);
+					hit = Physics2D.BoxCastAll (RightCheckPoint, offsetH, 0f, Vector2.right);
+					Debug.DrawRay (RightCheckPoint, Vector3.right, Color.blue, offsetH.x);
 				}
 			} else {
 				if (MoveDir == Dir.Up) {
-					hit = Physics2D.RaycastAll (UpCheckPoint, Vector2.up, offset);
-					Debug.DrawRay (UpCheckPoint, Vector3.up, Color.blue, offset);
+					hit = Physics2D.BoxCastAll (UpCheckPoint, offsetV, 0f,Vector2.up);
+					Debug.DrawRay (UpCheckPoint, Vector3.up, Color.blue, offsetV.y);
 				} else {
-					hit = Physics2D.RaycastAll (DownCheckPoint, Vector2.down, offset);
-					Debug.DrawRay (DownCheckPoint, Vector3.down, Color.blue, offset);
+					hit = Physics2D.BoxCastAll (DownCheckPoint, offsetV, 0f, Vector2.down);
+					Debug.DrawRay (DownCheckPoint, Vector3.down, Color.blue, offsetV.y);
 				}
 			}
 
