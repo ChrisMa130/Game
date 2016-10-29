@@ -18,6 +18,7 @@ public class UIManager : MonoBehaviour
         new UISystem() {Id = 0, Name = "LevelUI", LastUI = true}, 
         new UISystem() {Id = 1, Name = "Options", LastUI = false}, 
         new UISystem() {Id = 2, Name = "Loading", LastUI = false}, 
+        new UISystem() {Id = 3, Name = "UIDiaries", LastUI = false}, 
     };
 
     private Stack<UISystem> UIStack = new Stack<UISystem>(); // UI队列，用于前进和后退
