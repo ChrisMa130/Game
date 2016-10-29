@@ -162,8 +162,8 @@ namespace MG
 			UpCheckPoint.y = UpCheckPoint.y + b2c.size.y / 2 + 0.02f;
 			DownCheckPoint.y = UpCheckPoint.y - b2c.size.y / 2 - 0.02f;
 
-			Vector2 offsetH = new Vector3 (0.03f, b2c.size.y - 0.01f);
-			Vector2 offsetV = new Vector3 (b2c.size.x - 0.01f, 0.03f);
+			Vector2 offsetH = new Vector2 (0.03f, b2c.size.y - 0.01f);
+			Vector2 offsetV = new Vector2 (b2c.size.x - 0.01f, 0.03f);
 
 			if (MoveDir == Dir.Left || MoveDir == Dir.Right) {
 				if (MoveDir == Dir.Left) {

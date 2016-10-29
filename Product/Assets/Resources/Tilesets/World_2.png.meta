@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: f42491d1a4dedb14dbef77b5866f73a4
-timeCreated: 1476328054
+timeCreated: 1477622178
 licenseType: Pro
 TextureImporter:
   fileIDToRecycleName:
@@ -72,6 +72,23 @@ TextureImporter:
     21300130: World_2_65
     21300132: World_2_66
     21300134: World_2_67
+    21300136: World_2_68
+    21300138: World_2_69
+    21300140: World_2_70
+    21300142: World_2_71
+    21300144: World_2_72
+    21300146: World_2_73
+    21300148: World_2_74
+    21300150: World_2_75
+    21300152: World_2_76
+    21300154: World_2_77
+    21300156: World_2_78
+    21300158: World_2_79
+    21300160: World_2_80
+    21300162: World_2_81
+    21300164: World_2_82
+    21300166: World_2_83
+    21300168: World_2_84
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
@@ -506,13 +523,10 @@ TextureImporter:
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline:
-      - - {x: 14, y: 17}
-        - {x: -16, y: 17}
-        - {x: -16, y: -24}
-        - {x: -14, y: -25}
-        - {x: 6, y: -25}
-        - {x: 13, y: -23}
-        - {x: 14, y: -20}
+      - - {x: -15, y: 17}
+        - {x: -15, y: -25}
+        - {x: 15, y: -25}
+        - {x: 15, y: 17}
     - name: World_2_25
       rect:
         serializedVersion: 2
@@ -524,13 +538,13 @@ TextureImporter:
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline:
-      - - {x: -29, y: -30}
-        - {x: 27, y: -30}
-        - {x: 27, y: 0}
-        - {x: 26, y: 13}
-        - {x: 15, y: 22}
-        - {x: -16, y: 22}
-        - {x: -29, y: 0}
+      - - {x: -28, y: -30}
+        - {x: 28, y: -30}
+        - {x: 28, y: 0}
+        - {x: 27, y: 13}
+        - {x: 16, y: 22}
+        - {x: -15, y: 22}
+        - {x: -28, y: 0}
     - name: World_2_26
       rect:
         serializedVersion: 2
@@ -542,10 +556,10 @@ TextureImporter:
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline:
-      - - {x: -29, y: 30}
-        - {x: -29, y: -30}
-        - {x: 27, y: -30}
-        - {x: 27, y: 30}
+      - - {x: -28, y: 30}
+        - {x: -28, y: -30}
+        - {x: 28, y: -30}
+        - {x: 28, y: 30}
     - name: World_2_27
       rect:
         serializedVersion: 2
@@ -557,12 +571,12 @@ TextureImporter:
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline:
-      - - {x: -26, y: -14}
-        - {x: -29, y: -23}
-        - {x: -29, y: -30}
-        - {x: 27, y: -30}
-        - {x: 27, y: -16}
-        - {x: 18, y: -14}
+      - - {x: -25, y: -14}
+        - {x: -28, y: -23}
+        - {x: -28, y: -30}
+        - {x: 28, y: -30}
+        - {x: 28, y: -16}
+        - {x: 19, y: -14}
     - name: World_2_28
       rect:
         serializedVersion: 2
@@ -574,14 +588,14 @@ TextureImporter:
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline:
-      - - {x: -8, y: 1}
-        - {x: -12, y: 0}
-        - {x: -25, y: -5}
-        - {x: -29, y: -19}
-        - {x: -29, y: -30}
-        - {x: 27, y: -30}
-        - {x: 27, y: -19}
-        - {x: 5, y: 1}
+      - - {x: -7, y: 1}
+        - {x: -11, y: 0}
+        - {x: -24, y: -5}
+        - {x: -28, y: -19}
+        - {x: -28, y: -30}
+        - {x: 28, y: -30}
+        - {x: 28, y: -19}
+        - {x: 6, y: 1}
     - name: World_2_29
       rect:
         serializedVersion: 2
@@ -593,12 +607,12 @@ TextureImporter:
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline:
-      - - {x: -7, y: 30}
-        - {x: -7, y: -14}
-        - {x: -5, y: -15}
-        - {x: 2, y: -15}
-        - {x: 4, y: 2}
-        - {x: 4, y: 30}
+      - - {x: -6, y: 30}
+        - {x: -6, y: -14}
+        - {x: -4, y: -15}
+        - {x: 3, y: -15}
+        - {x: 5, y: 2}
+        - {x: 5, y: 30}
     - name: World_2_30
       rect:
         serializedVersion: 2
@@ -1237,6 +1251,284 @@ TextureImporter:
         - {x: 27, y: -8}
         - {x: 30, y: -8}
         - {x: 30, y: 30}
+    - name: World_2_68
+      rect:
+        serializedVersion: 2
+        x: 10
+        y: 1140
+        width: 60
+        height: 60
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 14, y: 20}
+        - {x: -12, y: 20}
+        - {x: -17, y: 8}
+        - {x: -17, y: -18}
+        - {x: -12, y: -19}
+        - {x: 10, y: -19}
+        - {x: 19, y: -10}
+        - {x: 19, y: 7}
+        - {x: 18, y: 18}
+    - name: World_2_69
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 1140
+        width: 60
+        height: 60
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -30, y: -30}
+        - {x: 30, y: -30}
+        - {x: 30, y: -1}
+        - {x: 25, y: 22}
+        - {x: 12, y: 30}
+        - {x: -6, y: 30}
+        - {x: -30, y: 14}
+    - name: World_2_70
+      rect:
+        serializedVersion: 2
+        x: 150
+        y: 1140
+        width: 60
+        height: 60
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -30, y: -30}
+        - {x: 30, y: -30}
+        - {x: 30, y: -1}
+        - {x: 25, y: 22}
+        - {x: 12, y: 30}
+        - {x: -6, y: 30}
+        - {x: -30, y: 14}
+    - name: World_2_71
+      rect:
+        serializedVersion: 2
+        x: 220
+        y: 1140
+        width: 60
+        height: 60
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -30, y: -30}
+        - {x: 30, y: -30}
+        - {x: 30, y: -1}
+        - {x: 25, y: 22}
+        - {x: 12, y: 30}
+        - {x: -6, y: 30}
+        - {x: -30, y: 14}
+    - name: World_2_72
+      rect:
+        serializedVersion: 2
+        x: 290
+        y: 1140
+        width: 60
+        height: 60
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -30, y: -30}
+        - {x: 30, y: -30}
+        - {x: 30, y: -1}
+        - {x: 25, y: 22}
+        - {x: 12, y: 30}
+        - {x: -6, y: 30}
+        - {x: -30, y: 14}
+    - name: World_2_73
+      rect:
+        serializedVersion: 2
+        x: 360
+        y: 1140
+        width: 60
+        height: 60
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -30, y: 30}
+        - {x: -30, y: -30}
+        - {x: 30, y: -30}
+        - {x: 30, y: 30}
+    - name: World_2_74
+      rect:
+        serializedVersion: 2
+        x: 430
+        y: 1140
+        width: 60
+        height: 60
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -28, y: 30}
+        - {x: -30, y: -3}
+        - {x: -30, y: -30}
+        - {x: 30, y: -30}
+        - {x: 30, y: 30}
+    - name: World_2_75
+      rect:
+        serializedVersion: 2
+        x: 500
+        y: 1140
+        width: 60
+        height: 60
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -30, y: 30}
+        - {x: -30, y: -30}
+        - {x: 28, y: -30}
+        - {x: 30, y: 9}
+        - {x: 30, y: 30}
+    - name: World_2_76
+      rect:
+        serializedVersion: 2
+        x: 570
+        y: 1140
+        width: 60
+        height: 60
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 30, y: -30}
+        - {x: 30, y: 30}
+        - {x: -30, y: 30}
+        - {x: -30, y: -30}
+    - name: World_2_77
+      rect:
+        serializedVersion: 2
+        x: 640
+        y: 1140
+        width: 60
+        height: 60
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -30, y: 30}
+        - {x: -30, y: -30}
+        - {x: 30, y: -30}
+        - {x: 30, y: 30}
+    - name: World_2_78
+      rect:
+        serializedVersion: 2
+        x: 710
+        y: 1140
+        width: 60
+        height: 60
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -28, y: 30}
+        - {x: -30, y: -3}
+        - {x: -30, y: -30}
+        - {x: 30, y: -30}
+        - {x: 30, y: 30}
+    - name: World_2_79
+      rect:
+        serializedVersion: 2
+        x: 780
+        y: 1140
+        width: 60
+        height: 60
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -30, y: 30}
+        - {x: -30, y: -30}
+        - {x: 28, y: -30}
+        - {x: 30, y: 9}
+        - {x: 30, y: 30}
+    - name: World_2_80
+      rect:
+        serializedVersion: 2
+        x: 850
+        y: 1140
+        width: 60
+        height: 60
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 30, y: -30}
+        - {x: 30, y: 30}
+        - {x: -30, y: 30}
+        - {x: -30, y: -30}
+    - name: World_2_81
+      rect:
+        serializedVersion: 2
+        x: 920
+        y: 1140
+        width: 60
+        height: 60
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -30, y: 30}
+        - {x: -30, y: -30}
+        - {x: 30, y: -30}
+        - {x: 30, y: 30}
+    - name: World_2_82
+      rect:
+        serializedVersion: 2
+        x: 990
+        y: 1140
+        width: 60
+        height: 60
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -28, y: 30}
+        - {x: -30, y: -3}
+        - {x: -30, y: -30}
+        - {x: 30, y: -30}
+        - {x: 30, y: 30}
+    - name: World_2_83
+      rect:
+        serializedVersion: 2
+        x: 1060
+        y: 1140
+        width: 60
+        height: 60
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -30, y: 30}
+        - {x: -30, y: -30}
+        - {x: 28, y: -30}
+        - {x: 30, y: 9}
+        - {x: 30, y: 30}
+    - name: World_2_84
+      rect:
+        serializedVersion: 2
+        x: 1130
+        y: 1140
+        width: 60
+        height: 60
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 30, y: -30}
+        - {x: 30, y: 30}
+        - {x: -30, y: 30}
+        - {x: -30, y: -30}
     outline: []
   spritePackingTag: 
   userData: 
