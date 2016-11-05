@@ -66,6 +66,8 @@ namespace MG
                 Instantiate(Resources.Load("prefabs/Utilities/BGManager"));
             }
 
+            // TODO 道具的创建
+
             // 首先从gamedata中得到当前level的保存信息
             // 如果没有保存内容，那么就创建一个
             if (GameData.Instance != null)
@@ -237,6 +239,14 @@ namespace MG
             transitionFX.TransitionExit();
             UiManager.CloseCurrentUI();
             PauseGame(false, false);
+        }
+
+        public void CreateLevelItem()
+        {
+            // 创建日志的道具
+            string fileName = string.Format("{0}/Diarie", LevelName);
+
+
         }
     }
 }
