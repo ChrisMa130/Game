@@ -7,7 +7,7 @@ namespace MG
 {
     public class outdoor : MonoBehaviour
     {
-        public int[] NeedCollects = new int[GameDefine.CollectCount];
+        public int NeedCollects;
 
         public string NextLevelName;
 
@@ -22,14 +22,8 @@ namespace MG
 
         void Start()
         {
-            if (NeedCollects.Length == 0)
-            {
-                GameMgr.Instance.ExitCount = 0;
-            }
-            else
-            {
-                GameMgr.Instance.ExitCount = NeedCollects[0];
-            }
+             GameMgr.Instance.ExitCount = NeedCollects;
+
 			_transitionFX.OnTransitionExitEnded = () => {
 			};
 			_transitionFX.OnTransitionExitEnded += OnTransitionExitEnded;

@@ -245,7 +245,8 @@ namespace MG
         {
             // 创建日志的道具
             string fileName = string.Format("{0}/Diarie", LevelName);
-
+            // 根据类型，创建不同的对象
+            
 
         }
     }

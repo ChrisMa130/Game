@@ -30,9 +30,9 @@ public class UILevel : MonoBehaviour
 
     void UpdateCount()
     {
-        if (LastCount == GameMgr.Instance.PlayerLogic.GetCollectCount(0))
+        if (LastCount == GameMgr.Instance.PlayerLogic.DiariesCount)
             return;
-        int count = GameMgr.Instance.PlayerLogic.GetCollectCount(0);
+        int count = GameMgr.Instance.PlayerLogic.DiariesCount;
 		int total = GameObject.FindGameObjectsWithTag ("Scroll").Length;
 		TopText.text = string.Format("{0}/{1}", count, total);
 

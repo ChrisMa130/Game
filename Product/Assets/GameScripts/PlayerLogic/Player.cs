@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using Com.LuisPedroFonseca.ProCamera2D;
 
 // 角色逻辑
@@ -7,7 +8,6 @@ namespace MG
     public class Player : TimeUnit
     {
         private GameInput InputMgr;
-        private Collect CollectItem;
         private Represent MyRepresent;
         private Vector3 RevivePoint;
 
@@ -31,15 +31,12 @@ namespace MG
 
         class UserData : TimeUnitUserData
         {
-            // 物品收集的信息
-            public int[] Items = new int[GameDefine.CollectCount];
-
             // 基础信息
             public bool Grounded;
             public bool OnTheLine;
             public bool OnTheClimbAera;
             public bool IsDead;
-
+            public int DiariesCount;
 			public float time;
             public Dir dir;
 
@@ -49,6 +46,10 @@ namespace MG
 
         // 猪脚一些属性
         public bool IsDead { get; private set; }
+        public int DiariesCount { get; private set; }
+
+        // 一些回调
+        public Action<int> OnPickUpAction;
 
         void Awake()
         {
@@ -56,7 +57,7 @@ namespace MG
             MyRepresent = gameObject.AddComponent<Represent>();
             MyState     = gameObject.AddMissingComponent<PlayerState>();
 
-            CollectItem = new Collect();
+            DiariesCount = 0;
 
             MyState.Init(this);
             IsDead = false;
@@ -93,9 +94,11 @@ namespace MG
             MyState.ApplyInput(input);
         }
 
-        public void AddCollectItem(int key, int value)
+        public void PickupDiarie(int id)
         {
-            CollectItem.AddCollectItem(key, value);
+            DiariesCount++;
+            if (OnPickUpAction != null)
+                OnPickUpAction(id);
         }
 
         public void Run()
@@ -133,26 +136,17 @@ namespace MG
             MyRepresent.TurnRound(dir);
         }
 
-        public int GetCollectCount(int key)
-        {
-            return CollectItem.GetCount(key);
-        }
-
         protected override TimeUnitUserData GetUserData()
         {
             UserData data = new UserData();
-
-            data.Items = new int[GameDefine.CollectCount];
-            for (int i = 0; i < GameDefine.CollectCount; i++)
-            {
-                data.Items[i] = CollectItem.GetCount(i);
-            }
 
             data.Grounded = Grounded;
             data.IsDead = IsDead;
             data.OnTheLine = OnTheLine;
             data.OnTheClimbAera = OnTheClimbAera;
             data.dir = CurrentDir;
+            data.DiariesCount = DiariesCount;
+
 			if (climb.activeSelf)
 				data.time = climb.GetComponent<Animator> ().GetFloat ("Time");
 
@@ -167,11 +161,6 @@ namespace MG
             if (d == null)
                 return;
 
-            for (int i = 0; i < GameDefine.CollectCount; i++)
-            {
-                CollectItem.AddCollectItem(i, d.Items[i]);
-            }
-
             if (!d.IsDead && IsDead)
             {
                 //Rigid.isKinematic = false;
@@ -184,6 +173,8 @@ namespace MG
             IsDead = d.IsDead;
             OnTheLine = d.OnTheLine;
             OnTheClimbAera = d.OnTheClimbAera;
+            DiariesCount = d.DiariesCount;
+
 			if (climb.activeSelf)
 				climb.GetComponent<Animator> ().SetFloat ("Time", d.time);
 			if (OnTheClimbAera == false) {
