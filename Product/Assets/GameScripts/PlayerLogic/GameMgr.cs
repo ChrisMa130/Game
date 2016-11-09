@@ -67,7 +67,9 @@ namespace MG
             }
 
             // TODO 道具的创建
-
+            CreateLevelItem();
+            
+            
             // 首先从gamedata中得到当前level的保存信息
             // 如果没有保存内容，那么就创建一个
             if (GameData.Instance != null)
@@ -244,10 +246,21 @@ namespace MG
         public void CreateLevelItem()
         {
             // 创建日志的道具
-            string fileName = string.Format("{0}/Diarie", LevelName);
+            string fileName = "1";
             // 根据类型，创建不同的对象
-            
+            SettingReader.Load(fileName, (l, i) =>
+            {
+                string path = l.GetString(i, "Prefab");
+                float x = l.GetFloat(i, "PosX");
+                float y = l.GetFloat(i, "PosY");
+                string name = l.GetString(i, "Name");
 
+                var o = Resources.Load(path) as GameObject;
+                var item = Instantiate(o) as GameObject;
+                item.name = name;
+                item.transform.position = new Vector3(x, y, 0);
+                item.transform.rotation = Quaternion.identity;
+            });
         }
     }
 }

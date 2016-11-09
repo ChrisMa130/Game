@@ -50,6 +50,7 @@ namespace MG
 
         // 一些回调
         public Action<int> OnPickUpAction;
+        public Action OnSetCheckPositionAction;
 
         void Awake()
         {
@@ -196,8 +197,13 @@ namespace MG
         public void SetRevivePoint(Vector3 pos)
         {
             RevivePoint = pos;
-			if (GameData.Instance != null)
-            	GameData.Instance.SavePos(pos);
+            if (GameData.Instance != null)
+            {
+                GameData.Instance.SavePos(pos);
+                if (OnSetCheckPositionAction != null)
+                    OnSetCheckPositionAction();
+            }
+
         }
 
         public void Revive()

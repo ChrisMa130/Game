@@ -4,12 +4,12 @@ namespace MG
 {
     public static class SettingReader
     {
-        public static void Load(string fileName, Action<TabFile> EnumeratorFunc)
+        public static void Load(string fileName, Action<TabFile, int> EnumeratorFunc)
         {
             if (string.IsNullOrEmpty(fileName) || EnumeratorFunc == null)
                 return;
 
-            var tabFile = TabFile.LoadFromFile(string.Format("Resources/Setting/{0}", fileName));
+            var tabFile = TabFile.LoadFromFile(string.Format("Setting/{0}.csv", fileName));
 
             if (tabFile == null)
                 return;
@@ -20,7 +20,7 @@ namespace MG
 
             for (int i = 2; i <= maxRow; i++)
             {
-                EnumeratorFunc(tabFile);
+                EnumeratorFunc(tabFile, i);
             }
         }
     }
