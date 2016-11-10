@@ -17,9 +17,11 @@ namespace MG
         private SaveBlack CurrentLevel;
         private List<SaveBlack> BlacksTable;
 
+        private List<int> DiariesList;
+
         void Start()
         {
-            // 已经设置了执行顺序 所以这个函数肯定是在所有脚本中Start函数第一个执行的
+            DiariesList = new List<int>();
             BlacksTable = new List<SaveBlack>();
             GameObject.DontDestroyOnLoad(this);
         }

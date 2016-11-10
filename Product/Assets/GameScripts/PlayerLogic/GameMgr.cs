@@ -65,10 +65,6 @@ namespace MG
             {
                 Instantiate(Resources.Load("prefabs/Utilities/BGManager"));
             }
-
-            // TODO 道具的创建
-            CreateLevelItem();
-            
             
             // 首先从gamedata中得到当前level的保存信息
             // 如果没有保存内容，那么就创建一个
@@ -88,6 +84,15 @@ namespace MG
                     PlayerLogic.Position = data.BornPos;
                 }
             }
+
+            CreateLevelItem();
+
+            PlayerLogic.OnPickUpAction += GameData.Instance.SaveCollectPickup;
+        }
+
+        public void OnDestroy()
+        {
+            PlayerLogic.OnPickUpAction = null;
         }
 
         void Update()

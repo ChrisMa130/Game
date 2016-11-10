@@ -1,23 +1,32 @@
 ﻿using System;
 using UnityEngine;
-using System.Collections;
 
 namespace MG
 {
     public class Diaries : TimeUnit
     {
-        void OnTriggerEnter2D(Collider2D other)
+        private int Id;
+        void Start()
         {
             string name = transform.parent.name;
             int pos = name.LastIndexOf("_") + 1;
-            int id = Convert.ToInt32(name.Substring(pos));
-            Debug.Log("Id = " + id);
+            Id = Convert.ToInt32(name.Substring(pos));
+
+            if (GameData.Instance != null)
+            {
+                if (GameData.Instance.HasCollect(Id))
+                    DestoryMe();
+            }
+        }
+        void OnTriggerEnter2D(Collider2D other)
+        {
+
             if (other.gameObject.layer == LayerMask.NameToLayer("Player"))
             {
                 var player = other.gameObject.GetComponent<Player>();
                 if (player != null)
                 {
-                    player.PickupDiarie(id);
+                    player.PickupDiarie(Id);
                     DestoryMe();
                 }
             }

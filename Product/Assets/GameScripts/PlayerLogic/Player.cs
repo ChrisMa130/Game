@@ -60,9 +60,10 @@ namespace MG
 
             DiariesCount = 0;
 
-            MyState.Init(this);
             IsDead = false;
             OnTheClimbAera = false;
+
+            MyState.Init(this);
         }
 
         void Start()
