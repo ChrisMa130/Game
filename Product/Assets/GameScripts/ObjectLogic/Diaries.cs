@@ -20,7 +20,6 @@ namespace MG
         }
         void OnTriggerEnter2D(Collider2D other)
         {
-
             if (other.gameObject.layer == LayerMask.NameToLayer("Player"))
             {
                 var player = other.gameObject.GetComponent<Player>();

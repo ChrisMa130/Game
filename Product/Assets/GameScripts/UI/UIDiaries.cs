@@ -18,14 +18,13 @@ namespace MG
             BtnDocs = new List<GameObject>();   
 
             Content = gameObject.GetChildByName<Component>("Content");
-
-            int len = GameConfig.DocsDesc.Count;
-            for (int i = 0; i < len; i++)
+            
+            GameMgr.Instance.Config.TraversalDiarieId(i =>
             {
                 GameObject o = InitADocButton(i);
 
                 BtnDocs.Add(o);
-            }
+            });
         }
 
         void CommonDocClick(int id)
@@ -42,17 +41,21 @@ namespace MG
             Button btn = o.GetComponent<Button>();
 
             // 判断当前日记是否已经收集了。
-
-            btn.onClick.AddListener(delegate()
+            bool collect = false;
+            if (GameData.Instance.HasCollect(id))
             {
-                CommonDocClick(id);
-            });
+                btn.onClick.AddListener(delegate()
+                {
+                    CommonDocClick(id);
+                });
+                collect = true;
+            }
 
             // 把按钮加到UI中
             o.transform.parent = Content.transform;
             o.transform.localScale = Vector3.one;
 
-            ChangeButtionStyle(false, btn, id);
+            ChangeButtionStyle(collect, btn, id);
 
             return o;
         }

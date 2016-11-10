@@ -26,6 +26,8 @@ namespace MG
 
         private List<pickup> CollectObjects = new List<pickup>();
 
+        public GameConfig Config;
+
         void Start()
         {
             if (PlayerObject == null)
@@ -41,6 +43,9 @@ namespace MG
             LineMgr = gameObject.AddMissingComponent<LineMgr>();
             UiManager = gameObject.AddMissingComponent<UIManager>();
             UiManager.OpenUI(0);
+
+            Config = new GameConfig();
+            Config.Load();
 
             // 查找开关
             var s = GameObject.Find("GameSwitch");

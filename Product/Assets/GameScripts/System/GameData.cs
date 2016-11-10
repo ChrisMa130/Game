@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
-using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace MG
 {
@@ -28,6 +28,7 @@ namespace MG
 
         public void SaveCollectPickup(int id)
         {
+            DiariesList.Add(id);
             CurrentLevel.CollectIds.Add(id);
         }
 
@@ -38,13 +39,7 @@ namespace MG
 
         public bool HasCollect(int id)
         {
-            foreach (var aId in CurrentLevel.CollectIds)
-            {
-                if (aId == id)
-                    return true;
-            }
-
-            return false;
+            return DiariesList.Any(aId => aId == id);
         }
 
         public void AddNewLevel(string levelName, string asName, Vector3 pos)

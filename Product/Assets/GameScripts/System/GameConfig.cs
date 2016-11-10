@@ -1,14 +1,47 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using UnityEngine;
+using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 
 // 游戏的各类配置文件
 
-public static class GameConfig
+namespace MG
 {
-    // 书稿对应的文字描述
-    public static Dictionary<int, string> DocsDesc = new Dictionary<int, string>()
+    public class GameConfig
     {
-        {1, "这是第一本书的描述，嗯。。。最好不要太长，否则没办法塞满呀。。。"},
-        {2, "这是第二本书的描述。这是第二本书的描述。这是第二本书的描述。这是第二本书的描述。这是第二本书的描述。"},
-        {3, "这是第三本书的描述。这是第三本书的描述。这是第三本书的描述。这是第三本书的描述。"}
-    };
+        // 书稿对应的文字描述
+        public Dictionary<int, string> DocsDesc = new Dictionary<int, string>();
+
+        public void Load()
+        {
+            LoadDiaries();
+        }
+
+        private void LoadDiaries()
+        {
+            SettingReader.Load("DiariesText", (l, i) =>
+            {
+                int id = l.GetInteger(i, "Id");
+                string t = l.GetString(i, "Text");
+
+                DocsDesc.Add(id, t);
+            });
+        }
+
+        public void TraversalDiarieId(Action<int> func)
+        {
+            DocsDesc.Forecah((i, s) =>
+            {
+                func(i);
+            });
+        }
+
+        public string GetDiarieText(int id)
+        {
+            return DocsDesc.GetValue(id);
+        }
+
+    }
 }
+
+
