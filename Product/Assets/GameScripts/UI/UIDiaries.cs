@@ -4,7 +4,6 @@ using UnityEngine.UI;
 
 namespace MG
 {
-
     public class UIDiaries : MonoBehaviour
     {
         List<GameObject> BtnDocs;
@@ -29,8 +28,18 @@ namespace MG
 
         void CommonDocClick(int id)
         {
+            UIManager manager = GameMgr.Instance.UiManager;
             // 创建TXT UI
+            if (!manager.OpenUI(4))
+                return;
 
+            GameObject ui = manager.GetCurrentUiObject();
+            if (ui == null)
+                return;
+
+            // 得到日志内容的脚本。赋值它的ID
+            UIShowDocs doc = ui.GetComponent<UIShowDocs>();
+            doc.Id = id;
         }
 
         // 添加一个按钮，加上点击回调，判断当前文档是否可读，修改图片颜色

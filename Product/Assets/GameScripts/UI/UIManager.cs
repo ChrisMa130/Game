@@ -19,6 +19,7 @@ public class UIManager : MonoBehaviour
         new UISystem() {Id = 1, Name = "Options", LastUI = false}, 
         new UISystem() {Id = 2, Name = "Loading", LastUI = false}, 
         new UISystem() {Id = 3, Name = "UIDiaries", LastUI = false}, 
+        new UISystem() {Id = 4, Name = "UIShowDocs", LastUI = false}, 
     };
 
     private Stack<UISystem> UIStack = new Stack<UISystem>(); // UI队列，用于前进和后退
@@ -137,5 +138,10 @@ public class UIManager : MonoBehaviour
             return true;
 
         return false;
+    }
+
+    public GameObject GetCurrentUiObject()
+    {
+        return CurrentUI.UIObj;
     }
 }
