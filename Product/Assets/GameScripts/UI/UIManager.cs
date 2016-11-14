@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using MG;
 using UnityEngine.EventSystems;
 
 public class UIManager : MonoBehaviour
@@ -20,8 +21,9 @@ public class UIManager : MonoBehaviour
         new UISystem() {Id = 2, Name = "Loading", LastUI = false}, 
         new UISystem() {Id = 3, Name = "UIDiaries", LastUI = false}, 
         new UISystem() {Id = 4, Name = "UIShowDocs", LastUI = false}, 
+        new UISystem() {Id = 5, Name = "UISwitchLevel", LastUI = false}, 
     };
-
+    
     private Stack<UISystem> UIStack = new Stack<UISystem>(); // UI队列，用于前进和后退
 
     private UISystem CurrentUI;
@@ -143,5 +145,11 @@ public class UIManager : MonoBehaviour
     public GameObject GetCurrentUiObject()
     {
         return CurrentUI.UIObj;
+    }
+
+    public void CloseAllUi()
+    {
+        OpenUI(0);
+        GameMgr.Instance.PauseGame(false, false);
     }
 }

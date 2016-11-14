@@ -49,6 +49,7 @@ namespace MG
         private void OnBtnLevelsClick()
         {
             Debug.Log("OnBtnLevelsClick");
+            GameMgr.Instance.UiManager.OpenUI(5);
         }
 
         private void OnBtnDiariesClick()

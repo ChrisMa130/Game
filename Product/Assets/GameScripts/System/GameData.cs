@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
 using System.Linq;
+using System;
 
 namespace MG
 {
@@ -82,6 +83,14 @@ namespace MG
             CurrentLevel = data;
 
             return false;
+        }
+
+        public void TraversalPassedLevelInfo(Action<SaveBlack> func)
+        {
+            foreach (var s in BlacksTable)
+            {
+                func(s);
+            }
         }
     }
 }

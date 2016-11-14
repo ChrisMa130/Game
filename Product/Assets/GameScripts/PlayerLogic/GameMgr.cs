@@ -232,6 +232,14 @@ namespace MG
             if (GameData.Instance == null)
                 return;
 
+            LoadLevel(LevelName);
+        }
+
+        public void LoadLevel(string name)
+        {
+            if (GameData.Instance == null)
+                return;
+
             var data = GameData.Instance.GetLevelData(LevelName);
             if (data == null)
             {
@@ -244,7 +252,7 @@ namespace MG
             transitionFX.OnTransitionExitEnded = () =>
             {
                 transitionFX.OnTransitionExitEnded = null;
-				PlayerLogic.Revive();
+                PlayerLogic.Revive();
                 //SceneManager.LoadSceneAsync(LevelName);
             };
 

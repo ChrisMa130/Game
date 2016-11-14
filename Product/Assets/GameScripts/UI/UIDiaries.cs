@@ -91,10 +91,5 @@ namespace MG
                 btn.colors = colorBlock;
             }
         }
-
-        void Update()
-        {
-
-        }
     }
 }
