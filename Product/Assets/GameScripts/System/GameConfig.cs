@@ -38,7 +38,6 @@ namespace MG
         {
             return DocsDesc.GetValue(id);
         }
-
     }
 }
 
