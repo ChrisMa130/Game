@@ -256,7 +256,7 @@ namespace MG
         public void CreateLevelItem()
         {
             // 创建日志的道具
-            string fileName = "1";
+            string fileName = LevelName;
             // 根据类型，创建不同的对象
             SettingReader.Load(fileName, (l, i) =>
             {

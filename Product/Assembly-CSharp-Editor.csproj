@@ -205,6 +205,9 @@
      <None Include="Assets\2DxFX\Resources\_2dxFX_WaterAndBackground.shader" />
      <None Include="Assets\2DxFX\Resources\_2dxFX_DesintegrationFX.shader" />
      <None Include="Assets\Resources\Spine\Examples\Spine\FootSoldier\Equipment\Equipment.atlas.txt" />
+ <Reference Include="Assembly-UnityScript">
+ <HintPath>D:/Github/Game/Product/Library/ScriptAssemblies/Assembly-UnityScript.dll</HintPath>
+ </Reference>
  <Reference Include="UnityEditor.Advertisements">
  <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/Advertisements/Editor/UnityEditor.Advertisements.dll</HintPath>
  </Reference>
@@ -244,8 +247,6 @@
       <Project>{C4895E38-EA54-450F-486B-1CCA4EDF8F39}</Project>      <Name>Assembly-CSharp-firstpass</Name>    </ProjectReference>
     <ProjectReference Include="Assembly-CSharp.csproj">
       <Project>{16EF6617-E411-6B44-7490-02585CED31BD}</Project>      <Name>Assembly-CSharp</Name>    </ProjectReference>
-    <ProjectReference Include="Assembly-UnityScript.unityproj">
-      <Project>{65534CA5-B80F-C963-2E22-B8475F6A066A}</Project>      <Name>Assembly-UnityScript</Name>    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

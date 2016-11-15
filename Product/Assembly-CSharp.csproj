@@ -176,6 +176,7 @@
      <Compile Include="Assets\GameScripts\NpcLogic\State\NpcStandState.cs" />
      <Compile Include="Assets\GameScripts\NpcLogic\State\NpcState.cs" />
      <Compile Include="Assets\GameScripts\NpcLogic\State\NpcWalkState.cs" />
+     <Compile Include="Assets\GameScripts\ObjectLogic\Diaries.cs" />
      <Compile Include="Assets\GameScripts\ObjectLogic\GameSwitch.cs" />
      <Compile Include="Assets\GameScripts\ObjectLogic\Key\KeyHold.cs" />
      <Compile Include="Assets\GameScripts\ObjectLogic\Key\OpenDoor.cs" />
@@ -222,10 +223,15 @@
      <Compile Include="Assets\GameScripts\PlayerLogic\State\StandState.cs" />
      <Compile Include="Assets\GameScripts\System\GameConfig.cs" />
      <Compile Include="Assets\GameScripts\System\GameData.cs" />
+     <Compile Include="Assets\GameScripts\System\ItemSetting.cs" />
      <Compile Include="Assets\GameScripts\System\SaveData.cs" />
+     <Compile Include="Assets\GameScripts\System\TabFile.cs" />
+     <Compile Include="Assets\GameScripts\UI\UIDiaries.cs" />
+     <Compile Include="Assets\GameScripts\UI\UIDocBtn.cs" />
      <Compile Include="Assets\GameScripts\UI\UILevel.cs" />
      <Compile Include="Assets\GameScripts\UI\UIManager.cs" />
      <Compile Include="Assets\GameScripts\UI\UIOptions.cs" />
+     <Compile Include="Assets\GameScripts\UI\UIShowDocs.cs" />
      <Compile Include="Assets\GameScripts\Utilities\AudioManager.cs" />
      <Compile Include="Assets\GameScripts\Utilities\BGManager.cs" />
      <Compile Include="Assets\GameScripts\Utilities\BackGroundFollowY.cs" />
