@@ -3,7 +3,7 @@ using System.Collections;
 
 namespace MG
 {
-    public class KeyHold : MonoBehaviour
+    public class KeyHold : TimeUnit
     {
         public OpenDoor Door;
 
