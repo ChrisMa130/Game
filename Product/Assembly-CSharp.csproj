@@ -241,6 +241,7 @@
      <Compile Include="Assets\GameScripts\Utilities\Notification\Hint.cs" />
      <Compile Include="Assets\GameScripts\Utilities\Notification\Logo.cs" />
      <Compile Include="Assets\GameScripts\Utilities\Notification\OnScreen.cs" />
+     <Compile Include="Assets\GameScripts\Utilities\ParticleScaler\ParticleScaler.cs" />
      <Compile Include="Assets\GameScripts\Utilities\SunshineManager.cs" />
      <Compile Include="Assets\Resources\Spine\Examples\Getting Started\Scripts\BasicPlatformerController.cs" />
      <Compile Include="Assets\Resources\Spine\Examples\Getting Started\Scripts\ConstrainedCamera.cs" />
@@ -381,6 +382,7 @@
      <None Include="Assets\2DxFX\Resources\_2dxFX_Negative.shader" />
      <None Include="Assets\2DxFX\Resources\_2dxFX_BlackHole.shader" />
      <None Include="Assets\2DxFX\Resources\_2dxFX_GoldenFX.shader" />
+     <None Include="Assets\GameScripts\Utilities\ParticleScaler\How_to_use.txt" />
      <None Include="Assets\Resources\Spine\Examples\Spine\FootSoldier\license.txt" />
      <None Include="Assets\2DxFX\Resources\_2dxFX_Liquify.shader" />
      <None Include="Assets\2DxFX\Resources\_2dxFX_4Gradients.shader" />
