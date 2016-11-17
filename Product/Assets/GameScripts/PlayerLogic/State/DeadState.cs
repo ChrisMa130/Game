@@ -35,7 +35,8 @@ namespace MG
                 GameMgr.Instance.LineMgr.CanDraw = false;
                 if (input.Jump)
                 {
-                    Owner.Revive();
+                    // Owner.Revive();
+                    GameMgr.Instance.LastCheckPoint();
                 }
             }
         }
