@@ -52,6 +52,8 @@ namespace MG
         // 拿起后的逻辑
         void OnTriggerEnter2D(Collider2D obj)
         {
+            if (obj.tag.Equals("ForbiddenZone") && obj.gameObject.layer == 0)
+                Dead();
             if (transform.parent == null)
             {
                 // 碰谁，谁拿

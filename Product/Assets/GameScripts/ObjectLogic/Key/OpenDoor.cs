@@ -30,17 +30,17 @@ namespace MG
 
 			if (Up) {
 				if (KeepTime > 0f) {
-					Rigid.AddForce (new Vector2 (0f, 1000f * MoveSpeed));
+					Rigid.AddForce (new Vector2 (0f, 2000f * MoveSpeed));
 					KeepTime -= Time.deltaTime;
 				}
 			}
 			else {
 				// 移动部分
-				if (KeepTime < 0f) {
-					Rigid.AddForce (new Vector2 (0f, 1000f * MoveSpeed));
-				} else {
-					KeepTime -= Time.deltaTime;
-				}
+				if (KeepTime > 0f) {
+                    KeepTime -= Time.deltaTime;
+                } else {
+                    Rigid.AddForce(new Vector2(0f, 2000f * MoveSpeed));
+                }
 			}
 
 		}

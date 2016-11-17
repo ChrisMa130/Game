@@ -69,7 +69,7 @@ namespace MG
         public static readonly float OpenDoorMoveLow = 1f;  // 从初始化的位置沿着Y轴向下移动的距离
 
         // 钥匙重生时间
-        public static readonly float OpenKeyReviveTime = 2f;
+        public static readonly float OpenKeyReviveTime = 7f;
 
         public static T AddMissingComponent<T>(this GameObject go) where T : Component
         {
