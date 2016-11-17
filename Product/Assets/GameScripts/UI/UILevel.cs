@@ -92,7 +92,7 @@ public class UILevel : MonoBehaviour
             return;
         }
 
-        if (TimeController.Instance.CurrentState == TimeControllState.Recording || !TimeController.Instance.IsOpTime())
+        if (TimeController.Instance.CurrentState == TimeControllState.Forward || TimeController.Instance.CurrentState == TimeControllState.Recording || !TimeController.Instance.IsOpTime())
             ForwardTxt.color = Color.gray;
         else
             ForwardTxt.color = Color.white;
