@@ -52,7 +52,7 @@ namespace MG
         // 拿起后的逻辑
         void OnTriggerEnter2D(Collider2D obj)
         {
-            if (obj.tag.Equals("ForbiddenZone") && obj.gameObject.layer == 0)
+            if (obj.tag.Equals("ForbiddenZone") && obj.gameObject.layer == 10)
                 Dead();
             if (transform.parent == null)
             {

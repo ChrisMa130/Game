@@ -241,6 +241,7 @@
      <Compile Include="Assets\GameScripts\Utilities\Notification\Hint.cs" />
      <Compile Include="Assets\GameScripts\Utilities\Notification\Logo.cs" />
      <Compile Include="Assets\GameScripts\Utilities\Notification\OnScreen.cs" />
+     <Compile Include="Assets\GameScripts\Utilities\ParticleRewind.cs" />
      <Compile Include="Assets\GameScripts\Utilities\ParticleScaler\ParticleScaler.cs" />
      <Compile Include="Assets\GameScripts\Utilities\SunshineManager.cs" />
      <Compile Include="Assets\Resources\Spine\Examples\Getting Started\Scripts\BasicPlatformerController.cs" />

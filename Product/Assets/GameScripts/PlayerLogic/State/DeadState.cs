@@ -26,6 +26,11 @@ namespace MG
 
         public override void ApplyInput(GameInput input)
         {
+            if (input.Jump)
+            {
+                // Owner.Revive();
+                GameMgr.Instance.LastCheckPoint();
+            }
             var anim = Animator.GetAnimator();
 
             var state = anim.GetCurrentAnimatorStateInfo(0);
@@ -33,11 +38,11 @@ namespace MG
             {
                 // 动画时间外
                 GameMgr.Instance.LineMgr.CanDraw = false;
-                if (input.Jump)
-                {
+                //if (input.Jump)
+                //{
                     // Owner.Revive();
-                    GameMgr.Instance.LastCheckPoint();
-                }
+                //    GameMgr.Instance.LastCheckPoint();
+                //}
             }
         }
     }

@@ -70,7 +70,6 @@ namespace MG
 
         public override void ApplyInput(GameInput input)
         {
-
 			float ladderY = Owner.LadderObj.transform.position.y;
 			bool outladder = (Owner.Position.y + (ownerHeight)) > (ladderY + c2d.bounds.size.y);
 			bool outBottom = (Owner.Position.y - (ownerHeight)) < (ladderY - c2d.bounds.size.y);

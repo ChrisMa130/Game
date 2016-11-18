@@ -6,6 +6,7 @@ namespace MG
     public class ReviveKey : TimeUnit
     {
         private float ReviveTime;
+        public float KeyReviveTime = 0;
         public GameObject TheKey;
         private Vector3 KeyPos;
         private Quaternion KeyRot;
@@ -17,7 +18,9 @@ namespace MG
 
         void Start()
         {
-            ReviveTime = GameDefine.OpenKeyReviveTime;
+            ReviveTime = KeyReviveTime;
+            if (KeyReviveTime == 0f)
+                ReviveTime = GameDefine.OpenKeyReviveTime;
             KeyPos = TheKey.transform.position;
             KeyRot = TheKey.transform.rotation;
 
@@ -36,7 +39,9 @@ namespace MG
             {
                 var o = Resources.Load("prefabs/Key") as GameObject;
                 TheKey = Instantiate(o, KeyPos, KeyRot) as GameObject;
-                ReviveTime = GameDefine.OpenKeyReviveTime;
+                ReviveTime = KeyReviveTime;
+                if (KeyReviveTime == 0f)
+                    ReviveTime = GameDefine.OpenKeyReviveTime;
                 return;
             }
 

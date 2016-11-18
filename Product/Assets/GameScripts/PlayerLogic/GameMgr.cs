@@ -28,6 +28,8 @@ namespace MG
 
         public GameConfig Config;
 
+        private bool inTransition = false;
+
         void Start()
         {
             if (PlayerObject == null)
@@ -168,6 +170,7 @@ namespace MG
                 else
                 {
                     PauseGame(true, false);
+                    ctrl.Freeze();
                 }
             }
             else if (InputMgr.TimebackUp)
@@ -181,6 +184,7 @@ namespace MG
                 else
                 {
                     PauseGame(true, false);
+                    ctrl.Freeze();
                 }
             }
             else if (InputMgr.TimeForwardDown && state != TimeControllState.Recording)
@@ -194,6 +198,7 @@ namespace MG
                 else
                 {
                     PauseGame(true, false);
+                    ctrl.Freeze();
                 }
             }
             else if (InputMgr.TimeForwardup && state != TimeControllState.Recording)
@@ -207,6 +212,7 @@ namespace MG
                 else
                 {
                     PauseGame(true, false);
+                    ctrl.Freeze();
                 }
             }
         }
@@ -231,8 +237,11 @@ namespace MG
         {
             if (GameData.Instance == null)
                 return;
-
-            LoadLevel(LevelName);
+            if (!inTransition)
+            {
+                inTransition = true;
+                LoadLevel(LevelName);
+            }
         }
 
         public void LoadLevel(string name)
@@ -257,8 +266,10 @@ namespace MG
             };
 
             transitionFX.TransitionExit();
-            UiManager.CloseCurrentUI();
+            if (UiManager.IsUIOpening(1))
+                UiManager.CloseCurrentUI();
             PauseGame(false, false);
+            inTransition = false;
         }
 
         public void CreateLevelItem()
