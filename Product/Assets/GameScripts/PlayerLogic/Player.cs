@@ -21,7 +21,7 @@ namespace MG
         public GameObject LadderObj { get; set; }
 
         private Dir CurrentDir;
-		private GameObject climb;
+        private GameObject climb;
 
         public Vector3 Position
         {
@@ -37,7 +37,7 @@ namespace MG
             public bool OnTheClimbAera;
             public bool IsDead;
             public int DiariesCount;
-			public float time;
+            public float time;
             public Dir dir;
 
             // 角色状态
@@ -56,7 +56,7 @@ namespace MG
         {
             // 出生后一些创建代码
             MyRepresent = gameObject.AddComponent<Represent>();
-            MyState     = gameObject.AddMissingComponent<PlayerState>();
+            MyState = gameObject.AddMissingComponent<PlayerState>();
 
             DiariesCount = 0;
 
@@ -71,7 +71,7 @@ namespace MG
             Stand();
             GroundCheck = transform.Find("GroundCheck");
             HandObject = transform.Find("FrontHand");
-			climb = transform.FindChild ("Climb").gameObject;
+            climb = transform.FindChild("Climb").gameObject;
 
             SetRevivePoint(transform.position);
 
@@ -122,7 +122,7 @@ namespace MG
         {
             MyState.Dead();
             IsDead = true;
-			gameObject.layer = 19;
+            gameObject.layer = 19;
             //EnableCollider(false);
             //Rigid.isKinematic = true;
         }
@@ -149,8 +149,8 @@ namespace MG
             data.dir = CurrentDir;
             data.DiariesCount = DiariesCount;
 
-			if (climb.activeSelf)
-				data.time = climb.GetComponent<Animator> ().GetFloat ("Time");
+            if (climb.activeSelf)
+                data.time = climb.GetComponent<Animator>().GetFloat("Time");
 
             data.StateUD = MyState.GetUserData();
 
@@ -167,7 +167,7 @@ namespace MG
             {
                 //Rigid.isKinematic = false;
                 //EnableCollider(true);
-				gameObject.layer = 8;
+                gameObject.layer = 8;
                 MyRepresent.Revive();
             }
 
@@ -177,16 +177,19 @@ namespace MG
             OnTheClimbAera = d.OnTheClimbAera;
             DiariesCount = d.DiariesCount;
 
-			if (climb.activeSelf)
-				climb.GetComponent<Animator> ().SetFloat ("Time", d.time);
-			if (OnTheClimbAera == false) {
-				transform.FindChild ("Climb").gameObject.SetActive (false);
-				GetComponent<MeshRenderer> ().enabled = true;
-			} else if (OnTheClimbAera == true && MyState.CurrentPlayerState == PlayerStateType.Climb) {
-				transform.FindChild ("Climb").gameObject.SetActive (true);
-				GetComponent<MeshRenderer> ().enabled = false;
+            if (climb.activeSelf)
+                climb.GetComponent<Animator>().SetFloat("Time", d.time);
+            if (OnTheClimbAera == false)
+            {
+                transform.FindChild("Climb").gameObject.SetActive(false);
+                GetComponent<MeshRenderer>().enabled = true;
+            }
+            else if (OnTheClimbAera && MyState.CurrentPlayerState == PlayerStateType.Climb)
+            {
+                transform.FindChild("Climb").gameObject.SetActive(true);
+                GetComponent<MeshRenderer>().enabled = false;
 
-			}
+            }
             TurnRound(d.dir);
 
             if (d.StateUD != null)
@@ -212,11 +215,11 @@ namespace MG
             GameMgr.Instance.LineMgr.CanDraw = true;
             IsDead = false;
             transform.position = RevivePoint;
-			gameObject.layer = 8;
+            gameObject.layer = 8;
             Stand();
-			var transitionFX = Camera.main.GetComponent<ProCamera2DTransitionsFX>();
-			GameMgr.Instance.GetComponent<UIManager>().OpenUI(0);
-			transitionFX.TransitionEnter();
+            var transitionFX = Camera.main.GetComponent<ProCamera2DTransitionsFX>();
+            GameMgr.Instance.GetComponent<UIManager>().OpenUI(0);
+            transitionFX.TransitionEnter();
         }
 
         public Transform GetHandObject()
@@ -224,9 +227,10 @@ namespace MG
             return HandObject;
         }
 
-		public Dir GetDir() {
-			return CurrentDir;
-		}
+        public Dir GetDir()
+        {
+            return CurrentDir;
+        }
 
         public void EnableCollider(bool enable)
         {

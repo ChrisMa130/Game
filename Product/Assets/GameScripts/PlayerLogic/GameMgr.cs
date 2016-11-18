@@ -224,6 +224,7 @@ namespace MG
 
             if (DoRecord)
             {
+                TimeController.Instance.ClearAllData();
                 RecordingTime = true;
             }
         }
