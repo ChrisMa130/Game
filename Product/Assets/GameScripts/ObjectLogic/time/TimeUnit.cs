@@ -268,6 +268,11 @@ namespace MG
             ForwardTimeData.Clear();
             FrameTimeData.Clear();
         }
+
+        public void ClearRewindData()
+        {
+            FrameTimeData.Clear();
+        }
     }
 }
 

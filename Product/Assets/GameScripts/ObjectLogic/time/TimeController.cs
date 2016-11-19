@@ -187,6 +187,11 @@ namespace MG
         {
             TraversalUnit(o => { o.ClearAllData(); });
         }
+
+        public void ClearRewindData()
+        {
+            TraversalUnit(o => { o.ClearRewindData(); });
+        }
     }
 }
 

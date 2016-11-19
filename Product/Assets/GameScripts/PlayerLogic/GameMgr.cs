@@ -213,6 +213,7 @@ namespace MG
                 {
                     PauseGame(true, false);
                     ctrl.Freeze();
+                    TimeController.Instance.ClearRewindData();
                 }
             }
         }
