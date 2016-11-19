@@ -54,6 +54,8 @@ namespace MG
         {
             if (obj.tag.Equals("ForbiddenZone") && obj.gameObject.layer == 10)
                 Dead();
+            if (TimeController.Instance.CurrentState == TimeControllState.Forward || TimeController.Instance.CurrentState == TimeControllState.Rewinding)
+                return;
             if (transform.parent == null)
             {
                 // 碰谁，谁拿

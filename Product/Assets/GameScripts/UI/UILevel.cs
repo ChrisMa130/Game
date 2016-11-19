@@ -68,17 +68,20 @@ public class UILevel : MonoBehaviour
 
     void UpdatePause()
     {
+
+        if (GameObject.Find("Faylisa").GetComponent<Player>().IsDead)
+        {
+            PauseTxt.enabled = true;
+            PauseTxt.text = "Press Space to Restart";
+            return;
+        }
+
         if (GameMgr.Instance.WorldSwith.ForbidTimeOperation)
         {
             PauseTxt.enabled = false;
             return;
         }
 
-        if (GameObject.Find("Faylisa").GetComponent<Player>().IsDead)
-        {
-            PauseTxt.enabled = true;
-            PauseTxt.text = "Press Space to Restart";
-        }
         else if (GameMgr.Instance.IsPause)
         {
             PauseTxt.text = "F：Resume";

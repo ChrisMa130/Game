@@ -3,7 +3,7 @@ using System.Collections;
 
 namespace MG
 {
-    public class ReviveKey : TimeUnit
+    public class ReviveKey : MonoBehaviour
     {
         private float ReviveTime;
         public float KeyReviveTime = 0;
@@ -24,7 +24,7 @@ namespace MG
             KeyPos = TheKey.transform.position;
             KeyRot = TheKey.transform.rotation;
 
-            Init(false);
+            //Init(false);
         }
 
         void Update()
@@ -48,22 +48,22 @@ namespace MG
             ReviveTime -= Time.deltaTime;
         }
 
-        protected override TimeUnitUserData GetUserData()
-        {
-            UserData data = new UserData();
-            data.ReviveTime = ReviveTime;
+        //protected override TimeUnitUserData GetUserData()
+        //{
+        //    UserData data = new UserData();
+        //    data.ReviveTime = ReviveTime;
 
-            return data;
-        }
+        //    return data;
+        //}
 
-        protected override void SetUserData(TimeUnitUserData data)
-        {
-            UserData d = data as UserData;
-            if (d == null)
-                return;
+        //protected override void SetUserData(TimeUnitUserData data)
+        //{
+        //    UserData d = data as UserData;
+        //    if (d == null)
+        //        return;
 
-            ReviveTime = d.ReviveTime;
-        }
+        //    ReviveTime = d.ReviveTime;
+        //}
     }
 }
 

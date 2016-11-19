@@ -30,7 +30,7 @@ public class OnScreen : MonoBehaviour {
 		LifeTime -= Time.deltaTime;
 		if (Error)
 			ColorControl ();
-        if (Fade)
+        //if (Fade)
 		if (LifeTime < 0)
 			Destroy (gameObject);
 	}
