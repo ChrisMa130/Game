@@ -53,6 +53,9 @@ namespace MG
             base.Activate(deltaTime);
             moveParam = Input.GetAxis("Vertical");
             Animator.Climb(moveParam);
+
+            if (Owner.LadderObj == null)
+                Owner.Stand();
         }
 
         public override void Exit()
@@ -70,6 +73,9 @@ namespace MG
 
         public override void ApplyInput(GameInput input)
         {
+            if (Owner.LadderObj == null)
+                return;
+
 			float ladderY = Owner.LadderObj.transform.position.y;
 			bool outladder = (Owner.Position.y + (ownerHeight)) > (ladderY + c2d.bounds.size.y);
 			bool outBottom = (Owner.Position.y - (ownerHeight)) < (ladderY - c2d.bounds.size.y);
