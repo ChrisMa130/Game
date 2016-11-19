@@ -263,6 +263,7 @@ namespace MG
             {
                 transitionFX.OnTransitionExitEnded = null;
                 PlayerLogic.Revive();
+                inTransition = false;
                 //SceneManager.LoadSceneAsync(LevelName);
             };
 
@@ -270,7 +271,6 @@ namespace MG
             if (UiManager.IsUIOpening(1))
                 UiManager.CloseCurrentUI();
             PauseGame(false, false);
-            inTransition = false;
         }
 
         public void CreateLevelItem()

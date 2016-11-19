@@ -176,6 +176,7 @@
      <Compile Include="Assets\GameScripts\NpcLogic\State\NpcStandState.cs" />
      <Compile Include="Assets\GameScripts\NpcLogic\State\NpcState.cs" />
      <Compile Include="Assets\GameScripts\NpcLogic\State\NpcWalkState.cs" />
+     <Compile Include="Assets\GameScripts\ObjectLogic\Crystal.cs" />
      <Compile Include="Assets\GameScripts\ObjectLogic\Diaries.cs" />
      <Compile Include="Assets\GameScripts\ObjectLogic\GameSwitch.cs" />
      <Compile Include="Assets\GameScripts\ObjectLogic\Key\KeyHold.cs" />

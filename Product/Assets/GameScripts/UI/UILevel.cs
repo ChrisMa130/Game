@@ -33,7 +33,7 @@ public class UILevel : MonoBehaviour
         if (LastCount == GameMgr.Instance.PlayerLogic.DiariesCount)
             return;
         int count = GameMgr.Instance.PlayerLogic.DiariesCount;
-		int total = GameObject.FindGameObjectsWithTag ("Scroll").Length;
+		int total = GameObject.FindGameObjectsWithTag ("Crystal").Length;
 		TopText.text = string.Format("{0}/{1}", count, total);
 
         LastCount = count;

@@ -29,13 +29,31 @@ namespace MG
 			_transitionFX.OnTransitionExitEnded += OnTransitionExitEnded;
         }
 
+        void Update()
+        {
+            Player player = GameObject.Find("Faylisa").GetComponent<Player>();
+            if (EnoughCount(player))
+            {
+                transform.FindChild("Light").gameObject.SetActive(true);
+                transform.FindChild("Flash").gameObject.SetActive(true);
+            }
+        }
+
+        private bool EnoughCount(Player player)
+        {
+            if (player.DiariesCount < NeedCollects)
+                return false;
+            return true;
+        }
+
         void OnTriggerStay2D(Collider2D other)
         {
-            var player = other.GetComponent<Player>();
+            Player player = other.GetComponent<Player>();
             if (player == null)
                 return;
 
-//            bool finish = true;
+            if (!EnoughCount(player))
+                return;
 //            for (int i = 0; i < NeedCollects.Length; i++)
 //            {
 //                var count = NeedCollects[i];
@@ -64,6 +82,7 @@ namespace MG
 //                Debug.Log("呵呵哒了，没下一关了。GGWP");
 //                return;
 //            }
+
 			if (GameMgr.Instance.InputMgr.UpUp && !inTransition) {
 				_transitionFX.TransitionExit ();
 				inTransition = true;

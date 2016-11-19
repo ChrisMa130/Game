@@ -96,6 +96,11 @@ namespace MG
             MyState.ApplyInput(input);
         }
 
+        public void PickUpCrystal()
+        {
+            DiariesCount++;
+        }
+
         public void PickupDiarie(int id)
         {
             DiariesCount++;

@@ -10,6 +10,8 @@ public class OnScreen : MonoBehaviour {
 //	public float Max;
 	public float TransitionTime;
 
+    public bool Fade;
+
 	private float currentTime;
 
 //	private float FadeSpeed;
@@ -28,6 +30,7 @@ public class OnScreen : MonoBehaviour {
 		LifeTime -= Time.deltaTime;
 		if (Error)
 			ColorControl ();
+        if (Fade)
 		if (LifeTime < 0)
 			Destroy (gameObject);
 	}
