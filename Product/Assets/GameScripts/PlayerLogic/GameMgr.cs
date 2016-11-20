@@ -125,10 +125,13 @@ namespace MG
 
         void UpdateInput()
         {
+            TimeController ctrl = TimeController.Instance;
             if (!WorldSwith.ForbidTimeOperation && InputMgr.PauseTime)
             {
                 IsPause = !IsPause;
                 PauseGame(IsPause, true);
+                if(IsPause)
+                    ctrl.Freeze();
             }
 
             if (InputMgr.EscButton)
@@ -142,6 +145,7 @@ namespace MG
                 {
                     UiManager.OpenUI(1);
                     PauseGame(true, false);
+                    ctrl.Freeze();
                 }
             }
 
