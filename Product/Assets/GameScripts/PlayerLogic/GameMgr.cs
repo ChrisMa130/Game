@@ -252,10 +252,11 @@ namespace MG
 
         public void LoadLevel(string name)
         {
+            Debug.Log(name);
             if (GameData.Instance == null)
                 return;
 
-            var data = GameData.Instance.GetLevelData(LevelName);
+            var data = GameData.Instance.GetLevelData(name);
             if (data == null)
             {
                 Debug.Log("未发现当前level的保存信息。bug");

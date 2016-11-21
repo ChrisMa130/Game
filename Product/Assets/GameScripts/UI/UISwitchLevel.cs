@@ -12,13 +12,13 @@ namespace MG
             Content = gameObject.GetChildByName<Component>("Content");
 
             // 遍历已经通过的关卡，并把名字显示出来
-            GameData.Instance.TraversalPassedLevelInfo(o =>
+            GameMgr.Instance.Config.Traversallevels((n, nikeName) =>
             {
-                InitLevelButton(o.LevelName);
+                InitLevelButton(n, nikeName);
             });
         }
 
-        void InitLevelButton(string name)
+        void InitLevelButton(string name, string nikeName)
         {
             var docObj = Resources.Load("prefabs/ui/UILevelBtn") as GameObject;
             GameObject o = Instantiate(docObj);
@@ -33,7 +33,7 @@ namespace MG
             o.transform.localScale = Vector3.one;
 
             Text txt = btn.GetComponentInChildren<Text>();
-            txt.text = name;
+            txt.text = nikeName;
         }
     }
 }

@@ -8,11 +8,13 @@ namespace MG
     public class GameConfig
     {
         // 书稿对应的文字描述
-        public Dictionary<int, string> DocsDesc = new Dictionary<int, string>();
+        private Dictionary<int, string> DocsDesc = new Dictionary<int, string>();
+        private Dictionary<string, string> LevelsInfo = new Dictionary<string, string>();
 
         public void Load()
         {
             LoadDiaries();
+            LoadLevels();
         }
 
         private void LoadDiaries()
@@ -26,12 +28,28 @@ namespace MG
             });
         }
 
+        private void LoadLevels()
+        {
+            SettingReader.Load("Levels", (l, i) =>
+            {
+                string name = l.GetString(i, "Name");
+                string nikeName = l.GetString(i, "NikeName");
+
+                LevelsInfo.Add(name, nikeName);
+            });
+        }
+
         public void TraversalDiarieId(Action<int> func)
         {
             DocsDesc.Forecah((i, s) =>
             {
                 func(i);
             });
+        }
+
+        public void Traversallevels(Action<string, string> func)
+        {
+            LevelsInfo.Forecah(func);
         }
 
         public string GetDiarieText(int id)
