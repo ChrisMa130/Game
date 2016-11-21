@@ -252,16 +252,8 @@ namespace MG
 
         public void LoadLevel(string name)
         {
-            Debug.Log(name);
             if (GameData.Instance == null)
                 return;
-
-            var data = GameData.Instance.GetLevelData(name);
-            if (data == null)
-            {
-                Debug.Log("未发现当前level的保存信息。bug");
-                return;
-            }
 
             var transitionFX = Camera.main.GetComponent<ProCamera2DTransitionsFX>();
 
@@ -270,7 +262,7 @@ namespace MG
                 transitionFX.OnTransitionExitEnded = null;
                 PlayerLogic.Revive();
                 inTransition = false;
-                //SceneManager.LoadSceneAsync(LevelName);
+                SceneManager.LoadSceneAsync(name);
             };
 
             transitionFX.TransitionExit();
